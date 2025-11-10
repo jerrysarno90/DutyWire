@@ -62,9 +62,9 @@
 /* Begin PBXFileReference section */
 		9EDF4779F31D43BE4013F524 /* awsconfiguration.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
 		A48808442EBF99BC0086EADE /* amplifyconfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
-		A4AC8DD92EB7E5AB00CD5FBD /* ShiftlinkMain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShiftlinkMain.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A4AC8DE72EB7E5AD00CD5FBD /* ShiftlinkMainTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShiftlinkMainTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A4AC8DF12EB7E5AD00CD5FBD /* ShiftlinkMainUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShiftlinkMainUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4AC8DD92EB7E5AB00CD5FBD /* DutyWire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DutyWire.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4AC8DE72EB7E5AD00CD5FBD /* DutyWireTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DutyWireTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4AC8DF12EB7E5AD00CD5FBD /* DutyWireUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DutyWireUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4B6B8412EB9923B00162FB3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A4B6B8422EB9923B00162FB3 /* ShiftlinkMainApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftlinkMainApp.swift; sourceTree = "<group>"; };
 		A4D24BBC2EB909F200FFACC2 /* amplify_outputs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplify_outputs.json; sourceTree = "<group>"; };
@@ -76,9 +76,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A4AC8DDB2EB7E5AB00CD5FBD /* ShiftlinkMain */ = {
+		A4AC8DDB2EB7E5AB00CD5FBD /* ShiftLinkMain */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ShiftlinkMain;
+			path = ShiftLinkMain;
 			sourceTree = "<group>";
 		};
 		A4AC8DEA2EB7E5AD00CD5FBD /* ShiftlinkMainTests */ = {
@@ -141,7 +141,7 @@
 		A4AC8DD02EB7E5AB00CD5FBD = {
 			isa = PBXGroup;
 			children = (
-				A4AC8DDB2EB7E5AB00CD5FBD /* ShiftlinkMain */,
+				A4AC8DDB2EB7E5AB00CD5FBD /* ShiftLinkMain */,
 				A4AC8DEA2EB7E5AD00CD5FBD /* ShiftlinkMainTests */,
 				A4AC8DF42EB7E5AD00CD5FBD /* ShiftlinkMainUITests */,
 				A4AC8DDA2EB7E5AB00CD5FBD /* Products */,
@@ -156,9 +156,9 @@
 		A4AC8DDA2EB7E5AB00CD5FBD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A4AC8DD92EB7E5AB00CD5FBD /* ShiftlinkMain.app */,
-				A4AC8DE72EB7E5AD00CD5FBD /* ShiftlinkMainTests.xctest */,
-				A4AC8DF12EB7E5AD00CD5FBD /* ShiftlinkMainUITests.xctest */,
+				A4AC8DD92EB7E5AB00CD5FBD /* DutyWire.app */,
+				A4AC8DE72EB7E5AD00CD5FBD /* DutyWireTests.xctest */,
+				A4AC8DF12EB7E5AD00CD5FBD /* DutyWireUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -196,9 +196,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A4AC8DD82EB7E5AB00CD5FBD /* ShiftlinkMain */ = {
+		A4AC8DD82EB7E5AB00CD5FBD /* DutyWire */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A4AC8DFB2EB7E5AD00CD5FBD /* Build configuration list for PBXNativeTarget "ShiftlinkMain" */;
+			buildConfigurationList = A4AC8DFB2EB7E5AD00CD5FBD /* Build configuration list for PBXNativeTarget "DutyWire" */;
 			buildPhases = (
 				A4AC8DD52EB7E5AB00CD5FBD /* Sources */,
 				A4AC8DD62EB7E5AB00CD5FBD /* Frameworks */,
@@ -209,9 +209,9 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				A4AC8DDB2EB7E5AB00CD5FBD /* ShiftlinkMain */,
+				A4AC8DDB2EB7E5AB00CD5FBD /* ShiftLinkMain */,
 			);
-			name = ShiftlinkMain;
+			name = DutyWire;
 			packageProductDependencies = (
 				A4D24BC12EB90A5C00FFACC2 /* AWSAPIPlugin */,
 				A4D24BC32EB90A5C00FFACC2 /* AWSCloudWatchLoggingPlugin */,
@@ -228,12 +228,12 @@
 				A4D24BDA2EB9104A00FFACC2 /* Authenticator */,
 			);
 			productName = ShiftlinkMain;
-			productReference = A4AC8DD92EB7E5AB00CD5FBD /* ShiftlinkMain.app */;
+			productReference = A4AC8DD92EB7E5AB00CD5FBD /* DutyWire.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A4AC8DE62EB7E5AD00CD5FBD /* ShiftlinkMainTests */ = {
+		A4AC8DE62EB7E5AD00CD5FBD /* DutyWireTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A4AC8DFE2EB7E5AD00CD5FBD /* Build configuration list for PBXNativeTarget "ShiftlinkMainTests" */;
+			buildConfigurationList = A4AC8DFE2EB7E5AD00CD5FBD /* Build configuration list for PBXNativeTarget "DutyWireTests" */;
 			buildPhases = (
 				A4AC8DE32EB7E5AD00CD5FBD /* Sources */,
 				A4AC8DE42EB7E5AD00CD5FBD /* Frameworks */,
@@ -247,16 +247,16 @@
 			fileSystemSynchronizedGroups = (
 				A4AC8DEA2EB7E5AD00CD5FBD /* ShiftlinkMainTests */,
 			);
-			name = ShiftlinkMainTests;
+			name = DutyWireTests;
 			packageProductDependencies = (
 			);
 			productName = ShiftlinkMainTests;
-			productReference = A4AC8DE72EB7E5AD00CD5FBD /* ShiftlinkMainTests.xctest */;
+			productReference = A4AC8DE72EB7E5AD00CD5FBD /* DutyWireTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		A4AC8DF02EB7E5AD00CD5FBD /* ShiftlinkMainUITests */ = {
+		A4AC8DF02EB7E5AD00CD5FBD /* DutyWireUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A4AC8E012EB7E5AD00CD5FBD /* Build configuration list for PBXNativeTarget "ShiftlinkMainUITests" */;
+			buildConfigurationList = A4AC8E012EB7E5AD00CD5FBD /* Build configuration list for PBXNativeTarget "DutyWireUITests" */;
 			buildPhases = (
 				A4AC8DED2EB7E5AD00CD5FBD /* Sources */,
 				A4AC8DEE2EB7E5AD00CD5FBD /* Frameworks */,
@@ -270,11 +270,11 @@
 			fileSystemSynchronizedGroups = (
 				A4AC8DF42EB7E5AD00CD5FBD /* ShiftlinkMainUITests */,
 			);
-			name = ShiftlinkMainUITests;
+			name = DutyWireUITests;
 			packageProductDependencies = (
 			);
 			productName = ShiftlinkMainUITests;
-			productReference = A4AC8DF12EB7E5AD00CD5FBD /* ShiftlinkMainUITests.xctest */;
+			productReference = A4AC8DF12EB7E5AD00CD5FBD /* DutyWireUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -300,7 +300,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A4AC8DD42EB7E5AB00CD5FBD /* Build configuration list for PBXProject "ShiftlinkMain" */;
+			buildConfigurationList = A4AC8DD42EB7E5AB00CD5FBD /* Build configuration list for PBXProject "DutyWire" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -318,9 +318,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A4AC8DD82EB7E5AB00CD5FBD /* ShiftlinkMain */,
-				A4AC8DE62EB7E5AD00CD5FBD /* ShiftlinkMainTests */,
-				A4AC8DF02EB7E5AD00CD5FBD /* ShiftlinkMainUITests */,
+				A4AC8DD82EB7E5AB00CD5FBD /* DutyWire */,
+				A4AC8DE62EB7E5AD00CD5FBD /* DutyWireTests */,
+				A4AC8DF02EB7E5AD00CD5FBD /* DutyWireUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -396,12 +396,12 @@
 /* Begin PBXTargetDependency section */
 		A4AC8DE92EB7E5AD00CD5FBD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A4AC8DD82EB7E5AB00CD5FBD /* ShiftlinkMain */;
+			target = A4AC8DD82EB7E5AB00CD5FBD /* DutyWire */;
 			targetProxy = A4AC8DE82EB7E5AD00CD5FBD /* PBXContainerItemProxy */;
 		};
 		A4AC8DF32EB7E5AD00CD5FBD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A4AC8DD82EB7E5AB00CD5FBD /* ShiftlinkMain */;
+			target = A4AC8DD82EB7E5AB00CD5FBD /* DutyWire */;
 			targetProxy = A4AC8DF22EB7E5AD00CD5FBD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -624,7 +624,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ShiftlinkMain.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ShiftlinkMain";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DutyWire.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DutyWire";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Debug;
@@ -648,7 +648,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ShiftlinkMain.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ShiftlinkMain";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DutyWire.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DutyWire";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Release;
@@ -702,7 +702,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A4AC8DD42EB7E5AB00CD5FBD /* Build configuration list for PBXProject "ShiftlinkMain" */ = {
+		A4AC8DD42EB7E5AB00CD5FBD /* Build configuration list for PBXProject "DutyWire" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A4AC8DF92EB7E5AD00CD5FBD /* Debug */,
@@ -711,7 +711,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A4AC8DFB2EB7E5AD00CD5FBD /* Build configuration list for PBXNativeTarget "ShiftlinkMain" */ = {
+		A4AC8DFB2EB7E5AD00CD5FBD /* Build configuration list for PBXNativeTarget "DutyWire" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A4AC8DFC2EB7E5AD00CD5FBD /* Debug */,
@@ -720,7 +720,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A4AC8DFE2EB7E5AD00CD5FBD /* Build configuration list for PBXNativeTarget "ShiftlinkMainTests" */ = {
+		A4AC8DFE2EB7E5AD00CD5FBD /* Build configuration list for PBXNativeTarget "DutyWireTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A4AC8DFF2EB7E5AD00CD5FBD /* Debug */,
@@ -729,7 +729,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A4AC8E012EB7E5AD00CD5FBD /* Build configuration list for PBXNativeTarget "ShiftlinkMainUITests" */ = {
+		A4AC8E012EB7E5AD00CD5FBD /* Build configuration list for PBXNativeTarget "DutyWireUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A4AC8E022EB7E5AD00CD5FBD /* Debug */,
