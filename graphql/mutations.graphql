@@ -1,0 +1,421 @@
+# this is an auto generated file. This will be overwritten
+
+mutation CreateRosterEntry(
+  $input: CreateRosterEntryInput!
+  $condition: ModelRosterEntryConditionInput
+) {
+  createRosterEntry(input: $input, condition: $condition) {
+    id
+    orgId
+    badgeNumber
+    shift
+    startsAt
+    endsAt
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateRosterEntry(
+  $input: UpdateRosterEntryInput!
+  $condition: ModelRosterEntryConditionInput
+) {
+  updateRosterEntry(input: $input, condition: $condition) {
+    id
+    orgId
+    badgeNumber
+    shift
+    startsAt
+    endsAt
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteRosterEntry(
+  $input: DeleteRosterEntryInput!
+  $condition: ModelRosterEntryConditionInput
+) {
+  deleteRosterEntry(input: $input, condition: $condition) {
+    id
+    orgId
+    badgeNumber
+    shift
+    startsAt
+    endsAt
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateVehicle(
+  $input: CreateVehicleInput!
+  $condition: ModelVehicleConditionInput
+) {
+  createVehicle(input: $input, condition: $condition) {
+    id
+    orgId
+    callsign
+    make
+    model
+    plate
+    inService
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateVehicle(
+  $input: UpdateVehicleInput!
+  $condition: ModelVehicleConditionInput
+) {
+  updateVehicle(input: $input, condition: $condition) {
+    id
+    orgId
+    callsign
+    make
+    model
+    plate
+    inService
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteVehicle(
+  $input: DeleteVehicleInput!
+  $condition: ModelVehicleConditionInput
+) {
+  deleteVehicle(input: $input, condition: $condition) {
+    id
+    orgId
+    callsign
+    make
+    model
+    plate
+    inService
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateCalendarEvent(
+  $input: CreateCalendarEventInput!
+  $condition: ModelCalendarEventConditionInput
+) {
+  createCalendarEvent(input: $input, condition: $condition) {
+    id
+    orgId
+    ownerId
+    title
+    category
+    color
+    notes
+    startsAt
+    endsAt
+    reminderMinutesBefore
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateCalendarEvent(
+  $input: UpdateCalendarEventInput!
+  $condition: ModelCalendarEventConditionInput
+) {
+  updateCalendarEvent(input: $input, condition: $condition) {
+    id
+    orgId
+    ownerId
+    title
+    category
+    color
+    notes
+    startsAt
+    endsAt
+    reminderMinutesBefore
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteCalendarEvent(
+  $input: DeleteCalendarEventInput!
+  $condition: ModelCalendarEventConditionInput
+) {
+  deleteCalendarEvent(input: $input, condition: $condition) {
+    id
+    orgId
+    ownerId
+    title
+    category
+    color
+    notes
+    startsAt
+    endsAt
+    reminderMinutesBefore
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateOfficerAssignment(
+  $input: CreateOfficerAssignmentInput!
+  $condition: ModelOfficerAssignmentConditionInput
+) {
+  createOfficerAssignment(input: $input, condition: $condition) {
+    id
+    orgId
+    badgeNumber
+    title
+    detail
+    location
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateOfficerAssignment(
+  $input: UpdateOfficerAssignmentInput!
+  $condition: ModelOfficerAssignmentConditionInput
+) {
+  updateOfficerAssignment(input: $input, condition: $condition) {
+    id
+    orgId
+    badgeNumber
+    title
+    detail
+    location
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteOfficerAssignment(
+  $input: DeleteOfficerAssignmentInput!
+  $condition: ModelOfficerAssignmentConditionInput
+) {
+  deleteOfficerAssignment(input: $input, condition: $condition) {
+    id
+    orgId
+    badgeNumber
+    title
+    detail
+    location
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateOvertimePosting(
+  $input: CreateOvertimePostingInput!
+  $condition: ModelOvertimePostingConditionInput
+) {
+  createOvertimePosting(input: $input, condition: $condition) {
+    id
+    orgId
+    title
+    location
+    scenario
+    startsAt
+    endsAt
+    slots
+    policySnapshot
+    state
+    createdBy
+    invites {
+      nextToken
+      __typename
+    }
+    auditTrail {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateOvertimePosting(
+  $input: UpdateOvertimePostingInput!
+  $condition: ModelOvertimePostingConditionInput
+) {
+  updateOvertimePosting(input: $input, condition: $condition) {
+    id
+    orgId
+    title
+    location
+    scenario
+    startsAt
+    endsAt
+    slots
+    policySnapshot
+    state
+    createdBy
+    invites {
+      nextToken
+      __typename
+    }
+    auditTrail {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteOvertimePosting(
+  $input: DeleteOvertimePostingInput!
+  $condition: ModelOvertimePostingConditionInput
+) {
+  deleteOvertimePosting(input: $input, condition: $condition) {
+    id
+    orgId
+    title
+    location
+    scenario
+    startsAt
+    endsAt
+    slots
+    policySnapshot
+    state
+    createdBy
+    invites {
+      nextToken
+      __typename
+    }
+    auditTrail {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateOvertimeInvite(
+  $input: CreateOvertimeInviteInput!
+  $condition: ModelOvertimeInviteConditionInput
+) {
+  createOvertimeInvite(input: $input, condition: $condition) {
+    id
+    postingId
+    officerId
+    bucket
+    sequence
+    reason
+    status
+    respondedAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateOvertimeInvite(
+  $input: UpdateOvertimeInviteInput!
+  $condition: ModelOvertimeInviteConditionInput
+) {
+  updateOvertimeInvite(input: $input, condition: $condition) {
+    id
+    postingId
+    officerId
+    bucket
+    sequence
+    reason
+    status
+    respondedAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteOvertimeInvite(
+  $input: DeleteOvertimeInviteInput!
+  $condition: ModelOvertimeInviteConditionInput
+) {
+  deleteOvertimeInvite(input: $input, condition: $condition) {
+    id
+    postingId
+    officerId
+    bucket
+    sequence
+    reason
+    status
+    respondedAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateOvertimeAuditEvent(
+  $input: CreateOvertimeAuditEventInput!
+  $condition: ModelOvertimeAuditEventConditionInput
+) {
+  createOvertimeAuditEvent(input: $input, condition: $condition) {
+    id
+    postingId
+    type
+    details
+    createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateOvertimeAuditEvent(
+  $input: UpdateOvertimeAuditEventInput!
+  $condition: ModelOvertimeAuditEventConditionInput
+) {
+  updateOvertimeAuditEvent(input: $input, condition: $condition) {
+    id
+    postingId
+    type
+    details
+    createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteOvertimeAuditEvent(
+  $input: DeleteOvertimeAuditEventInput!
+  $condition: ModelOvertimeAuditEventConditionInput
+) {
+  deleteOvertimeAuditEvent(input: $input, condition: $condition) {
+    id
+    postingId
+    type
+    details
+    createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}

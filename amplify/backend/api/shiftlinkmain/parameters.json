@@ -1,0 +1,12 @@
+{
+  "AppSyncApiName": "shiftlinkmain",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authshiftlinkmain32f72376",
+      "Outputs.UserPoolId"
+    ]
+  },
+  "AuthModeLastUpdated": "2025-11-09T02:52:47.707Z"
+}

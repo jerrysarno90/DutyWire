@@ -1,0 +1,173 @@
+type RosterEntry @model
+  @auth(rules: [
+    { allow: owner, ownerField: "badgeNumber" },
+    { allow: groups, groups: ["Admin"] },
+    { allow: groups, groups: ["Supervisor"], operations: [read] }
+  ]) {
+  id: ID!
+  orgId: String! @index(name: "rosterEntriesByOrg", queryField: "rosterEntriesByOrg", sortKeyFields: ["startsAt"])
+  badgeNumber: String!
+    @auth(rules: [
+      { allow: owner, ownerField: "badgeNumber", operations: [read] },
+      { allow: groups, groups: ["Admin"] },
+      { allow: groups, groups: ["Supervisor"], operations: [read] }
+    ])
+  shift: String
+  startsAt: AWSDateTime!
+  endsAt: AWSDateTime!
+  notes: String
+  createdAt: AWSDateTime
+    @aws_cognito_user_pools
+  updatedAt: AWSDateTime
+    @aws_cognito_user_pools
+}
+
+type Vehicle @model
+  @auth(rules: [
+    { allow: groups, groups: ["Admin"] },
+    { allow: groups, groups: ["Supervisor"], operations: [read, update] },
+    { allow: private, operations: [read] }
+  ]) {
+  id: ID!
+  orgId: String! @index(name: "vehiclesByOrg", queryField: "vehiclesByOrg", sortKeyFields: ["callsign"])
+  callsign: String!
+  make: String
+  model: String
+  plate: String
+  inService: Boolean
+  createdAt: AWSDateTime
+    @aws_cognito_user_pools
+  updatedAt: AWSDateTime
+    @aws_cognito_user_pools
+}
+
+type CalendarEvent @model
+  @auth(rules: [
+    { allow: owner, ownerField: "ownerId" },
+    { allow: groups, groups: ["Admin", "Supervisor"] },
+    { allow: private, operations: [read] }
+  ]) {
+  id: ID!
+  orgId: String! @index(name: "eventsByOrg", queryField: "calendarEventsByOrg", sortKeyFields: ["startsAt"])
+  ownerId: String!
+    @index(name: "eventsByOwner", queryField: "calendarEventsByOwner", sortKeyFields: ["startsAt"])
+    @auth(rules: [
+      { allow: owner, ownerField: "ownerId", operations: [read] },
+      { allow: groups, groups: ["Admin", "Supervisor"] },
+      { allow: private, operations: [read] }
+    ])
+  title: String!
+  category: String!
+  color: String!
+  notes: String
+  startsAt: AWSDateTime!
+  endsAt: AWSDateTime!
+  reminderMinutesBefore: Int
+  createdAt: AWSDateTime
+    @aws_cognito_user_pools
+  updatedAt: AWSDateTime
+    @aws_cognito_user_pools
+}
+
+type OfficerAssignment @model
+  @aws_iam
+  @auth(rules: [
+    { allow: owner, ownerField: "badgeNumber", operations: [read] },
+    { allow: groups, groups: ["Admin"] },
+    { allow: groups, groups: ["Supervisor"], operations: [read, update] }
+  ]) {
+  id: ID!
+  orgId: String! @index(name: "assignmentsByOrg", queryField: "assignmentsByOrg", sortKeyFields: ["updatedAt"])
+  badgeNumber: String!
+    @index(name: "assignmentsByOfficer", queryField: "assignmentsByOfficer", sortKeyFields: ["updatedAt"])
+  title: String!
+  detail: String
+  location: String
+  notes: String
+  createdAt: AWSDateTime
+    @aws_cognito_user_pools
+  updatedAt: AWSDateTime
+    @aws_cognito_user_pools
+}
+
+enum OvertimeScenario {
+  PATROL_SHORT_SHIFT
+  SERGEANT_SHORT_SHIFT
+  SPECIAL_EVENT
+  OTHER_OVERTIME
+}
+
+enum OvertimePostingState {
+  OPEN
+  FILLED
+  CLOSED
+}
+
+enum OvertimeInviteStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  ORDERED
+  EXPIRED
+}
+
+type OvertimePosting @model
+  @auth(rules: [
+    { allow: owner, ownerField: "createdBy" },
+    { allow: groups, groups: ["Admin", "Supervisor"] }
+  ]) {
+  id: ID!
+  orgId: String!
+    @index(name: "overtimeByOrg", queryField: "overtimePostingsByOrg", sortKeyFields: ["startsAt"])
+  title: String!
+  location: String
+  scenario: OvertimeScenario!
+  startsAt: AWSDateTime!
+  endsAt: AWSDateTime!
+  slots: Int!
+  policySnapshot: AWSJSON!
+  state: OvertimePostingState!
+  createdBy: String!
+  invites: [OvertimeInvite]
+    @hasMany(indexName: "invitesByPosting", fields: ["id"])
+  auditTrail: [OvertimeAuditEvent]
+    @hasMany(indexName: "auditsByPosting", fields: ["id"])
+  createdAt: AWSDateTime
+    @aws_cognito_user_pools
+  updatedAt: AWSDateTime
+    @aws_cognito_user_pools
+}
+
+type OvertimeInvite @model
+  @auth(rules: [
+    { allow: owner, ownerField: "officerId" },
+    { allow: groups, groups: ["Admin", "Supervisor"] }
+  ]) {
+  id: ID!
+  postingId: ID!
+    @index(name: "invitesByPosting", queryField: "invitesByPosting", sortKeyFields: ["sequence"])
+  officerId: String!
+  bucket: String!
+  sequence: Int!
+  reason: String!
+  status: OvertimeInviteStatus!
+  respondedAt: AWSDateTime
+  createdAt: AWSDateTime
+    @aws_cognito_user_pools
+  updatedAt: AWSDateTime
+    @aws_cognito_user_pools
+}
+
+type OvertimeAuditEvent @model
+  @auth(rules: [
+    { allow: groups, groups: ["Admin", "Supervisor"] }
+  ]) {
+  id: ID!
+  postingId: ID!
+    @index(name: "auditsByPosting", queryField: "auditsByPosting", sortKeyFields: ["createdAt"])
+  type: String!
+  details: AWSJSON
+  createdBy: String
+  createdAt: AWSDateTime
+    @aws_cognito_user_pools
+}

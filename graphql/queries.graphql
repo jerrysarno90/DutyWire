@@ -1,0 +1,601 @@
+# this is an auto generated file. This will be overwritten
+
+query GetRosterEntry($id: ID!) {
+  getRosterEntry(id: $id) {
+    id
+    orgId
+    badgeNumber
+    shift
+    startsAt
+    endsAt
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListRosterEntries(
+  $filter: ModelRosterEntryFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listRosterEntries(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      orgId
+      badgeNumber
+      shift
+      startsAt
+      endsAt
+      notes
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query RosterEntriesByOrg(
+  $orgId: String!
+  $startsAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelRosterEntryFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  rosterEntriesByOrg(
+    orgId: $orgId
+    startsAt: $startsAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      orgId
+      badgeNumber
+      shift
+      startsAt
+      endsAt
+      notes
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetVehicle($id: ID!) {
+  getVehicle(id: $id) {
+    id
+    orgId
+    callsign
+    make
+    model
+    plate
+    inService
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListVehicles(
+  $filter: ModelVehicleFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listVehicles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      orgId
+      callsign
+      make
+      model
+      plate
+      inService
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query VehiclesByOrg(
+  $orgId: String!
+  $callsign: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelVehicleFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  vehiclesByOrg(
+    orgId: $orgId
+    callsign: $callsign
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      orgId
+      callsign
+      make
+      model
+      plate
+      inService
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetCalendarEvent($id: ID!) {
+  getCalendarEvent(id: $id) {
+    id
+    orgId
+    ownerId
+    title
+    category
+    color
+    notes
+    startsAt
+    endsAt
+    reminderMinutesBefore
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListCalendarEvents(
+  $filter: ModelCalendarEventFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listCalendarEvents(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      orgId
+      ownerId
+      title
+      category
+      color
+      notes
+      startsAt
+      endsAt
+      reminderMinutesBefore
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query CalendarEventsByOrg(
+  $orgId: String!
+  $startsAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelCalendarEventFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  calendarEventsByOrg(
+    orgId: $orgId
+    startsAt: $startsAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      orgId
+      ownerId
+      title
+      category
+      color
+      notes
+      startsAt
+      endsAt
+      reminderMinutesBefore
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query CalendarEventsByOwner(
+  $ownerId: String!
+  $startsAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelCalendarEventFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  calendarEventsByOwner(
+    ownerId: $ownerId
+    startsAt: $startsAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      orgId
+      ownerId
+      title
+      category
+      color
+      notes
+      startsAt
+      endsAt
+      reminderMinutesBefore
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetOfficerAssignment($id: ID!) {
+  getOfficerAssignment(id: $id) {
+    id
+    orgId
+    badgeNumber
+    title
+    detail
+    location
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListOfficerAssignments(
+  $filter: ModelOfficerAssignmentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listOfficerAssignments(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      orgId
+      badgeNumber
+      title
+      detail
+      location
+      notes
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query AssignmentsByOrg(
+  $orgId: String!
+  $updatedAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelOfficerAssignmentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  assignmentsByOrg(
+    orgId: $orgId
+    updatedAt: $updatedAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      orgId
+      badgeNumber
+      title
+      detail
+      location
+      notes
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query AssignmentsByOfficer(
+  $badgeNumber: String!
+  $updatedAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelOfficerAssignmentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  assignmentsByOfficer(
+    badgeNumber: $badgeNumber
+    updatedAt: $updatedAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      orgId
+      badgeNumber
+      title
+      detail
+      location
+      notes
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetOvertimePosting($id: ID!) {
+  getOvertimePosting(id: $id) {
+    id
+    orgId
+    title
+    location
+    scenario
+    startsAt
+    endsAt
+    slots
+    policySnapshot
+    state
+    createdBy
+    invites {
+      nextToken
+      __typename
+    }
+    auditTrail {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListOvertimePostings(
+  $filter: ModelOvertimePostingFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listOvertimePostings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      orgId
+      title
+      location
+      scenario
+      startsAt
+      endsAt
+      slots
+      policySnapshot
+      state
+      createdBy
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query OvertimePostingsByOrg(
+  $orgId: String!
+  $startsAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelOvertimePostingFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  overtimePostingsByOrg(
+    orgId: $orgId
+    startsAt: $startsAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      orgId
+      title
+      location
+      scenario
+      startsAt
+      endsAt
+      slots
+      policySnapshot
+      state
+      createdBy
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetOvertimeInvite($id: ID!) {
+  getOvertimeInvite(id: $id) {
+    id
+    postingId
+    officerId
+    bucket
+    sequence
+    reason
+    status
+    respondedAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListOvertimeInvites(
+  $filter: ModelOvertimeInviteFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listOvertimeInvites(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      postingId
+      officerId
+      bucket
+      sequence
+      reason
+      status
+      respondedAt
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query InvitesByPosting(
+  $postingId: ID!
+  $sequence: ModelIntKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelOvertimeInviteFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  invitesByPosting(
+    postingId: $postingId
+    sequence: $sequence
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      postingId
+      officerId
+      bucket
+      sequence
+      reason
+      status
+      respondedAt
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetOvertimeAuditEvent($id: ID!) {
+  getOvertimeAuditEvent(id: $id) {
+    id
+    postingId
+    type
+    details
+    createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListOvertimeAuditEvents(
+  $filter: ModelOvertimeAuditEventFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listOvertimeAuditEvents(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      postingId
+      type
+      details
+      createdBy
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query AuditsByPosting(
+  $postingId: ID!
+  $createdAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelOvertimeAuditEventFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  auditsByPosting(
+    postingId: $postingId
+    createdAt: $createdAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      postingId
+      type
+      details
+      createdBy
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}

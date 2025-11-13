@@ -1,0 +1,409 @@
+# this is an auto generated file. This will be overwritten
+
+subscription OnCreateRosterEntry(
+  $filter: ModelSubscriptionRosterEntryFilterInput
+  $badgeNumber: String
+) {
+  onCreateRosterEntry(filter: $filter, badgeNumber: $badgeNumber) {
+    id
+    orgId
+    badgeNumber
+    shift
+    startsAt
+    endsAt
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateRosterEntry(
+  $filter: ModelSubscriptionRosterEntryFilterInput
+  $badgeNumber: String
+) {
+  onUpdateRosterEntry(filter: $filter, badgeNumber: $badgeNumber) {
+    id
+    orgId
+    badgeNumber
+    shift
+    startsAt
+    endsAt
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteRosterEntry(
+  $filter: ModelSubscriptionRosterEntryFilterInput
+  $badgeNumber: String
+) {
+  onDeleteRosterEntry(filter: $filter, badgeNumber: $badgeNumber) {
+    id
+    orgId
+    badgeNumber
+    shift
+    startsAt
+    endsAt
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnCreateVehicle($filter: ModelSubscriptionVehicleFilterInput) {
+  onCreateVehicle(filter: $filter) {
+    id
+    orgId
+    callsign
+    make
+    model
+    plate
+    inService
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateVehicle($filter: ModelSubscriptionVehicleFilterInput) {
+  onUpdateVehicle(filter: $filter) {
+    id
+    orgId
+    callsign
+    make
+    model
+    plate
+    inService
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteVehicle($filter: ModelSubscriptionVehicleFilterInput) {
+  onDeleteVehicle(filter: $filter) {
+    id
+    orgId
+    callsign
+    make
+    model
+    plate
+    inService
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnCreateCalendarEvent(
+  $filter: ModelSubscriptionCalendarEventFilterInput
+  $ownerId: String
+) {
+  onCreateCalendarEvent(filter: $filter, ownerId: $ownerId) {
+    id
+    orgId
+    ownerId
+    title
+    category
+    color
+    notes
+    startsAt
+    endsAt
+    reminderMinutesBefore
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateCalendarEvent(
+  $filter: ModelSubscriptionCalendarEventFilterInput
+  $ownerId: String
+) {
+  onUpdateCalendarEvent(filter: $filter, ownerId: $ownerId) {
+    id
+    orgId
+    ownerId
+    title
+    category
+    color
+    notes
+    startsAt
+    endsAt
+    reminderMinutesBefore
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteCalendarEvent(
+  $filter: ModelSubscriptionCalendarEventFilterInput
+  $ownerId: String
+) {
+  onDeleteCalendarEvent(filter: $filter, ownerId: $ownerId) {
+    id
+    orgId
+    ownerId
+    title
+    category
+    color
+    notes
+    startsAt
+    endsAt
+    reminderMinutesBefore
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnCreateOfficerAssignment(
+  $filter: ModelSubscriptionOfficerAssignmentFilterInput
+  $badgeNumber: String
+) {
+  onCreateOfficerAssignment(filter: $filter, badgeNumber: $badgeNumber) {
+    id
+    orgId
+    badgeNumber
+    title
+    detail
+    location
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateOfficerAssignment(
+  $filter: ModelSubscriptionOfficerAssignmentFilterInput
+  $badgeNumber: String
+) {
+  onUpdateOfficerAssignment(filter: $filter, badgeNumber: $badgeNumber) {
+    id
+    orgId
+    badgeNumber
+    title
+    detail
+    location
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteOfficerAssignment(
+  $filter: ModelSubscriptionOfficerAssignmentFilterInput
+  $badgeNumber: String
+) {
+  onDeleteOfficerAssignment(filter: $filter, badgeNumber: $badgeNumber) {
+    id
+    orgId
+    badgeNumber
+    title
+    detail
+    location
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnCreateOvertimePosting(
+  $filter: ModelSubscriptionOvertimePostingFilterInput
+  $createdBy: String
+) {
+  onCreateOvertimePosting(filter: $filter, createdBy: $createdBy) {
+    id
+    orgId
+    title
+    location
+    scenario
+    startsAt
+    endsAt
+    slots
+    policySnapshot
+    state
+    createdBy
+    invites {
+      nextToken
+      __typename
+    }
+    auditTrail {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateOvertimePosting(
+  $filter: ModelSubscriptionOvertimePostingFilterInput
+  $createdBy: String
+) {
+  onUpdateOvertimePosting(filter: $filter, createdBy: $createdBy) {
+    id
+    orgId
+    title
+    location
+    scenario
+    startsAt
+    endsAt
+    slots
+    policySnapshot
+    state
+    createdBy
+    invites {
+      nextToken
+      __typename
+    }
+    auditTrail {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteOvertimePosting(
+  $filter: ModelSubscriptionOvertimePostingFilterInput
+  $createdBy: String
+) {
+  onDeleteOvertimePosting(filter: $filter, createdBy: $createdBy) {
+    id
+    orgId
+    title
+    location
+    scenario
+    startsAt
+    endsAt
+    slots
+    policySnapshot
+    state
+    createdBy
+    invites {
+      nextToken
+      __typename
+    }
+    auditTrail {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnCreateOvertimeInvite(
+  $filter: ModelSubscriptionOvertimeInviteFilterInput
+  $officerId: String
+) {
+  onCreateOvertimeInvite(filter: $filter, officerId: $officerId) {
+    id
+    postingId
+    officerId
+    bucket
+    sequence
+    reason
+    status
+    respondedAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateOvertimeInvite(
+  $filter: ModelSubscriptionOvertimeInviteFilterInput
+  $officerId: String
+) {
+  onUpdateOvertimeInvite(filter: $filter, officerId: $officerId) {
+    id
+    postingId
+    officerId
+    bucket
+    sequence
+    reason
+    status
+    respondedAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteOvertimeInvite(
+  $filter: ModelSubscriptionOvertimeInviteFilterInput
+  $officerId: String
+) {
+  onDeleteOvertimeInvite(filter: $filter, officerId: $officerId) {
+    id
+    postingId
+    officerId
+    bucket
+    sequence
+    reason
+    status
+    respondedAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnCreateOvertimeAuditEvent(
+  $filter: ModelSubscriptionOvertimeAuditEventFilterInput
+) {
+  onCreateOvertimeAuditEvent(filter: $filter) {
+    id
+    postingId
+    type
+    details
+    createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateOvertimeAuditEvent(
+  $filter: ModelSubscriptionOvertimeAuditEventFilterInput
+) {
+  onUpdateOvertimeAuditEvent(filter: $filter) {
+    id
+    postingId
+    type
+    details
+    createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteOvertimeAuditEvent(
+  $filter: ModelSubscriptionOvertimeAuditEventFilterInput
+) {
+  onDeleteOvertimeAuditEvent(filter: $filter) {
+    id
+    postingId
+    type
+    details
+    createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}

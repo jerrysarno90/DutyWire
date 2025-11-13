@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-shiftlinkmain-dev-43163-authRole",
+      "UnauthRoleArn": "arn:aws:iam::578684998499:role/amplify-shiftlinkmain-dev-43163-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::578684998499:role/amplify-shiftlinkmain-dev-43163-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-shiftlinkmain-dev-43163-deployment",
+      "UnauthRoleName": "amplify-shiftlinkmain-dev-43163-unauthRole",
+      "StackName": "amplify-shiftlinkmain-dev-43163",
+      "StackId": "arn:aws:cloudformation:us-east-1:578684998499:stack/amplify-shiftlinkmain-dev-43163/79ede530-bce2-11f0-8a6f-125126c30e41",
+      "AmplifyAppId": "d2i26d6uko7hf6"
+    },
+    "categories": {
+      "api": {
+        "shiftlinkmain": {}
+      },
+      "auth": {
+        "shiftlinkmain32f72376": {}
+      }
+    }
+  }
+}
