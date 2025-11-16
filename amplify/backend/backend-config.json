@@ -56,5 +56,87 @@
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
     }
+  },
+  "function": {
+    "overtimeNotifier": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "shiftlinkmain"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "rotationEscalationWatcher": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "shiftlinkmain"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_overtimeNotifier_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "overtimeNotifier"
+        }
+      ]
+    },
+    "AMPLIFY_function_overtimeNotifier_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "overtimeNotifier"
+        }
+      ]
+    },
+    "AMPLIFY_function_overtimeNotifier_snsPlatformApplicationArnAndroid": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "overtimeNotifier"
+        }
+      ]
+    },
+    "AMPLIFY_function_overtimeNotifier_snsPlatformApplicationArnIOS": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "overtimeNotifier"
+        }
+      ]
+    },
+    "AMPLIFY_function_rotationEscalationWatcher_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "rotationEscalationWatcher"
+        }
+      ]
+    },
+    "AMPLIFY_function_rotationEscalationWatcher_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "rotationEscalationWatcher"
+        }
+      ]
+    }
   }
 }

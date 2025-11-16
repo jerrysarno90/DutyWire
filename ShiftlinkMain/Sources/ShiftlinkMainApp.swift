@@ -7,13 +7,18 @@
 
 import SwiftUI
 import Amplify
+import UIKit
 
 @main
 struct ShiftlinkMainApp: App {
     @StateObject private var auth = AuthViewModel()
+    @UIApplicationDelegateAdaptor(PushNotificationCoordinator.self) private var pushCoordinator
 
     init() {
         AmplifyBootstrap.configure()
+        DispatchQueue.main.async {
+            UIApplication.shared.registerForRemoteNotifications()
+        }
     }
 
     var body: some Scene {

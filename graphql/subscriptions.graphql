@@ -407,3 +407,180 @@ subscription OnDeleteOvertimeAuditEvent(
     __typename
   }
 }
+
+subscription OnCreateNotificationEndpoint(
+  $filter: ModelSubscriptionNotificationEndpointFilterInput
+  $userId: String
+) {
+  onCreateNotificationEndpoint(filter: $filter, userId: $userId) {
+    id
+    orgId
+    userId
+    deviceToken
+    platform
+    deviceName
+    enabled
+    platformEndpointArn
+    lastUsedAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateNotificationEndpoint(
+  $filter: ModelSubscriptionNotificationEndpointFilterInput
+  $userId: String
+) {
+  onUpdateNotificationEndpoint(filter: $filter, userId: $userId) {
+    id
+    orgId
+    userId
+    deviceToken
+    platform
+    deviceName
+    enabled
+    platformEndpointArn
+    lastUsedAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteNotificationEndpoint(
+  $filter: ModelSubscriptionNotificationEndpointFilterInput
+  $userId: String
+) {
+  onDeleteNotificationEndpoint(filter: $filter, userId: $userId) {
+    id
+    orgId
+    userId
+    deviceToken
+    platform
+    deviceName
+    enabled
+    platformEndpointArn
+    lastUsedAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnCreateNotificationMessage(
+  $filter: ModelSubscriptionNotificationMessageFilterInput
+) {
+  onCreateNotificationMessage(filter: $filter) {
+    id
+    orgId
+    title
+    body
+    category
+    recipients
+    metadata
+    createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateNotificationMessage(
+  $filter: ModelSubscriptionNotificationMessageFilterInput
+) {
+  onUpdateNotificationMessage(filter: $filter) {
+    id
+    orgId
+    title
+    body
+    category
+    recipients
+    metadata
+    createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteNotificationMessage(
+  $filter: ModelSubscriptionNotificationMessageFilterInput
+) {
+  onDeleteNotificationMessage(filter: $filter) {
+    id
+    orgId
+    title
+    body
+    category
+    recipients
+    metadata
+    createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnCreateNotificationPreference(
+  $filter: ModelSubscriptionNotificationPreferenceFilterInput
+  $userId: String
+) {
+  onCreateNotificationPreference(filter: $filter, userId: $userId) {
+    id
+    userId
+    generalBulletin
+    taskAlert
+    overtime
+    squadMessages
+    other
+    contactPhone
+    contactEmail
+    backupEmail
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateNotificationPreference(
+  $filter: ModelSubscriptionNotificationPreferenceFilterInput
+  $userId: String
+) {
+  onUpdateNotificationPreference(filter: $filter, userId: $userId) {
+    id
+    userId
+    generalBulletin
+    taskAlert
+    overtime
+    squadMessages
+    other
+    contactPhone
+    contactEmail
+    backupEmail
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteNotificationPreference(
+  $filter: ModelSubscriptionNotificationPreferenceFilterInput
+  $userId: String
+) {
+  onDeleteNotificationPreference(filter: $filter, userId: $userId) {
+    id
+    userId
+    generalBulletin
+    taskAlert
+    overtime
+    squadMessages
+    other
+    contactPhone
+    contactEmail
+    backupEmail
+    createdAt
+    updatedAt
+    __typename
+  }
+}

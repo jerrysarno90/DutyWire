@@ -15,5 +15,20 @@ export type AmplifyDependentResourcesAttributes = {
       "UserPoolId": "string",
       "UserPoolName": "string"
     }
+  },
+  "function": {
+    "overtimeNotifier": {
+      "Arn": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string"
+    },
+    "rotationEscalationWatcher": {
+      "Arn": "string",
+      "CloudWatchEventRule": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    }
   }
 }

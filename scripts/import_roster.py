@@ -157,14 +157,17 @@ def call_appsync(query: str, variables: dict) -> dict:
     return data["data"]
 
 
-def ensure_cognito_user(officer: OfficerRow, org_id: str) -> None:
+def ensure_cognito_user(officer: OfficerRow, org_id: str) -> str:
     username = officer.email.strip()
+    preferred_username = officer.full_name or officer.badge_number
     attributes = [
         {"Name": "email", "Value": username},
         {"Name": "email_verified", "Value": "true"},
-        {"Name": "preferred_username", "Value": officer.badge_number},
+        {"Name": "preferred_username", "Value": preferred_username},
         {"Name": "custom:orgID", "Value": org_id},
     ]
+    if officer.full_name:
+        attributes.append({"Name": "name", "Value": officer.full_name})
     if officer.first_name:
         attributes.append({"Name": "given_name", "Value": officer.first_name})
     if officer.last_name:
@@ -174,8 +177,9 @@ def ensure_cognito_user(officer: OfficerRow, org_id: str) -> None:
     if officer.phone:
         attributes.append({"Name": "phone_number", "Value": officer.phone})
 
+    user_record = None
     try:
-        cognito.admin_get_user(UserPoolId=USER_POOL_ID, Username=username)
+        user_record = cognito.admin_get_user(UserPoolId=USER_POOL_ID, Username=username)
         cognito.admin_update_user_attributes(
             UserPoolId=USER_POOL_ID,
             Username=username,
@@ -189,6 +193,7 @@ def ensure_cognito_user(officer: OfficerRow, org_id: str) -> None:
             MessageAction="SUPPRESS",
             UserAttributes=attributes,
         )
+        user_record = cognito.admin_get_user(UserPoolId=USER_POOL_ID, Username=username)
 
     cognito.admin_add_user_to_group(
         UserPoolId=USER_POOL_ID,
@@ -196,8 +201,15 @@ def ensure_cognito_user(officer: OfficerRow, org_id: str) -> None:
         GroupName=officer.group,
     )
 
+    if not user_record:
+        user_record = cognito.admin_get_user(UserPoolId=USER_POOL_ID, Username=username)
 
-def build_profile_notes(officer: OfficerRow) -> Optional[str]:
+    for attribute in user_record.get("UserAttributes", []):
+        if attribute.get("Name") == "sub":
+            return attribute.get("Value")
+    raise RuntimeError(f"Unable to determine Cognito user ID for {username}")
+
+def build_profile_notes(officer: OfficerRow, user_id: str) -> Optional[str]:
     profile = {}
     if officer.full_name:
         profile["fullName"] = officer.full_name
@@ -205,12 +217,13 @@ def build_profile_notes(officer: OfficerRow) -> Optional[str]:
         profile["rank"] = officer.rank
     if officer.phone:
         profile["departmentPhone"] = officer.phone
+    profile["userId"] = user_id
     if not profile:
         return None
     return json.dumps(profile)
 
 
-def upsert_assignment(officer: OfficerRow, org_id: str) -> None:
+def upsert_assignment(officer: OfficerRow, org_id: str, user_id: str) -> None:
     if not officer.assignment:
         return
     assignment_id = f"{org_id}-{officer.badge_number}"
@@ -221,7 +234,7 @@ def upsert_assignment(officer: OfficerRow, org_id: str) -> None:
         "title": officer.assignment,
         "detail": officer.rank,
         "location": None,
-        "notes": build_profile_notes(officer),
+        "notes": build_profile_notes(officer, user_id),
     }
     try:
         call_appsync(UPDATE_ASSIGNMENT_MUTATION, {"input": input_payload})
@@ -233,8 +246,8 @@ def process_officer(officer: OfficerRow, org_id: str, dry_run: bool) -> None:
     print(f"- {officer.badge_number}: {officer.email} [{officer.group}] assignment={officer.assignment!r}")
     if dry_run:
         return
-    ensure_cognito_user(officer, org_id)
-    upsert_assignment(officer, org_id)
+    user_id = ensure_cognito_user(officer, org_id)
+    upsert_assignment(officer, org_id, user_id)
 
 
 def main():

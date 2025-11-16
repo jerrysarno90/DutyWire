@@ -1,5 +1,25 @@
 # this is an auto generated file. This will be overwritten
 
+mutation NotifyOvertimeEvent($input: OvertimeNotificationInput!) {
+  notifyOvertimeEvent(input: $input) {
+    success
+    delivered
+    recipientCount
+    message
+    __typename
+  }
+}
+
+mutation SendNotification($input: OvertimeNotificationInput!) {
+  sendNotification(input: $input) {
+    success
+    delivered
+    recipientCount
+    message
+    __typename
+  }
+}
+
 mutation CreateRosterEntry(
   $input: CreateRosterEntryInput!
   $condition: ModelRosterEntryConditionInput
@@ -414,6 +434,186 @@ mutation DeleteOvertimeAuditEvent(
     type
     details
     createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateNotificationEndpoint(
+  $input: CreateNotificationEndpointInput!
+  $condition: ModelNotificationEndpointConditionInput
+) {
+  createNotificationEndpoint(input: $input, condition: $condition) {
+    id
+    orgId
+    userId
+    deviceToken
+    platform
+    deviceName
+    enabled
+    platformEndpointArn
+    lastUsedAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateNotificationEndpoint(
+  $input: UpdateNotificationEndpointInput!
+  $condition: ModelNotificationEndpointConditionInput
+) {
+  updateNotificationEndpoint(input: $input, condition: $condition) {
+    id
+    orgId
+    userId
+    deviceToken
+    platform
+    deviceName
+    enabled
+    platformEndpointArn
+    lastUsedAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteNotificationEndpoint(
+  $input: DeleteNotificationEndpointInput!
+  $condition: ModelNotificationEndpointConditionInput
+) {
+  deleteNotificationEndpoint(input: $input, condition: $condition) {
+    id
+    orgId
+    userId
+    deviceToken
+    platform
+    deviceName
+    enabled
+    platformEndpointArn
+    lastUsedAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateNotificationMessage(
+  $input: CreateNotificationMessageInput!
+  $condition: ModelNotificationMessageConditionInput
+) {
+  createNotificationMessage(input: $input, condition: $condition) {
+    id
+    orgId
+    title
+    body
+    category
+    recipients
+    metadata
+    createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateNotificationMessage(
+  $input: UpdateNotificationMessageInput!
+  $condition: ModelNotificationMessageConditionInput
+) {
+  updateNotificationMessage(input: $input, condition: $condition) {
+    id
+    orgId
+    title
+    body
+    category
+    recipients
+    metadata
+    createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteNotificationMessage(
+  $input: DeleteNotificationMessageInput!
+  $condition: ModelNotificationMessageConditionInput
+) {
+  deleteNotificationMessage(input: $input, condition: $condition) {
+    id
+    orgId
+    title
+    body
+    category
+    recipients
+    metadata
+    createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateNotificationPreference(
+  $input: CreateNotificationPreferenceInput!
+  $condition: ModelNotificationPreferenceConditionInput
+) {
+  createNotificationPreference(input: $input, condition: $condition) {
+    id
+    userId
+    generalBulletin
+    taskAlert
+    overtime
+    squadMessages
+    other
+    contactPhone
+    contactEmail
+    backupEmail
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateNotificationPreference(
+  $input: UpdateNotificationPreferenceInput!
+  $condition: ModelNotificationPreferenceConditionInput
+) {
+  updateNotificationPreference(input: $input, condition: $condition) {
+    id
+    userId
+    generalBulletin
+    taskAlert
+    overtime
+    squadMessages
+    other
+    contactPhone
+    contactEmail
+    backupEmail
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteNotificationPreference(
+  $input: DeleteNotificationPreferenceInput!
+  $condition: ModelNotificationPreferenceConditionInput
+) {
+  deleteNotificationPreference(input: $input, condition: $condition) {
+    id
+    userId
+    generalBulletin
+    taskAlert
+    overtime
+    squadMessages
+    other
+    contactPhone
+    contactEmail
+    backupEmail
     createdAt
     updatedAt
     __typename

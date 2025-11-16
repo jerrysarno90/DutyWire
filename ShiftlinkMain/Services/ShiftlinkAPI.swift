@@ -114,6 +114,8 @@ struct OfficerAssignmentProfile: Codable {
     var departmentExtension: String?
     var departmentEmail: String?
     var squad: String?
+    var mfaVerified: Bool?
+    var userId: String?
 }
 
 struct DepartmentAlertPayload: Codable {
@@ -179,6 +181,214 @@ struct NewOvertimePostingInput {
     var endsAt: Date
     var reminderMinutesBefore: Int?
     var priorityColorHex: String
+}
+
+// MARK: - Overtime Rotation (v2) Models
+
+enum OvertimeScenarioKind: String, Codable, CaseIterable {
+    case patrolShortShift = "PATROL_SHORT_SHIFT"
+    case sergeantShortShift = "SERGEANT_SHORT_SHIFT"
+    case specialEvent = "SPECIAL_EVENT"
+    case seniorityBased = "SENIORITY_BASED"
+    case other = "OTHER_OVERTIME"
+}
+
+enum OvertimePostingStateKind: String, Codable, CaseIterable {
+    case open = "OPEN"
+    case filled = "FILLED"
+    case closed = "CLOSED"
+}
+
+enum OvertimeInviteStatusKind: String, Codable, CaseIterable {
+    case pending = "PENDING"
+    case accepted = "ACCEPTED"
+    case declined = "DECLINED"
+    case ordered = "ORDERED"
+    case expired = "EXPIRED"
+}
+
+enum OvertimeSelectionPolicyKind: String, Codable, CaseIterable {
+    case rotation = "ROTATION"
+    case seniority = "SENIORITY"
+    case firstCome = "FIRST_COME"
+}
+
+struct RotationOvertimePostingDTO: Identifiable {
+    let id: String
+    let orgId: String
+    let title: String
+    let location: String?
+    let scenario: OvertimeScenarioKind
+    let startsAt: Date
+    let endsAt: Date
+    let slots: Int
+    let state: OvertimePostingStateKind
+    let createdBy: String
+    let createdAt: Date?
+    let updatedAt: Date?
+    let policySnapshot: RotationPolicySnapshot
+    let needsEscalation: Bool
+    let selectionPolicy: OvertimeSelectionPolicyKind
+}
+
+struct NewRotationOvertimePostingInput {
+    var orgId: String
+    var title: String
+    var location: String?
+    var scenario: OvertimeScenarioKind
+    var startsAt: Date
+    var endsAt: Date
+    var slots: Int
+    var policySnapshot: RotationPolicySnapshot
+    var needsEscalation: Bool
+    var selectionPolicy: OvertimeSelectionPolicyKind
+}
+
+struct OvertimeInviteDTO: Identifiable {
+    let id: String
+    let postingId: String
+    let officerId: String
+    let bucket: OvertimeRankBucket
+    let sequence: Int
+    let reason: RotationInviteStep.Reason
+    let status: OvertimeInviteStatusKind
+    let scheduledAt: Date?
+    let respondedAt: Date?
+    let createdAt: Date?
+    let updatedAt: Date?
+}
+
+struct OvertimeAuditEventDTO: Identifiable {
+    let id: String
+    let postingId: String
+    let type: String
+    let details: [String: Any]?
+    let createdBy: String?
+    let createdAt: Date?
+}
+
+struct NotificationDispatchRequest {
+    var orgId: String
+    var recipients: [String]
+    var title: String
+    var body: String
+    var category: String
+    var postingId: String?
+    var metadata: [String: Any]?
+}
+
+typealias OvertimeNotificationRequest = NotificationDispatchRequest
+
+struct NotificationPreferenceDTO: Equatable {
+    var id: String?
+    var userId: String
+    var generalBulletin: Bool
+    var taskAlert: Bool
+    var overtime: Bool
+    var squadMessages: Bool
+    var other: Bool
+    var contactPhone: String?
+    var contactEmail: String?
+    var backupEmail: String?
+
+    init(
+        id: String? = nil,
+        userId: String,
+        generalBulletin: Bool = true,
+        taskAlert: Bool = true,
+        overtime: Bool = true,
+        squadMessages: Bool = true,
+        other: Bool = true,
+        contactPhone: String? = nil,
+        contactEmail: String? = nil,
+        backupEmail: String? = nil
+    ) {
+        self.id = id
+        self.userId = userId
+        self.generalBulletin = generalBulletin
+        self.taskAlert = taskAlert
+        self.overtime = overtime
+        self.squadMessages = squadMessages
+        self.other = other
+        self.contactPhone = contactPhone
+        self.contactEmail = contactEmail
+        self.backupEmail = backupEmail
+    }
+
+    static func placeholder(userId: String) -> NotificationPreferenceDTO {
+        NotificationPreferenceDTO(id: nil, userId: userId)
+    }
+
+    var contactMetadata: [String: String] {
+        var details: [String: String] = [:]
+        if let phone = sanitized(contactPhone) {
+            details["phone"] = phone
+        }
+        if let email = sanitized(contactEmail) {
+            details["email"] = email
+        }
+        if let backup = sanitized(backupEmail) {
+            details["backupEmail"] = backup
+        }
+        return details
+    }
+
+    private func sanitized(_ value: String?) -> String? {
+        guard let trimmed = value?.trimmingCharacters(in: .whitespacesAndNewlines), !trimmed.isEmpty else { return nil }
+        return trimmed
+    }
+
+    private func graphQLInput(using identifier: String) -> [String: Any] {
+        var payload: [String: Any] = [
+            "id": identifier,
+            "userId": userId,
+            "generalBulletin": generalBulletin,
+            "taskAlert": taskAlert,
+            "overtime": overtime,
+            "squadMessages": squadMessages,
+            "other": other
+        ]
+        if let phone = sanitized(contactPhone) {
+            payload["contactPhone"] = phone
+        }
+        if let email = sanitized(contactEmail) {
+            payload["contactEmail"] = email
+        }
+        if let backup = sanitized(backupEmail) {
+            payload["backupEmail"] = backup
+        }
+        return payload
+    }
+
+    func createInput() -> [String: Any] {
+        graphQLInput(using: id ?? UUID().uuidString)
+    }
+
+    func updateInput() throws -> [String: Any] {
+        guard let identifier = id else { throw ShiftlinkAPIError.missingIdentifiers }
+        return graphQLInput(using: identifier)
+    }
+}
+
+struct CalendarEventDTO: Identifiable {
+    let id: String
+    let ownerId: String
+    let orgId: String
+    let title: String
+    let category: String
+    let colorHex: String
+    let notes: String?
+    let startsAt: Date
+    let endsAt: Date
+}
+
+struct NewCalendarEventInput {
+    var title: String
+    var startsAt: Date
+    var endsAt: Date
+    var category: String
+    var colorHex: String
+    var notes: String?
 }
 
 // MARK: - API Service
@@ -418,6 +628,114 @@ struct ShiftlinkAPI {
         }
     }
 
+    static func listCalendarEvents(ownerIds: [String]) async throws -> [CalendarEventDTO] {
+        let ownerFilters = ownerIds
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+            .map { ["ownerId": ["eq": $0]] }
+
+        guard !ownerFilters.isEmpty else { return [] }
+
+        let filter: [String: Any]
+        if ownerFilters.count == 1, let first = ownerFilters.first {
+            filter = first
+        } else {
+            filter = ["or": ownerFilters]
+        }
+
+        let variables: [String: Any] = ["filter": filter]
+
+        let request = GraphQLRequest<ListCalendarEventsResponse>(
+            document: Self.listCalendarEventsDocument,
+            variables: variables,
+            responseType: ListCalendarEventsResponse.self
+        )
+
+        let result = try await Amplify.API.query(request: request)
+        switch result {
+        case .success(let payload):
+            return payload.listCalendarEvents.items.compactMap(Self.makeCalendarEventDTO)
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    static func createCalendarEvent(ownerId: String, orgId: String?, input: NewCalendarEventInput) async throws -> CalendarEventDTO {
+        var payload: [String: Any] = [
+            "ownerId": ownerId,
+            "orgId": (orgId?.isEmpty == false ? orgId! : "PERSONAL"),
+            "title": input.title,
+            "category": input.category,
+            "color": input.colorHex,
+            "startsAt": encode(date: input.startsAt),
+            "endsAt": encode(date: input.endsAt)
+        ]
+        if let notes = input.notes, !notes.isEmpty { payload["notes"] = notes }
+
+        let request = GraphQLRequest<CreateCalendarEventResponse>(
+            document: Self.createCalendarEventDocument,
+            variables: ["input": payload],
+            responseType: CreateCalendarEventResponse.self
+        )
+
+        let result = try await Amplify.API.mutate(request: request)
+        switch result {
+        case .success(let payload):
+            guard let dto = Self.makeCalendarEventDTO(payload.createCalendarEvent) else {
+                throw ShiftlinkAPIError.malformedResponse
+            }
+            return dto
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    static func updateCalendarEvent(id: String, ownerId: String, input: NewCalendarEventInput) async throws -> CalendarEventDTO {
+        var payload: [String: Any] = [
+            "id": id,
+            "ownerId": ownerId,
+            "title": input.title,
+            "category": input.category,
+            "color": input.colorHex,
+            "startsAt": encode(date: input.startsAt),
+            "endsAt": encode(date: input.endsAt)
+        ]
+        payload["notes"] = input.notes
+
+        let request = GraphQLRequest<UpdateCalendarEventResponse>(
+            document: Self.updateCalendarEventDocument,
+            variables: ["input": payload],
+            responseType: UpdateCalendarEventResponse.self
+        )
+
+        let result = try await Amplify.API.mutate(request: request)
+        switch result {
+        case .success(let payload):
+            guard let dto = Self.makeCalendarEventDTO(payload.updateCalendarEvent) else {
+                throw ShiftlinkAPIError.malformedResponse
+            }
+            return dto
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    static func deleteCalendarEvent(id: String) async throws {
+        let request = GraphQLRequest<DeleteCalendarEventResponse>(
+            document: Self.deleteCalendarEventDocument,
+            variables: ["input": ["id": id]],
+            responseType: DeleteCalendarEventResponse.self
+        )
+
+        let result = try await Amplify.API.mutate(request: request)
+        switch result {
+        case .success:
+            return
+        case .failure(let error):
+            throw error
+        }
+    }
+
     static func createOvertimePosting(
         orgId: String,
         posterId: String,
@@ -497,6 +815,497 @@ struct ShiftlinkAPI {
         }
     }
 
+    // MARK: Rotation Overtime (v2)
+
+    static func listRotationOvertimePostings(
+        orgId: String,
+        state: OvertimePostingStateKind? = nil,
+        limit: Int = 50
+    ) async throws -> [RotationOvertimePostingDTO] {
+        var variables: [String: Any] = [
+            "orgId": orgId,
+            "sortDirection": "ASC",
+            "limit": limit
+        ]
+        if let state {
+            variables["filter"] = [
+                "state": ["eq": state.rawValue]
+            ]
+        }
+
+        let request = GraphQLRequest<OvertimePostingsByOrgResponse>(
+            document: Self.overtimePostingsByOrgDocument,
+            variables: variables,
+            responseType: OvertimePostingsByOrgResponse.self
+        )
+
+        let result = try await Amplify.API.query(request: request)
+        switch result {
+        case .success(let payload):
+            let records = payload.overtimePostingsByOrg?.items ?? []
+            return records.compactMap(Self.makeRotationPostingDTO)
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    static func createRotationOvertimePosting(
+        createdBy: String,
+        input: NewRotationOvertimePostingInput
+    ) async throws -> RotationOvertimePostingDTO {
+        let snapshotJSON = try encodeJSONPayload(input.policySnapshot)
+        var payload: [String: Any] = [
+            "orgId": input.orgId,
+            "title": input.title,
+            "scenario": input.scenario.rawValue,
+            "startsAt": encode(date: input.startsAt),
+            "endsAt": encode(date: input.endsAt),
+            "slots": input.slots,
+            "policySnapshot": snapshotJSON,
+            "state": OvertimePostingStateKind.open.rawValue,
+            "createdBy": createdBy,
+            "needsEscalation": input.needsEscalation,
+            "selectionPolicy": input.selectionPolicy.rawValue
+        ]
+        if let location = input.location, !location.isEmpty {
+            payload["location"] = location
+        }
+
+        let request = GraphQLRequest<CreateOvertimePostingV2Response>(
+            document: Self.createOvertimePostingV2Document,
+            variables: ["input": payload],
+            responseType: CreateOvertimePostingV2Response.self
+        )
+
+        let result = try await Amplify.API.mutate(request: request)
+        switch result {
+        case .success(let payload):
+            return try makeRotationPostingDTO(from: payload.createOvertimePosting)
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    static func updateOvertimePostingState(
+        postingId: String,
+        newState: OvertimePostingStateKind
+    ) async throws -> RotationOvertimePostingDTO {
+        let request = GraphQLRequest<UpdateOvertimePostingV2Response>(
+            document: Self.updateOvertimePostingV2Document,
+            variables: ["input": ["id": postingId, "state": newState.rawValue]],
+            responseType: UpdateOvertimePostingV2Response.self
+        )
+
+        let result = try await Amplify.API.mutate(request: request)
+        switch result {
+        case .success(let payload):
+            guard let record = payload.updateOvertimePosting else {
+                throw ShiftlinkAPIError.malformedResponse
+            }
+            return try makeRotationPostingDTO(from: record)
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    static func updateRotationOvertimePosting(
+        postingId: String,
+        input: NewRotationOvertimePostingInput
+    ) async throws -> RotationOvertimePostingDTO {
+        let snapshotJSON = try encodeJSONPayload(input.policySnapshot)
+        var payload: [String: Any] = [
+            "id": postingId,
+            "title": input.title,
+            "scenario": input.scenario.rawValue,
+            "startsAt": encode(date: input.startsAt),
+            "endsAt": encode(date: input.endsAt),
+            "slots": input.slots,
+            "policySnapshot": snapshotJSON,
+            "needsEscalation": input.needsEscalation,
+            "selectionPolicy": input.selectionPolicy.rawValue
+        ]
+        if let location = input.location, !location.isEmpty {
+            payload["location"] = location
+        } else {
+            payload["location"] = nil
+        }
+
+        let request = GraphQLRequest<UpdateOvertimePostingV2Response>(
+            document: Self.updateOvertimePostingV2Document,
+            variables: ["input": payload],
+            responseType: UpdateOvertimePostingV2Response.self
+        )
+
+        let result = try await Amplify.API.mutate(request: request)
+        switch result {
+        case .success(let payload):
+            guard let record = payload.updateOvertimePosting else {
+                throw ShiftlinkAPIError.malformedResponse
+            }
+            return try makeRotationPostingDTO(from: record)
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    static func deleteRotationOvertimePosting(postingId: String) async throws {
+        let request = GraphQLRequest<DeleteOvertimePostingResponse>(
+            document: Self.deleteOvertimePostingDocument,
+            variables: ["input": ["id": postingId]],
+            responseType: DeleteOvertimePostingResponse.self
+        )
+
+        let result = try await Amplify.API.mutate(request: request)
+        switch result {
+        case .success:
+            return
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    static func updatePostingEscalationStatus(postingId: String, needsEscalation: Bool) async throws -> RotationOvertimePostingDTO {
+        let request = GraphQLRequest<UpdateOvertimePostingV2Response>(
+            document: Self.updateOvertimePostingV2Document,
+            variables: ["input": ["id": postingId, "needsEscalation": needsEscalation]],
+            responseType: UpdateOvertimePostingV2Response.self
+        )
+
+        let result = try await Amplify.API.mutate(request: request)
+        switch result {
+        case .success(let payload):
+            guard let record = payload.updateOvertimePosting else {
+                throw ShiftlinkAPIError.malformedResponse
+            }
+            return try makeRotationPostingDTO(from: record)
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    static func createOvertimeInvites(postingId: String, plan: [RotationInviteStep]) async throws -> [OvertimeInviteDTO] {
+        guard !plan.isEmpty else { return [] }
+        var created: [OvertimeInviteDTO] = []
+        for step in plan.sorted(by: { $0.sequence < $1.sequence }) {
+            let payload: [String: Any] = [
+                "postingId": postingId,
+                "officerId": step.officerId,
+                "bucket": step.bucket.rawValue,
+                "sequence": step.sequence,
+                "reason": step.reason.rawValue,
+                "status": OvertimeInviteStatusKind.pending.rawValue
+            ]
+
+            let request = GraphQLRequest<CreateOvertimeInviteResponse>(
+                document: Self.createOvertimeInviteDocument,
+                variables: ["input": payload],
+                responseType: CreateOvertimeInviteResponse.self
+            )
+
+            let result = try await Amplify.API.mutate(request: request)
+            switch result {
+            case .success(let payload):
+                guard let dto = makeOvertimeInviteDTO(payload.createOvertimeInvite) else {
+                    throw ShiftlinkAPIError.malformedResponse
+                }
+                created.append(dto)
+            case .failure(let error):
+                throw error
+            }
+        }
+        return created
+    }
+
+    static func listOvertimeInvites(postingId: String) async throws -> [OvertimeInviteDTO] {
+        let request = GraphQLRequest<ListOvertimeInvitesResponse>(
+            document: Self.invitesByPostingDocument,
+            variables: [
+                "postingId": postingId,
+                "sortDirection": "ASC",
+                "limit": 500
+            ],
+            responseType: ListOvertimeInvitesResponse.self
+        )
+
+        let result = try await Amplify.API.query(request: request)
+        switch result {
+        case .success(let payload):
+            let items = payload.invitesByPosting?.items ?? []
+            return items.compactMap(Self.makeOvertimeInviteDTO)
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    static func deleteOvertimeInvites(ids: [String]) async throws {
+        guard !ids.isEmpty else { return }
+        for id in ids {
+            let request = GraphQLRequest<DeleteOvertimeInviteResponse>(
+                document: Self.deleteOvertimeInviteDocument,
+                variables: ["input": ["id": id]],
+                responseType: DeleteOvertimeInviteResponse.self
+            )
+            let result = try await Amplify.API.mutate(request: request)
+            if case .failure(let error) = result {
+                throw error
+            }
+        }
+    }
+
+    static func createForceAssignmentInvite(
+        postingId: String,
+        officerId: String,
+        bucket: OvertimeRankBucket,
+        sequence: Int
+    ) async throws -> OvertimeInviteDTO {
+        var payload: [String: Any] = [
+            "postingId": postingId,
+            "officerId": officerId,
+            "bucket": bucket.rawValue,
+            "sequence": sequence,
+            "reason": RotationInviteStep.Reason.forcedAssignment.rawValue,
+            "status": OvertimeInviteStatusKind.ordered.rawValue
+        ]
+        payload["scheduledAt"] = encode(date: Date())
+
+        let request = GraphQLRequest<CreateOvertimeInviteResponse>(
+            document: Self.createOvertimeInviteDocument,
+            variables: ["input": payload],
+            responseType: CreateOvertimeInviteResponse.self
+        )
+
+        let result = try await Amplify.API.mutate(request: request)
+        switch result {
+        case .success(let response):
+            guard let dto = makeOvertimeInviteDTO(response.createOvertimeInvite) else {
+                throw ShiftlinkAPIError.malformedResponse
+            }
+            return dto
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    static func scheduleRotationInvites(
+        posting: RotationOvertimePostingDTO,
+        plan: [RotationInviteStep],
+        invites: [OvertimeInviteDTO]
+    ) async throws -> [OvertimeInviteDTO] {
+        guard !plan.isEmpty else { return [] }
+        let baseDate = posting.createdAt ?? posting.startsAt
+        let invitesBySequence = Dictionary(uniqueKeysWithValues: invites.map { ($0.sequence, $0) })
+        var scheduledInvites: [OvertimeInviteDTO] = []
+
+        for step in plan {
+            guard let invite = invitesBySequence[step.sequence] else { continue }
+            let scheduledAt = baseDate.addingTimeInterval(Double(step.delayMinutes) * 60)
+            let updatedInvite = try await updateOvertimeInviteSchedule(
+                inviteId: invite.id,
+                scheduledAt: scheduledAt,
+                status: nil
+            )
+            scheduledInvites.append(updatedInvite)
+        }
+
+        return scheduledInvites
+    }
+
+    static func updateOvertimeInviteStatus(
+        inviteId: String,
+        status: OvertimeInviteStatusKind,
+        respondedAt: Date? = nil
+    ) async throws -> OvertimeInviteDTO {
+        var payload: [String: Any] = [
+            "id": inviteId,
+            "status": status.rawValue
+        ]
+        if let respondedAt {
+            payload["respondedAt"] = encode(date: respondedAt)
+        }
+
+        let request = GraphQLRequest<UpdateOvertimeInviteResponse>(
+            document: Self.updateOvertimeInviteDocument,
+            variables: ["input": payload],
+            responseType: UpdateOvertimeInviteResponse.self
+        )
+
+        let result = try await Amplify.API.mutate(request: request)
+        switch result {
+        case .success(let payload):
+            guard let record = payload.updateOvertimeInvite else {
+                throw ShiftlinkAPIError.malformedResponse
+            }
+            guard let dto = makeOvertimeInviteDTO(record) else {
+                throw ShiftlinkAPIError.malformedResponse
+            }
+            return dto
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    private static func updateOvertimeInviteSchedule(
+        inviteId: String,
+        scheduledAt: Date,
+        status: OvertimeInviteStatusKind?
+    ) async throws -> OvertimeInviteDTO {
+        var payload: [String: Any] = [
+            "id": inviteId,
+            "scheduledAt": encode(date: scheduledAt)
+        ]
+        if let status {
+            payload["status"] = status.rawValue
+        }
+        let request = GraphQLRequest<UpdateOvertimeInviteResponse>(
+            document: Self.updateOvertimeInviteDocument,
+            variables: ["input": payload],
+            responseType: UpdateOvertimeInviteResponse.self
+        )
+
+        let result = try await Amplify.API.mutate(request: request)
+        switch result {
+        case .success(let payload):
+            guard let record = payload.updateOvertimeInvite else {
+                throw ShiftlinkAPIError.malformedResponse
+            }
+            guard let dto = makeOvertimeInviteDTO(record) else {
+                throw ShiftlinkAPIError.malformedResponse
+            }
+            return dto
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    static func logOvertimeAuditEvent(
+        postingId: String,
+        type: String,
+        details: [String: Any]? = nil,
+        createdBy: String?
+    ) async throws -> OvertimeAuditEventDTO {
+        var payload: [String: Any] = [
+            "postingId": postingId,
+            "type": type
+        ]
+        if let createdBy, !createdBy.isEmpty {
+            payload["createdBy"] = createdBy
+        }
+        if let details, !details.isEmpty {
+            payload["details"] = try encodeJSONDictionary(details)
+        }
+
+        let request = GraphQLRequest<CreateOvertimeAuditEventResponse>(
+            document: Self.createOvertimeAuditEventDocument,
+            variables: ["input": payload],
+            responseType: CreateOvertimeAuditEventResponse.self
+        )
+
+        let result = try await Amplify.API.mutate(request: request)
+        switch result {
+        case .success(let payload):
+            guard let dto = makeOvertimeAuditDTO(payload.createOvertimeAuditEvent) else {
+                throw ShiftlinkAPIError.malformedResponse
+            }
+            return dto
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    static func listOvertimeAuditEvents(postingId: String) async throws -> [OvertimeAuditEventDTO] {
+        let request = GraphQLRequest<ListOvertimeAuditsResponse>(
+            document: Self.auditsByPostingDocument,
+            variables: [
+                "postingId": postingId,
+                "sortDirection": "ASC",
+                "limit": 200
+            ],
+            responseType: ListOvertimeAuditsResponse.self
+        )
+
+        let result = try await Amplify.API.query(request: request)
+        switch result {
+        case .success(let payload):
+            let items = payload.auditsByPosting?.items ?? []
+            return items.compactMap(Self.makeOvertimeAuditDTO)
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    @discardableResult
+    static func notifyOvertimeEvent(request: NotificationDispatchRequest) async -> Bool {
+        let extra = request.postingId.map { ["postingId": $0] } ?? [:]
+        return await dispatchNotification(
+            document: Self.notifyOvertimeEventDocument,
+            responseType: NotifyOvertimeEventResponse.self,
+            keyPath: \.notifyOvertimeEvent,
+            request: request,
+            additionalFields: extra
+        )
+    }
+
+    @discardableResult
+    static func sendNotification(request: NotificationDispatchRequest) async -> Bool {
+        return await dispatchNotification(
+            document: Self.sendNotificationDocument,
+            responseType: SendNotificationResponse.self,
+            keyPath: \.sendNotification,
+            request: request
+        )
+    }
+
+    private static func dispatchNotification<Response: Decodable>(
+        document: String,
+        responseType: Response.Type,
+        keyPath: KeyPath<Response, NotificationSendResultRecord?>,
+        request: NotificationDispatchRequest,
+        additionalFields: [String: Any] = [:]
+    ) async -> Bool {
+        var input: [String: Any] = [
+            "orgId": request.orgId,
+            "recipients": request.recipients,
+            "title": request.title,
+            "body": request.body,
+            "category": request.category
+        ]
+
+        if let metadata = request.metadata, !metadata.isEmpty {
+            do {
+                input["metadata"] = try encodeJSONDictionary(metadata)
+            } catch {
+                print("[DutyWire] Failed to encode notification metadata: \(error)")
+            }
+        }
+
+        for (key, value) in additionalFields {
+            input[key] = value
+        }
+
+        let gqlRequest = GraphQLRequest<Response>(
+            document: document,
+            variables: ["input": input],
+            responseType: responseType
+        )
+
+        do {
+            let result = try await Amplify.API.mutate(request: gqlRequest)
+            switch result {
+            case .success(let payload):
+                guard let summary = payload[keyPath: keyPath] else {
+                    return false
+                }
+                return summary.success ?? false
+            case .failure(let error):
+                print("[DutyWire] Notification dispatch failed: \(error)")
+                return false
+            }
+        } catch {
+            print("[DutyWire] Notification dispatch error: \(error)")
+            return false
+        }
+    }
+
     // MARK: Vehicles
 
     static func listVehicles(orgId: String) async throws -> [VehicleDTO] {
@@ -547,6 +1356,86 @@ struct ShiftlinkAPI {
         case .failure(let error):
             throw error
         }
+    }
+
+    // MARK: Notification Preferences
+
+    static func fetchNotificationPreferences(userId: String) async throws -> NotificationPreferenceDTO? {
+        let request = GraphQLRequest<NotificationPreferencesByUserResponse>(
+            document: notificationPreferencesByUserDocument,
+            variables: ["userId": userId, "limit": 1],
+            responseType: NotificationPreferencesByUserResponse.self
+        )
+
+        let result = try await Amplify.API.query(request: request)
+        switch result {
+        case .success(let payload):
+            let record = payload.notificationPreferencesByUser?.items.compactMap { $0 }.first
+            return record.map(makeNotificationPreferenceDTO)
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    static func upsertNotificationPreferences(_ prefs: NotificationPreferenceDTO) async throws -> NotificationPreferenceDTO {
+        if prefs.id == nil {
+            return try await createNotificationPreference(prefs)
+        } else {
+            return try await updateNotificationPreference(prefs)
+        }
+    }
+
+    private static func createNotificationPreference(_ prefs: NotificationPreferenceDTO) async throws -> NotificationPreferenceDTO {
+        let request = GraphQLRequest<CreateNotificationPreferenceResponse>(
+            document: createNotificationPreferenceDocument,
+            variables: ["input": prefs.createInput()],
+            responseType: CreateNotificationPreferenceResponse.self
+        )
+
+        let result = try await Amplify.API.mutate(request: request)
+        switch result {
+        case .success(let payload):
+            if let record = payload.createNotificationPreference {
+                return makeNotificationPreferenceDTO(from: record)
+            }
+            throw ShiftlinkAPIError.malformedResponse
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    private static func updateNotificationPreference(_ prefs: NotificationPreferenceDTO) async throws -> NotificationPreferenceDTO {
+        let request = GraphQLRequest<UpdateNotificationPreferenceResponse>(
+            document: updateNotificationPreferenceDocument,
+            variables: ["input": try prefs.updateInput()],
+            responseType: UpdateNotificationPreferenceResponse.self
+        )
+
+        let result = try await Amplify.API.mutate(request: request)
+        switch result {
+        case .success(let payload):
+            if let record = payload.updateNotificationPreference {
+                return makeNotificationPreferenceDTO(from: record)
+            }
+            throw ShiftlinkAPIError.malformedResponse
+        case .failure(let error):
+            throw error
+        }
+    }
+
+    private static func makeNotificationPreferenceDTO(from record: NotificationPreferenceRecord) -> NotificationPreferenceDTO {
+        NotificationPreferenceDTO(
+            id: record.id,
+            userId: record.userId,
+            generalBulletin: record.generalBulletin,
+            taskAlert: record.taskAlert,
+            overtime: record.overtime,
+            squadMessages: record.squadMessages,
+            other: record.other,
+            contactPhone: record.contactPhone,
+            contactEmail: record.contactEmail,
+            backupEmail: record.backupEmail
+        )
     }
 
 }
@@ -644,6 +1533,10 @@ private struct UpdateCalendarEventResponse: Decodable {
     let updateCalendarEvent: CalendarEventRecord
 }
 
+private struct DeleteCalendarEventResponse: Decodable {
+    let deleteCalendarEvent: CalendarEventRecord?
+}
+
 private struct ListVehiclesResponse: Decodable {
     struct ItemsContainer: Decodable {
         struct Item: Decodable {
@@ -662,6 +1555,143 @@ private struct ListVehiclesResponse: Decodable {
 
 private struct SendAlertResponse: Decodable {
     let sendDepartmentAlert: MutationResponsePayload
+}
+
+private struct NotificationPreferenceConnection: Decodable {
+    let items: [NotificationPreferenceRecord?]
+}
+
+private struct NotificationPreferencesByUserResponse: Decodable {
+    let notificationPreferencesByUser: NotificationPreferenceConnection?
+}
+
+private struct CreateNotificationPreferenceResponse: Decodable {
+    let createNotificationPreference: NotificationPreferenceRecord?
+}
+
+private struct UpdateNotificationPreferenceResponse: Decodable {
+    let updateNotificationPreference: NotificationPreferenceRecord?
+}
+
+private struct NotificationPreferenceRecord: Decodable {
+    let id: String
+    let userId: String
+    let generalBulletin: Bool
+    let taskAlert: Bool
+    let overtime: Bool
+    let squadMessages: Bool
+    let other: Bool
+    let contactPhone: String?
+    let contactEmail: String?
+    let backupEmail: String?
+}
+
+private struct OvertimePostingsByOrgResponse: Decodable {
+    struct ItemsContainer: Decodable {
+        let items: [OvertimePostingRecord]
+        let nextToken: String?
+    }
+    let overtimePostingsByOrg: ItemsContainer?
+}
+
+private struct CreateOvertimePostingV2Response: Decodable {
+    let createOvertimePosting: OvertimePostingRecord
+}
+
+private struct UpdateOvertimePostingV2Response: Decodable {
+    let updateOvertimePosting: OvertimePostingRecord?
+}
+
+private struct DeleteOvertimePostingResponse: Decodable {
+    let deleteOvertimePosting: OvertimePostingRecord?
+}
+
+private struct OvertimePostingRecord: Decodable {
+    let id: String
+    let orgId: String
+    let title: String
+    let location: String?
+    let scenario: String
+    let startsAt: String
+    let endsAt: String
+    let slots: Int
+    let policySnapshot: String
+    let state: String
+    let createdBy: String
+    let createdAt: String?
+    let updatedAt: String?
+    let needsEscalation: Bool?
+    let selectionPolicy: String?
+}
+
+private struct ListOvertimeInvitesResponse: Decodable {
+    struct ItemsContainer: Decodable {
+        let items: [OvertimeInviteRecord]
+        let nextToken: String?
+    }
+    let invitesByPosting: ItemsContainer?
+}
+
+private struct CreateOvertimeInviteResponse: Decodable {
+    let createOvertimeInvite: OvertimeInviteRecord
+}
+
+private struct UpdateOvertimeInviteResponse: Decodable {
+    let updateOvertimeInvite: OvertimeInviteRecord?
+}
+
+private struct DeleteOvertimeInviteResponse: Decodable {
+    let deleteOvertimeInvite: OvertimeInviteRecord?
+}
+
+private struct OvertimeInviteRecord: Decodable {
+    let id: String
+    let postingId: String
+    let officerId: String
+    let bucket: String
+    let sequence: Int
+    let reason: String
+    let status: String
+    let scheduledAt: String?
+    let respondedAt: String?
+    let createdAt: String?
+    let updatedAt: String?
+}
+
+private struct ListOvertimeAuditsResponse: Decodable {
+    struct ItemsContainer: Decodable {
+        let items: [OvertimeAuditEventRecord]
+        let nextToken: String?
+    }
+    let auditsByPosting: ItemsContainer?
+}
+
+private struct CreateOvertimeAuditEventResponse: Decodable {
+    let createOvertimeAuditEvent: OvertimeAuditEventRecord
+}
+
+private struct OvertimeAuditEventRecord: Decodable {
+    let id: String
+    let postingId: String
+    let type: String
+    let details: String?
+    let createdBy: String?
+    let createdAt: String?
+}
+
+private struct NotifyOvertimeEventResponse: Decodable {
+    let notifyOvertimeEvent: NotificationSendResultRecord?
+}
+
+private struct SendNotificationResponse: Decodable {
+    let sendNotification: NotificationSendResultRecord?
+}
+
+private struct NotificationSendResultRecord: Decodable {
+    let success: Bool?
+    let delivered: Int?
+    let recipientCount: Int?
+    let message: String?
 }
 
 // MARK: - GraphQL Documents
@@ -796,6 +1826,14 @@ private extension ShiftlinkAPI {
     }
     """
 
+    static let deleteCalendarEventDocument = """
+    mutation DeleteCalendarEvent($input: DeleteCalendarEventInput!, $condition: ModelCalendarEventConditionInput) {
+      deleteCalendarEvent(input: $input, condition: $condition) {
+        id
+      }
+    }
+    """
+
     static let listVehiclesDocument = """
     query ListVehicles($filter: ModelVehicleFilterInput) {
       listVehicles(filter: $filter) {
@@ -812,12 +1850,280 @@ private extension ShiftlinkAPI {
     }
     """
 
+    static let overtimePostingsByOrgDocument = """
+    query OvertimePostingsByOrg($orgId: String!, $sortDirection: ModelSortDirection, $filter: ModelOvertimePostingFilterInput, $limit: Int, $nextToken: String) {
+      overtimePostingsByOrg(orgId: $orgId, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+        items {
+          id
+          orgId
+          title
+          location
+          scenario
+          startsAt
+          endsAt
+          slots
+          policySnapshot
+          state
+          createdBy
+          selectionPolicy
+          needsEscalation
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+    """
+
+    static let createOvertimePostingV2Document = """
+    mutation CreateOvertimePosting($input: CreateOvertimePostingInput!) {
+      createOvertimePosting(input: $input) {
+        id
+        orgId
+        title
+        location
+        scenario
+        startsAt
+        endsAt
+        slots
+        policySnapshot
+        state
+        createdBy
+        selectionPolicy
+        needsEscalation
+        createdAt
+        updatedAt
+      }
+    }
+    """
+
+    static let updateOvertimePostingV2Document = """
+    mutation UpdateOvertimePosting($input: UpdateOvertimePostingInput!) {
+      updateOvertimePosting(input: $input) {
+        id
+        orgId
+        title
+        location
+        scenario
+        startsAt
+        endsAt
+        slots
+        policySnapshot
+        state
+        createdBy
+        selectionPolicy
+        needsEscalation
+        createdAt
+        updatedAt
+      }
+    }
+    """
+
+    static let deleteOvertimePostingDocument = """
+    mutation DeleteOvertimePosting($input: DeleteOvertimePostingInput!) {
+      deleteOvertimePosting(input: $input) {
+        id
+        orgId
+        title
+        location
+        scenario
+        startsAt
+        endsAt
+        slots
+        policySnapshot
+        state
+        createdBy
+        createdAt
+        updatedAt
+      }
+    }
+    """
+
+    static let createOvertimeInviteDocument = """
+    mutation CreateOvertimeInvite($input: CreateOvertimeInviteInput!) {
+      createOvertimeInvite(input: $input) {
+        id
+        postingId
+        officerId
+        bucket
+        sequence
+        reason
+        status
+        scheduledAt
+        respondedAt
+        createdAt
+        updatedAt
+      }
+    }
+    """
+
+    static let updateOvertimeInviteDocument = """
+    mutation UpdateOvertimeInvite($input: UpdateOvertimeInviteInput!) {
+      updateOvertimeInvite(input: $input) {
+        id
+        postingId
+        officerId
+        bucket
+        sequence
+        reason
+        status
+        scheduledAt
+        respondedAt
+        createdAt
+        updatedAt
+      }
+    }
+    """
+
+    static let deleteOvertimeInviteDocument = """
+    mutation DeleteOvertimeInvite($input: DeleteOvertimeInviteInput!) {
+      deleteOvertimeInvite(input: $input) {
+        id
+        postingId
+        officerId
+        bucket
+        sequence
+        reason
+        status
+        scheduledAt
+        respondedAt
+        createdAt
+        updatedAt
+      }
+    }
+    """
+
+    static let invitesByPostingDocument = """
+    query InvitesByPosting($postingId: ID!, $sortDirection: ModelSortDirection, $limit: Int, $nextToken: String) {
+      invitesByPosting(postingId: $postingId, sortDirection: $sortDirection, limit: $limit, nextToken: $nextToken) {
+        items {
+          id
+          postingId
+          officerId
+          bucket
+          sequence
+          reason
+          status
+          scheduledAt
+          respondedAt
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+    """
+
+    static let createOvertimeAuditEventDocument = """
+    mutation CreateOvertimeAuditEvent($input: CreateOvertimeAuditEventInput!) {
+      createOvertimeAuditEvent(input: $input) {
+        id
+        postingId
+        type
+        details
+        createdBy
+        createdAt
+      }
+    }
+    """
+
+    static let notifyOvertimeEventDocument = """
+    mutation NotifyOvertimeEvent($input: OvertimeNotificationInput!) {
+      notifyOvertimeEvent(input: $input) {
+        success
+        delivered
+        recipientCount
+        message
+      }
+    }
+    """
+
+    static let sendNotificationDocument = """
+    mutation SendNotification($input: OvertimeNotificationInput!) {
+      sendNotification(input: $input) {
+        success
+        delivered
+        recipientCount
+        message
+      }
+    }
+    """
+
+    static let auditsByPostingDocument = """
+    query AuditsByPosting($postingId: ID!, $sortDirection: ModelSortDirection, $limit: Int, $nextToken: String) {
+      auditsByPosting(postingId: $postingId, sortDirection: $sortDirection, limit: $limit, nextToken: $nextToken) {
+        items {
+          id
+          postingId
+          type
+          details
+          createdBy
+          createdAt
+        }
+        nextToken
+      }
+    }
+    """
+
     /// Update the mutation name or shape to match your deployed resolver.
     static let sendDepartmentAlertDocument = """
     mutation SendDepartmentAlert($input: DepartmentAlertInput!) {
       sendDepartmentAlert(input: $input) {
         success
         message
+      }
+    }
+    """
+
+    static let notificationPreferencesByUserDocument = """
+    query NotificationPreferencesByUser($userId: String!, $limit: Int) {
+      notificationPreferencesByUser(userId: $userId, limit: $limit) {
+        items {
+          id
+          userId
+          generalBulletin
+          taskAlert
+          overtime
+          squadMessages
+          other
+          contactPhone
+          contactEmail
+          backupEmail
+        }
+      }
+    }
+    """
+
+    static let createNotificationPreferenceDocument = """
+    mutation CreateNotificationPreference($input: CreateNotificationPreferenceInput!) {
+      createNotificationPreference(input: $input) {
+        id
+        userId
+        generalBulletin
+        taskAlert
+        overtime
+        squadMessages
+        other
+        contactPhone
+        contactEmail
+        backupEmail
+      }
+    }
+    """
+
+    static let updateNotificationPreferenceDocument = """
+    mutation UpdateNotificationPreference($input: UpdateNotificationPreferenceInput!) {
+      updateNotificationPreference(input: $input) {
+        id
+        userId
+        generalBulletin
+        taskAlert
+        overtime
+        squadMessages
+        other
+        contactPhone
+        contactEmail
+        backupEmail
       }
     }
     """
@@ -906,6 +2212,107 @@ private extension ShiftlinkAPI {
         )
     }
 
+    static func makeCalendarEventDTO(_ record: CalendarEventRecord) -> CalendarEventDTO? {
+        guard
+            let starts = parse(dateString: record.startsAt),
+            let ends = parse(dateString: record.endsAt)
+        else { return nil }
+
+        return CalendarEventDTO(
+            id: record.id,
+            ownerId: record.ownerId,
+            orgId: record.orgId,
+            title: record.title,
+            category: record.category,
+            colorHex: record.color,
+            notes: record.notes,
+            startsAt: starts,
+            endsAt: ends
+        )
+    }
+
+    static func makeRotationPostingDTO(from record: OvertimePostingRecord) throws -> RotationOvertimePostingDTO {
+        guard
+            let starts = parse(dateString: record.startsAt),
+            let ends = parse(dateString: record.endsAt)
+        else {
+            throw ShiftlinkAPIError.malformedResponse
+        }
+
+        guard
+            let scenario = OvertimeScenarioKind(rawValue: record.scenario),
+            let state = OvertimePostingStateKind(rawValue: record.state)
+        else {
+            throw ShiftlinkAPIError.malformedResponse
+        }
+
+        guard let snapshot = decodePolicySnapshot(from: record.policySnapshot) else {
+            throw ShiftlinkAPIError.malformedResponse
+        }
+
+        let selectionPolicy = OvertimeSelectionPolicyKind(rawValue: record.selectionPolicy ?? "ROTATION") ?? .rotation
+
+        return RotationOvertimePostingDTO(
+            id: record.id,
+            orgId: record.orgId,
+            title: record.title,
+            location: record.location,
+            scenario: scenario,
+            startsAt: starts,
+            endsAt: ends,
+            slots: record.slots,
+            state: state,
+            createdBy: record.createdBy,
+            createdAt: record.createdAt.flatMap(parse(dateString:)),
+            updatedAt: record.updatedAt.flatMap(parse(dateString:)),
+            policySnapshot: snapshot,
+            needsEscalation: record.needsEscalation ?? false,
+            selectionPolicy: selectionPolicy
+        )
+    }
+
+    static func makeRotationPostingDTO(_ record: OvertimePostingRecord) -> RotationOvertimePostingDTO? {
+        return try? makeRotationPostingDTO(from: record)
+    }
+
+    static func makeOvertimeInviteDTO(_ record: OvertimeInviteRecord) -> OvertimeInviteDTO? {
+        guard
+            let bucket = OvertimeRankBucket(rawValue: record.bucket.lowercased()),
+            let status = OvertimeInviteStatusKind(rawValue: record.status)
+        else {
+            return nil
+        }
+        let reason = RotationInviteStep.Reason(rawValue: record.reason) ?? .rotation
+        return OvertimeInviteDTO(
+            id: record.id,
+            postingId: record.postingId,
+            officerId: record.officerId,
+            bucket: bucket,
+            sequence: record.sequence,
+            reason: reason,
+            status: status,
+            scheduledAt: record.scheduledAt.flatMap(parse(dateString:)),
+            respondedAt: record.respondedAt.flatMap(parse(dateString:)),
+            createdAt: record.createdAt.flatMap(parse(dateString:)),
+            updatedAt: record.updatedAt.flatMap(parse(dateString:))
+        )
+    }
+
+    static func makeOvertimeAuditDTO(_ record: OvertimeAuditEventRecord) -> OvertimeAuditEventDTO? {
+        let details = record.details
+            .flatMap { $0.data(using: .utf8) }
+            .flatMap { try? JSONSerialization.jsonObject(with: $0) as? [String: Any] }
+
+        return OvertimeAuditEventDTO(
+            id: record.id,
+            postingId: record.postingId,
+            type: record.type,
+            details: details,
+            createdBy: record.createdBy,
+            createdAt: record.createdAt.flatMap(parse(dateString:))
+        )
+    }
+
     static func makeOfficerAssignmentDTO(_ record: OfficerAssignmentRecord) -> OfficerAssignmentDTO {
         let profile = decodeAssignmentProfile(from: record.notes)
             .withFallback(rank: record.detail, vehicle: record.location)
@@ -937,7 +2344,7 @@ static func decodeAssignmentProfile(from notes: String?) -> OfficerAssignmentPro
     if let decoded = try? JSONDecoder().decode(OfficerAssignmentProfile.self, from: data) {
         return decoded
     }
-    return OfficerAssignmentProfile(fullName: notes)
+    return OfficerAssignmentProfile(fullName: notes, rank: nil, vehicle: nil, specialAssignment: nil, departmentPhone: nil, departmentExtension: nil, departmentEmail: nil, squad: nil, mfaVerified: nil, userId: nil)
 }
 
     static func encode(jobDetails: OvertimeJobDetails) -> String? {
@@ -962,9 +2369,32 @@ static func decodeAssignmentProfile(from notes: String?) -> OfficerAssignmentPro
         )
     }
 
-    static func encode(date: Date) -> String {
-        isoFormatter.string(from: date)
+static func encode(date: Date) -> String {
+    isoFormatter.string(from: date)
+}
+
+static func encodeJSONPayload<T: Encodable>(_ value: T) throws -> String {
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = []
+    let data = try encoder.encode(value)
+    guard let string = String(data: data, encoding: .utf8) else {
+        throw ShiftlinkAPIError.malformedResponse
     }
+    return string
+}
+
+static func encodeJSONDictionary(_ dictionary: [String: Any]) throws -> String {
+    let data = try JSONSerialization.data(withJSONObject: dictionary, options: [])
+    guard let string = String(data: data, encoding: .utf8) else {
+        throw ShiftlinkAPIError.malformedResponse
+    }
+    return string
+}
+
+static func decodePolicySnapshot(from json: String) -> RotationPolicySnapshot? {
+    guard let data = json.data(using: .utf8) else { return nil }
+    return try? JSONDecoder().decode(RotationPolicySnapshot.self, from: data)
+}
 
 static let fallbackISOFormatter: ISO8601DateFormatter = {
     let formatter = ISO8601DateFormatter()
@@ -983,14 +2413,16 @@ private extension OfficerAssignmentProfile {
             departmentPhone: departmentPhone?.trimmedOrNil,
             departmentExtension: departmentExtension?.trimmedOrNil,
             departmentEmail: departmentEmail?.trimmedOrNil,
-            squad: squad?.trimmedOrNil
+            squad: squad?.trimmedOrNil,
+            mfaVerified: mfaVerified,
+            userId: userId?.trimmedOrNil
         )
     }
 
     var containsData: Bool {
-        return [fullName, rank, vehicle, specialAssignment, departmentPhone, departmentExtension, departmentEmail, squad]
-            .compactMap { $0 }
-            .contains(where: { !$0.isEmpty })
+        let strings = [fullName, rank, vehicle, specialAssignment, departmentPhone, departmentExtension, departmentEmail, squad, userId]
+            .compactMap { $0?.isEmpty == false ? $0 : nil }
+        return !strings.isEmpty || mfaVerified != nil
     }
 
     func withFallback(rank: String?, vehicle: String?) -> OfficerAssignmentProfile {

@@ -422,6 +422,126 @@ extension Dictionary {
 import AWSAppSync
 #endif
 
+public struct OvertimeNotificationInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(orgId: String, recipients: [String], title: String, body: String, category: NotificationCategory, postingId: GraphQLID? = nil, metadata: String? = nil) {
+    graphQLMap = ["orgId": orgId, "recipients": recipients, "title": title, "body": body, "category": category, "postingId": postingId, "metadata": metadata]
+  }
+
+  public var orgId: String {
+    get {
+      return graphQLMap["orgId"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "orgId")
+    }
+  }
+
+  public var recipients: [String] {
+    get {
+      return graphQLMap["recipients"] as! [String]
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "recipients")
+    }
+  }
+
+  public var title: String {
+    get {
+      return graphQLMap["title"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "title")
+    }
+  }
+
+  public var body: String {
+    get {
+      return graphQLMap["body"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "body")
+    }
+  }
+
+  public var category: NotificationCategory {
+    get {
+      return graphQLMap["category"] as! NotificationCategory
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "category")
+    }
+  }
+
+  public var postingId: GraphQLID? {
+    get {
+      return graphQLMap["postingId"] as! GraphQLID?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "postingId")
+    }
+  }
+
+  public var metadata: String? {
+    get {
+      return graphQLMap["metadata"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "metadata")
+    }
+  }
+}
+
+public enum NotificationCategory: RawRepresentable, Equatable, JSONDecodable, JSONEncodable {
+  public typealias RawValue = String
+  case overtimePosted
+  case overtimeEscalation
+  case overtimeForceAssign
+  case squadAlert
+  case taskAlert
+  case bulletin
+  /// Auto generated constant for unknown enum values
+  case unknown(RawValue)
+
+  public init?(rawValue: RawValue) {
+    switch rawValue {
+      case "OVERTIME_POSTED": self = .overtimePosted
+      case "OVERTIME_ESCALATION": self = .overtimeEscalation
+      case "OVERTIME_FORCE_ASSIGN": self = .overtimeForceAssign
+      case "SQUAD_ALERT": self = .squadAlert
+      case "TASK_ALERT": self = .taskAlert
+      case "BULLETIN": self = .bulletin
+      default: self = .unknown(rawValue)
+    }
+  }
+
+  public var rawValue: RawValue {
+    switch self {
+      case .overtimePosted: return "OVERTIME_POSTED"
+      case .overtimeEscalation: return "OVERTIME_ESCALATION"
+      case .overtimeForceAssign: return "OVERTIME_FORCE_ASSIGN"
+      case .squadAlert: return "SQUAD_ALERT"
+      case .taskAlert: return "TASK_ALERT"
+      case .bulletin: return "BULLETIN"
+      case .unknown(let value): return value
+    }
+  }
+
+  public static func == (lhs: NotificationCategory, rhs: NotificationCategory) -> Bool {
+    switch (lhs, rhs) {
+      case (.overtimePosted, .overtimePosted): return true
+      case (.overtimeEscalation, .overtimeEscalation): return true
+      case (.overtimeForceAssign, .overtimeForceAssign): return true
+      case (.squadAlert, .squadAlert): return true
+      case (.taskAlert, .taskAlert): return true
+      case (.bulletin, .bulletin): return true
+      case (.unknown(let lhsValue), .unknown(let rhsValue)): return lhsValue == rhsValue
+      default: return false
+    }
+  }
+}
+
 public struct CreateRosterEntryInput: GraphQLMapConvertible {
   public var graphQLMap: GraphQLMap
 
@@ -3400,6 +3520,1159 @@ public struct DeleteOvertimeAuditEventInput: GraphQLMapConvertible {
   }
 }
 
+public struct CreateNotificationEndpointInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: GraphQLID? = nil, orgId: String, userId: String, deviceToken: String, platform: NotificationPlatform, deviceName: String? = nil, enabled: Bool, platformEndpointArn: String? = nil, lastUsedAt: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+    graphQLMap = ["id": id, "orgId": orgId, "userId": userId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt]
+  }
+
+  public var id: GraphQLID? {
+    get {
+      return graphQLMap["id"] as! GraphQLID?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  public var orgId: String {
+    get {
+      return graphQLMap["orgId"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "orgId")
+    }
+  }
+
+  public var userId: String {
+    get {
+      return graphQLMap["userId"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "userId")
+    }
+  }
+
+  public var deviceToken: String {
+    get {
+      return graphQLMap["deviceToken"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "deviceToken")
+    }
+  }
+
+  public var platform: NotificationPlatform {
+    get {
+      return graphQLMap["platform"] as! NotificationPlatform
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "platform")
+    }
+  }
+
+  public var deviceName: String? {
+    get {
+      return graphQLMap["deviceName"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "deviceName")
+    }
+  }
+
+  public var enabled: Bool {
+    get {
+      return graphQLMap["enabled"] as! Bool
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "enabled")
+    }
+  }
+
+  public var platformEndpointArn: String? {
+    get {
+      return graphQLMap["platformEndpointArn"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "platformEndpointArn")
+    }
+  }
+
+  public var lastUsedAt: String? {
+    get {
+      return graphQLMap["lastUsedAt"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "lastUsedAt")
+    }
+  }
+
+  public var createdAt: String? {
+    get {
+      return graphQLMap["createdAt"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: String? {
+    get {
+      return graphQLMap["updatedAt"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+}
+
+public enum NotificationPlatform: RawRepresentable, Equatable, JSONDecodable, JSONEncodable {
+  public typealias RawValue = String
+  case ios
+  case android
+  /// Auto generated constant for unknown enum values
+  case unknown(RawValue)
+
+  public init?(rawValue: RawValue) {
+    switch rawValue {
+      case "IOS": self = .ios
+      case "ANDROID": self = .android
+      default: self = .unknown(rawValue)
+    }
+  }
+
+  public var rawValue: RawValue {
+    switch self {
+      case .ios: return "IOS"
+      case .android: return "ANDROID"
+      case .unknown(let value): return value
+    }
+  }
+
+  public static func == (lhs: NotificationPlatform, rhs: NotificationPlatform) -> Bool {
+    switch (lhs, rhs) {
+      case (.ios, .ios): return true
+      case (.android, .android): return true
+      case (.unknown(let lhsValue), .unknown(let rhsValue)): return lhsValue == rhsValue
+      default: return false
+    }
+  }
+}
+
+public struct ModelNotificationEndpointConditionInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(orgId: ModelStringInput? = nil, userId: ModelStringInput? = nil, deviceToken: ModelStringInput? = nil, platform: ModelNotificationPlatformInput? = nil, deviceName: ModelStringInput? = nil, enabled: ModelBooleanInput? = nil, platformEndpointArn: ModelStringInput? = nil, lastUsedAt: ModelStringInput? = nil, createdAt: ModelStringInput? = nil, updatedAt: ModelStringInput? = nil, and: [ModelNotificationEndpointConditionInput?]? = nil, or: [ModelNotificationEndpointConditionInput?]? = nil, not: ModelNotificationEndpointConditionInput? = nil) {
+    graphQLMap = ["orgId": orgId, "userId": userId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or, "not": not]
+  }
+
+  public var orgId: ModelStringInput? {
+    get {
+      return graphQLMap["orgId"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "orgId")
+    }
+  }
+
+  public var userId: ModelStringInput? {
+    get {
+      return graphQLMap["userId"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "userId")
+    }
+  }
+
+  public var deviceToken: ModelStringInput? {
+    get {
+      return graphQLMap["deviceToken"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "deviceToken")
+    }
+  }
+
+  public var platform: ModelNotificationPlatformInput? {
+    get {
+      return graphQLMap["platform"] as! ModelNotificationPlatformInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "platform")
+    }
+  }
+
+  public var deviceName: ModelStringInput? {
+    get {
+      return graphQLMap["deviceName"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "deviceName")
+    }
+  }
+
+  public var enabled: ModelBooleanInput? {
+    get {
+      return graphQLMap["enabled"] as! ModelBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "enabled")
+    }
+  }
+
+  public var platformEndpointArn: ModelStringInput? {
+    get {
+      return graphQLMap["platformEndpointArn"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "platformEndpointArn")
+    }
+  }
+
+  public var lastUsedAt: ModelStringInput? {
+    get {
+      return graphQLMap["lastUsedAt"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "lastUsedAt")
+    }
+  }
+
+  public var createdAt: ModelStringInput? {
+    get {
+      return graphQLMap["createdAt"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: ModelStringInput? {
+    get {
+      return graphQLMap["updatedAt"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+
+  public var and: [ModelNotificationEndpointConditionInput?]? {
+    get {
+      return graphQLMap["and"] as! [ModelNotificationEndpointConditionInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "and")
+    }
+  }
+
+  public var or: [ModelNotificationEndpointConditionInput?]? {
+    get {
+      return graphQLMap["or"] as! [ModelNotificationEndpointConditionInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "or")
+    }
+  }
+
+  public var not: ModelNotificationEndpointConditionInput? {
+    get {
+      return graphQLMap["not"] as! ModelNotificationEndpointConditionInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "not")
+    }
+  }
+}
+
+public struct ModelNotificationPlatformInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(eq: NotificationPlatform? = nil, ne: NotificationPlatform? = nil) {
+    graphQLMap = ["eq": eq, "ne": ne]
+  }
+
+  public var eq: NotificationPlatform? {
+    get {
+      return graphQLMap["eq"] as! NotificationPlatform?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "eq")
+    }
+  }
+
+  public var ne: NotificationPlatform? {
+    get {
+      return graphQLMap["ne"] as! NotificationPlatform?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "ne")
+    }
+  }
+}
+
+public struct UpdateNotificationEndpointInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: GraphQLID, orgId: String? = nil, userId: String? = nil, deviceToken: String? = nil, platform: NotificationPlatform? = nil, deviceName: String? = nil, enabled: Bool? = nil, platformEndpointArn: String? = nil, lastUsedAt: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+    graphQLMap = ["id": id, "orgId": orgId, "userId": userId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt]
+  }
+
+  public var id: GraphQLID {
+    get {
+      return graphQLMap["id"] as! GraphQLID
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  public var orgId: String? {
+    get {
+      return graphQLMap["orgId"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "orgId")
+    }
+  }
+
+  public var userId: String? {
+    get {
+      return graphQLMap["userId"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "userId")
+    }
+  }
+
+  public var deviceToken: String? {
+    get {
+      return graphQLMap["deviceToken"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "deviceToken")
+    }
+  }
+
+  public var platform: NotificationPlatform? {
+    get {
+      return graphQLMap["platform"] as! NotificationPlatform?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "platform")
+    }
+  }
+
+  public var deviceName: String? {
+    get {
+      return graphQLMap["deviceName"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "deviceName")
+    }
+  }
+
+  public var enabled: Bool? {
+    get {
+      return graphQLMap["enabled"] as! Bool?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "enabled")
+    }
+  }
+
+  public var platformEndpointArn: String? {
+    get {
+      return graphQLMap["platformEndpointArn"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "platformEndpointArn")
+    }
+  }
+
+  public var lastUsedAt: String? {
+    get {
+      return graphQLMap["lastUsedAt"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "lastUsedAt")
+    }
+  }
+
+  public var createdAt: String? {
+    get {
+      return graphQLMap["createdAt"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: String? {
+    get {
+      return graphQLMap["updatedAt"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+}
+
+public struct DeleteNotificationEndpointInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: GraphQLID) {
+    graphQLMap = ["id": id]
+  }
+
+  public var id: GraphQLID {
+    get {
+      return graphQLMap["id"] as! GraphQLID
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+}
+
+public struct CreateNotificationMessageInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: GraphQLID? = nil, orgId: String, title: String, body: String, category: NotificationCategory, recipients: [String], metadata: String? = nil, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
+    graphQLMap = ["id": id, "orgId": orgId, "title": title, "body": body, "category": category, "recipients": recipients, "metadata": metadata, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt]
+  }
+
+  public var id: GraphQLID? {
+    get {
+      return graphQLMap["id"] as! GraphQLID?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  public var orgId: String {
+    get {
+      return graphQLMap["orgId"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "orgId")
+    }
+  }
+
+  public var title: String {
+    get {
+      return graphQLMap["title"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "title")
+    }
+  }
+
+  public var body: String {
+    get {
+      return graphQLMap["body"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "body")
+    }
+  }
+
+  public var category: NotificationCategory {
+    get {
+      return graphQLMap["category"] as! NotificationCategory
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "category")
+    }
+  }
+
+  public var recipients: [String] {
+    get {
+      return graphQLMap["recipients"] as! [String]
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "recipients")
+    }
+  }
+
+  public var metadata: String? {
+    get {
+      return graphQLMap["metadata"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "metadata")
+    }
+  }
+
+  public var createdBy: String {
+    get {
+      return graphQLMap["createdBy"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdBy")
+    }
+  }
+
+  public var createdAt: String? {
+    get {
+      return graphQLMap["createdAt"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: String? {
+    get {
+      return graphQLMap["updatedAt"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+}
+
+public struct ModelNotificationMessageConditionInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(orgId: ModelStringInput? = nil, title: ModelStringInput? = nil, body: ModelStringInput? = nil, category: ModelNotificationCategoryInput? = nil, recipients: ModelStringInput? = nil, metadata: ModelStringInput? = nil, createdBy: ModelStringInput? = nil, createdAt: ModelStringInput? = nil, updatedAt: ModelStringInput? = nil, and: [ModelNotificationMessageConditionInput?]? = nil, or: [ModelNotificationMessageConditionInput?]? = nil, not: ModelNotificationMessageConditionInput? = nil) {
+    graphQLMap = ["orgId": orgId, "title": title, "body": body, "category": category, "recipients": recipients, "metadata": metadata, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or, "not": not]
+  }
+
+  public var orgId: ModelStringInput? {
+    get {
+      return graphQLMap["orgId"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "orgId")
+    }
+  }
+
+  public var title: ModelStringInput? {
+    get {
+      return graphQLMap["title"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "title")
+    }
+  }
+
+  public var body: ModelStringInput? {
+    get {
+      return graphQLMap["body"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "body")
+    }
+  }
+
+  public var category: ModelNotificationCategoryInput? {
+    get {
+      return graphQLMap["category"] as! ModelNotificationCategoryInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "category")
+    }
+  }
+
+  public var recipients: ModelStringInput? {
+    get {
+      return graphQLMap["recipients"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "recipients")
+    }
+  }
+
+  public var metadata: ModelStringInput? {
+    get {
+      return graphQLMap["metadata"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "metadata")
+    }
+  }
+
+  public var createdBy: ModelStringInput? {
+    get {
+      return graphQLMap["createdBy"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdBy")
+    }
+  }
+
+  public var createdAt: ModelStringInput? {
+    get {
+      return graphQLMap["createdAt"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: ModelStringInput? {
+    get {
+      return graphQLMap["updatedAt"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+
+  public var and: [ModelNotificationMessageConditionInput?]? {
+    get {
+      return graphQLMap["and"] as! [ModelNotificationMessageConditionInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "and")
+    }
+  }
+
+  public var or: [ModelNotificationMessageConditionInput?]? {
+    get {
+      return graphQLMap["or"] as! [ModelNotificationMessageConditionInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "or")
+    }
+  }
+
+  public var not: ModelNotificationMessageConditionInput? {
+    get {
+      return graphQLMap["not"] as! ModelNotificationMessageConditionInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "not")
+    }
+  }
+}
+
+public struct ModelNotificationCategoryInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(eq: NotificationCategory? = nil, ne: NotificationCategory? = nil) {
+    graphQLMap = ["eq": eq, "ne": ne]
+  }
+
+  public var eq: NotificationCategory? {
+    get {
+      return graphQLMap["eq"] as! NotificationCategory?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "eq")
+    }
+  }
+
+  public var ne: NotificationCategory? {
+    get {
+      return graphQLMap["ne"] as! NotificationCategory?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "ne")
+    }
+  }
+}
+
+public struct UpdateNotificationMessageInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: GraphQLID, orgId: String? = nil, title: String? = nil, body: String? = nil, category: NotificationCategory? = nil, recipients: [String]? = nil, metadata: String? = nil, createdBy: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+    graphQLMap = ["id": id, "orgId": orgId, "title": title, "body": body, "category": category, "recipients": recipients, "metadata": metadata, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt]
+  }
+
+  public var id: GraphQLID {
+    get {
+      return graphQLMap["id"] as! GraphQLID
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  public var orgId: String? {
+    get {
+      return graphQLMap["orgId"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "orgId")
+    }
+  }
+
+  public var title: String? {
+    get {
+      return graphQLMap["title"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "title")
+    }
+  }
+
+  public var body: String? {
+    get {
+      return graphQLMap["body"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "body")
+    }
+  }
+
+  public var category: NotificationCategory? {
+    get {
+      return graphQLMap["category"] as! NotificationCategory?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "category")
+    }
+  }
+
+  public var recipients: [String]? {
+    get {
+      return graphQLMap["recipients"] as! [String]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "recipients")
+    }
+  }
+
+  public var metadata: String? {
+    get {
+      return graphQLMap["metadata"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "metadata")
+    }
+  }
+
+  public var createdBy: String? {
+    get {
+      return graphQLMap["createdBy"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdBy")
+    }
+  }
+
+  public var createdAt: String? {
+    get {
+      return graphQLMap["createdAt"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: String? {
+    get {
+      return graphQLMap["updatedAt"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+}
+
+public struct DeleteNotificationMessageInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: GraphQLID) {
+    graphQLMap = ["id": id]
+  }
+
+  public var id: GraphQLID {
+    get {
+      return graphQLMap["id"] as! GraphQLID
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+}
+
+public struct CreateNotificationPreferenceInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: GraphQLID? = nil, userId: String, generalBulletin: Bool, taskAlert: Bool, overtime: Bool, squadMessages: Bool, other: Bool, contactPhone: String? = nil, contactEmail: String? = nil, backupEmail: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+    graphQLMap = ["id": id, "userId": userId, "generalBulletin": generalBulletin, "taskAlert": taskAlert, "overtime": overtime, "squadMessages": squadMessages, "other": other, "contactPhone": contactPhone, "contactEmail": contactEmail, "backupEmail": backupEmail, "createdAt": createdAt, "updatedAt": updatedAt]
+  }
+
+  public var id: GraphQLID? {
+    get {
+      return graphQLMap["id"] as! GraphQLID?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  public var userId: String {
+    get {
+      return graphQLMap["userId"] as! String
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "userId")
+    }
+  }
+
+  public var generalBulletin: Bool {
+    get {
+      return graphQLMap["generalBulletin"] as! Bool
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "generalBulletin")
+    }
+  }
+
+  public var taskAlert: Bool {
+    get {
+      return graphQLMap["taskAlert"] as! Bool
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "taskAlert")
+    }
+  }
+
+  public var overtime: Bool {
+    get {
+      return graphQLMap["overtime"] as! Bool
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "overtime")
+    }
+  }
+
+  public var squadMessages: Bool {
+    get {
+      return graphQLMap["squadMessages"] as! Bool
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "squadMessages")
+    }
+  }
+
+  public var other: Bool {
+    get {
+      return graphQLMap["other"] as! Bool
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "other")
+    }
+  }
+
+  public var contactPhone: String? {
+    get {
+      return graphQLMap["contactPhone"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "contactPhone")
+    }
+  }
+
+  public var contactEmail: String? {
+    get {
+      return graphQLMap["contactEmail"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "contactEmail")
+    }
+  }
+
+  public var backupEmail: String? {
+    get {
+      return graphQLMap["backupEmail"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "backupEmail")
+    }
+  }
+
+  public var createdAt: String? {
+    get {
+      return graphQLMap["createdAt"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: String? {
+    get {
+      return graphQLMap["updatedAt"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+}
+
+public struct ModelNotificationPreferenceConditionInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(userId: ModelStringInput? = nil, generalBulletin: ModelBooleanInput? = nil, taskAlert: ModelBooleanInput? = nil, overtime: ModelBooleanInput? = nil, squadMessages: ModelBooleanInput? = nil, other: ModelBooleanInput? = nil, contactPhone: ModelStringInput? = nil, contactEmail: ModelStringInput? = nil, backupEmail: ModelStringInput? = nil, createdAt: ModelStringInput? = nil, updatedAt: ModelStringInput? = nil, and: [ModelNotificationPreferenceConditionInput?]? = nil, or: [ModelNotificationPreferenceConditionInput?]? = nil, not: ModelNotificationPreferenceConditionInput? = nil) {
+    graphQLMap = ["userId": userId, "generalBulletin": generalBulletin, "taskAlert": taskAlert, "overtime": overtime, "squadMessages": squadMessages, "other": other, "contactPhone": contactPhone, "contactEmail": contactEmail, "backupEmail": backupEmail, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or, "not": not]
+  }
+
+  public var userId: ModelStringInput? {
+    get {
+      return graphQLMap["userId"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "userId")
+    }
+  }
+
+  public var generalBulletin: ModelBooleanInput? {
+    get {
+      return graphQLMap["generalBulletin"] as! ModelBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "generalBulletin")
+    }
+  }
+
+  public var taskAlert: ModelBooleanInput? {
+    get {
+      return graphQLMap["taskAlert"] as! ModelBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "taskAlert")
+    }
+  }
+
+  public var overtime: ModelBooleanInput? {
+    get {
+      return graphQLMap["overtime"] as! ModelBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "overtime")
+    }
+  }
+
+  public var squadMessages: ModelBooleanInput? {
+    get {
+      return graphQLMap["squadMessages"] as! ModelBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "squadMessages")
+    }
+  }
+
+  public var other: ModelBooleanInput? {
+    get {
+      return graphQLMap["other"] as! ModelBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "other")
+    }
+  }
+
+  public var contactPhone: ModelStringInput? {
+    get {
+      return graphQLMap["contactPhone"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "contactPhone")
+    }
+  }
+
+  public var contactEmail: ModelStringInput? {
+    get {
+      return graphQLMap["contactEmail"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "contactEmail")
+    }
+  }
+
+  public var backupEmail: ModelStringInput? {
+    get {
+      return graphQLMap["backupEmail"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "backupEmail")
+    }
+  }
+
+  public var createdAt: ModelStringInput? {
+    get {
+      return graphQLMap["createdAt"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: ModelStringInput? {
+    get {
+      return graphQLMap["updatedAt"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+
+  public var and: [ModelNotificationPreferenceConditionInput?]? {
+    get {
+      return graphQLMap["and"] as! [ModelNotificationPreferenceConditionInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "and")
+    }
+  }
+
+  public var or: [ModelNotificationPreferenceConditionInput?]? {
+    get {
+      return graphQLMap["or"] as! [ModelNotificationPreferenceConditionInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "or")
+    }
+  }
+
+  public var not: ModelNotificationPreferenceConditionInput? {
+    get {
+      return graphQLMap["not"] as! ModelNotificationPreferenceConditionInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "not")
+    }
+  }
+}
+
+public struct UpdateNotificationPreferenceInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: GraphQLID, userId: String? = nil, generalBulletin: Bool? = nil, taskAlert: Bool? = nil, overtime: Bool? = nil, squadMessages: Bool? = nil, other: Bool? = nil, contactPhone: String? = nil, contactEmail: String? = nil, backupEmail: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+    graphQLMap = ["id": id, "userId": userId, "generalBulletin": generalBulletin, "taskAlert": taskAlert, "overtime": overtime, "squadMessages": squadMessages, "other": other, "contactPhone": contactPhone, "contactEmail": contactEmail, "backupEmail": backupEmail, "createdAt": createdAt, "updatedAt": updatedAt]
+  }
+
+  public var id: GraphQLID {
+    get {
+      return graphQLMap["id"] as! GraphQLID
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  public var userId: String? {
+    get {
+      return graphQLMap["userId"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "userId")
+    }
+  }
+
+  public var generalBulletin: Bool? {
+    get {
+      return graphQLMap["generalBulletin"] as! Bool?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "generalBulletin")
+    }
+  }
+
+  public var taskAlert: Bool? {
+    get {
+      return graphQLMap["taskAlert"] as! Bool?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "taskAlert")
+    }
+  }
+
+  public var overtime: Bool? {
+    get {
+      return graphQLMap["overtime"] as! Bool?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "overtime")
+    }
+  }
+
+  public var squadMessages: Bool? {
+    get {
+      return graphQLMap["squadMessages"] as! Bool?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "squadMessages")
+    }
+  }
+
+  public var other: Bool? {
+    get {
+      return graphQLMap["other"] as! Bool?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "other")
+    }
+  }
+
+  public var contactPhone: String? {
+    get {
+      return graphQLMap["contactPhone"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "contactPhone")
+    }
+  }
+
+  public var contactEmail: String? {
+    get {
+      return graphQLMap["contactEmail"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "contactEmail")
+    }
+  }
+
+  public var backupEmail: String? {
+    get {
+      return graphQLMap["backupEmail"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "backupEmail")
+    }
+  }
+
+  public var createdAt: String? {
+    get {
+      return graphQLMap["createdAt"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: String? {
+    get {
+      return graphQLMap["updatedAt"] as! String?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+}
+
+public struct DeleteNotificationPreferenceInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: GraphQLID) {
+    graphQLMap = ["id": id]
+  }
+
+  public var id: GraphQLID {
+    get {
+      return graphQLMap["id"] as! GraphQLID
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+}
+
 public struct ModelRosterEntryFilterInput: GraphQLMapConvertible {
   public var graphQLMap: GraphQLMap
 
@@ -4425,6 +5698,408 @@ public struct ModelOvertimeAuditEventFilterInput: GraphQLMapConvertible {
   public var not: ModelOvertimeAuditEventFilterInput? {
     get {
       return graphQLMap["not"] as! ModelOvertimeAuditEventFilterInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "not")
+    }
+  }
+}
+
+public struct ModelNotificationEndpointFilterInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: ModelIDInput? = nil, orgId: ModelStringInput? = nil, userId: ModelStringInput? = nil, deviceToken: ModelStringInput? = nil, platform: ModelNotificationPlatformInput? = nil, deviceName: ModelStringInput? = nil, enabled: ModelBooleanInput? = nil, platformEndpointArn: ModelStringInput? = nil, lastUsedAt: ModelStringInput? = nil, createdAt: ModelStringInput? = nil, updatedAt: ModelStringInput? = nil, and: [ModelNotificationEndpointFilterInput?]? = nil, or: [ModelNotificationEndpointFilterInput?]? = nil, not: ModelNotificationEndpointFilterInput? = nil) {
+    graphQLMap = ["id": id, "orgId": orgId, "userId": userId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or, "not": not]
+  }
+
+  public var id: ModelIDInput? {
+    get {
+      return graphQLMap["id"] as! ModelIDInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  public var orgId: ModelStringInput? {
+    get {
+      return graphQLMap["orgId"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "orgId")
+    }
+  }
+
+  public var userId: ModelStringInput? {
+    get {
+      return graphQLMap["userId"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "userId")
+    }
+  }
+
+  public var deviceToken: ModelStringInput? {
+    get {
+      return graphQLMap["deviceToken"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "deviceToken")
+    }
+  }
+
+  public var platform: ModelNotificationPlatformInput? {
+    get {
+      return graphQLMap["platform"] as! ModelNotificationPlatformInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "platform")
+    }
+  }
+
+  public var deviceName: ModelStringInput? {
+    get {
+      return graphQLMap["deviceName"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "deviceName")
+    }
+  }
+
+  public var enabled: ModelBooleanInput? {
+    get {
+      return graphQLMap["enabled"] as! ModelBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "enabled")
+    }
+  }
+
+  public var platformEndpointArn: ModelStringInput? {
+    get {
+      return graphQLMap["platformEndpointArn"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "platformEndpointArn")
+    }
+  }
+
+  public var lastUsedAt: ModelStringInput? {
+    get {
+      return graphQLMap["lastUsedAt"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "lastUsedAt")
+    }
+  }
+
+  public var createdAt: ModelStringInput? {
+    get {
+      return graphQLMap["createdAt"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: ModelStringInput? {
+    get {
+      return graphQLMap["updatedAt"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+
+  public var and: [ModelNotificationEndpointFilterInput?]? {
+    get {
+      return graphQLMap["and"] as! [ModelNotificationEndpointFilterInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "and")
+    }
+  }
+
+  public var or: [ModelNotificationEndpointFilterInput?]? {
+    get {
+      return graphQLMap["or"] as! [ModelNotificationEndpointFilterInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "or")
+    }
+  }
+
+  public var not: ModelNotificationEndpointFilterInput? {
+    get {
+      return graphQLMap["not"] as! ModelNotificationEndpointFilterInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "not")
+    }
+  }
+}
+
+public struct ModelNotificationMessageFilterInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: ModelIDInput? = nil, orgId: ModelStringInput? = nil, title: ModelStringInput? = nil, body: ModelStringInput? = nil, category: ModelNotificationCategoryInput? = nil, recipients: ModelStringInput? = nil, metadata: ModelStringInput? = nil, createdBy: ModelStringInput? = nil, createdAt: ModelStringInput? = nil, updatedAt: ModelStringInput? = nil, and: [ModelNotificationMessageFilterInput?]? = nil, or: [ModelNotificationMessageFilterInput?]? = nil, not: ModelNotificationMessageFilterInput? = nil) {
+    graphQLMap = ["id": id, "orgId": orgId, "title": title, "body": body, "category": category, "recipients": recipients, "metadata": metadata, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or, "not": not]
+  }
+
+  public var id: ModelIDInput? {
+    get {
+      return graphQLMap["id"] as! ModelIDInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  public var orgId: ModelStringInput? {
+    get {
+      return graphQLMap["orgId"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "orgId")
+    }
+  }
+
+  public var title: ModelStringInput? {
+    get {
+      return graphQLMap["title"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "title")
+    }
+  }
+
+  public var body: ModelStringInput? {
+    get {
+      return graphQLMap["body"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "body")
+    }
+  }
+
+  public var category: ModelNotificationCategoryInput? {
+    get {
+      return graphQLMap["category"] as! ModelNotificationCategoryInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "category")
+    }
+  }
+
+  public var recipients: ModelStringInput? {
+    get {
+      return graphQLMap["recipients"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "recipients")
+    }
+  }
+
+  public var metadata: ModelStringInput? {
+    get {
+      return graphQLMap["metadata"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "metadata")
+    }
+  }
+
+  public var createdBy: ModelStringInput? {
+    get {
+      return graphQLMap["createdBy"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdBy")
+    }
+  }
+
+  public var createdAt: ModelStringInput? {
+    get {
+      return graphQLMap["createdAt"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: ModelStringInput? {
+    get {
+      return graphQLMap["updatedAt"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+
+  public var and: [ModelNotificationMessageFilterInput?]? {
+    get {
+      return graphQLMap["and"] as! [ModelNotificationMessageFilterInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "and")
+    }
+  }
+
+  public var or: [ModelNotificationMessageFilterInput?]? {
+    get {
+      return graphQLMap["or"] as! [ModelNotificationMessageFilterInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "or")
+    }
+  }
+
+  public var not: ModelNotificationMessageFilterInput? {
+    get {
+      return graphQLMap["not"] as! ModelNotificationMessageFilterInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "not")
+    }
+  }
+}
+
+public struct ModelNotificationPreferenceFilterInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: ModelIDInput? = nil, userId: ModelStringInput? = nil, generalBulletin: ModelBooleanInput? = nil, taskAlert: ModelBooleanInput? = nil, overtime: ModelBooleanInput? = nil, squadMessages: ModelBooleanInput? = nil, other: ModelBooleanInput? = nil, contactPhone: ModelStringInput? = nil, contactEmail: ModelStringInput? = nil, backupEmail: ModelStringInput? = nil, createdAt: ModelStringInput? = nil, updatedAt: ModelStringInput? = nil, and: [ModelNotificationPreferenceFilterInput?]? = nil, or: [ModelNotificationPreferenceFilterInput?]? = nil, not: ModelNotificationPreferenceFilterInput? = nil) {
+    graphQLMap = ["id": id, "userId": userId, "generalBulletin": generalBulletin, "taskAlert": taskAlert, "overtime": overtime, "squadMessages": squadMessages, "other": other, "contactPhone": contactPhone, "contactEmail": contactEmail, "backupEmail": backupEmail, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or, "not": not]
+  }
+
+  public var id: ModelIDInput? {
+    get {
+      return graphQLMap["id"] as! ModelIDInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  public var userId: ModelStringInput? {
+    get {
+      return graphQLMap["userId"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "userId")
+    }
+  }
+
+  public var generalBulletin: ModelBooleanInput? {
+    get {
+      return graphQLMap["generalBulletin"] as! ModelBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "generalBulletin")
+    }
+  }
+
+  public var taskAlert: ModelBooleanInput? {
+    get {
+      return graphQLMap["taskAlert"] as! ModelBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "taskAlert")
+    }
+  }
+
+  public var overtime: ModelBooleanInput? {
+    get {
+      return graphQLMap["overtime"] as! ModelBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "overtime")
+    }
+  }
+
+  public var squadMessages: ModelBooleanInput? {
+    get {
+      return graphQLMap["squadMessages"] as! ModelBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "squadMessages")
+    }
+  }
+
+  public var other: ModelBooleanInput? {
+    get {
+      return graphQLMap["other"] as! ModelBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "other")
+    }
+  }
+
+  public var contactPhone: ModelStringInput? {
+    get {
+      return graphQLMap["contactPhone"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "contactPhone")
+    }
+  }
+
+  public var contactEmail: ModelStringInput? {
+    get {
+      return graphQLMap["contactEmail"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "contactEmail")
+    }
+  }
+
+  public var backupEmail: ModelStringInput? {
+    get {
+      return graphQLMap["backupEmail"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "backupEmail")
+    }
+  }
+
+  public var createdAt: ModelStringInput? {
+    get {
+      return graphQLMap["createdAt"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: ModelStringInput? {
+    get {
+      return graphQLMap["updatedAt"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+
+  public var and: [ModelNotificationPreferenceFilterInput?]? {
+    get {
+      return graphQLMap["and"] as! [ModelNotificationPreferenceFilterInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "and")
+    }
+  }
+
+  public var or: [ModelNotificationPreferenceFilterInput?]? {
+    get {
+      return graphQLMap["or"] as! [ModelNotificationPreferenceFilterInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "or")
+    }
+  }
+
+  public var not: ModelNotificationPreferenceFilterInput? {
+    get {
+      return graphQLMap["not"] as! ModelNotificationPreferenceFilterInput?
     }
     set {
       graphQLMap.updateValue(newValue, forKey: "not")
@@ -5578,6 +7253,490 @@ public struct ModelSubscriptionOvertimeAuditEventFilterInput: GraphQLMapConverti
     }
     set {
       graphQLMap.updateValue(newValue, forKey: "or")
+    }
+  }
+}
+
+public struct ModelSubscriptionNotificationEndpointFilterInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: ModelSubscriptionIDInput? = nil, orgId: ModelSubscriptionStringInput? = nil, deviceToken: ModelSubscriptionStringInput? = nil, platform: ModelSubscriptionStringInput? = nil, deviceName: ModelSubscriptionStringInput? = nil, enabled: ModelSubscriptionBooleanInput? = nil, platformEndpointArn: ModelSubscriptionStringInput? = nil, lastUsedAt: ModelSubscriptionStringInput? = nil, createdAt: ModelSubscriptionStringInput? = nil, updatedAt: ModelSubscriptionStringInput? = nil, and: [ModelSubscriptionNotificationEndpointFilterInput?]? = nil, or: [ModelSubscriptionNotificationEndpointFilterInput?]? = nil, userId: ModelStringInput? = nil) {
+    graphQLMap = ["id": id, "orgId": orgId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or, "userId": userId]
+  }
+
+  public var id: ModelSubscriptionIDInput? {
+    get {
+      return graphQLMap["id"] as! ModelSubscriptionIDInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  public var orgId: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["orgId"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "orgId")
+    }
+  }
+
+  public var deviceToken: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["deviceToken"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "deviceToken")
+    }
+  }
+
+  public var platform: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["platform"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "platform")
+    }
+  }
+
+  public var deviceName: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["deviceName"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "deviceName")
+    }
+  }
+
+  public var enabled: ModelSubscriptionBooleanInput? {
+    get {
+      return graphQLMap["enabled"] as! ModelSubscriptionBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "enabled")
+    }
+  }
+
+  public var platformEndpointArn: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["platformEndpointArn"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "platformEndpointArn")
+    }
+  }
+
+  public var lastUsedAt: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["lastUsedAt"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "lastUsedAt")
+    }
+  }
+
+  public var createdAt: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["createdAt"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["updatedAt"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+
+  public var and: [ModelSubscriptionNotificationEndpointFilterInput?]? {
+    get {
+      return graphQLMap["and"] as! [ModelSubscriptionNotificationEndpointFilterInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "and")
+    }
+  }
+
+  public var or: [ModelSubscriptionNotificationEndpointFilterInput?]? {
+    get {
+      return graphQLMap["or"] as! [ModelSubscriptionNotificationEndpointFilterInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "or")
+    }
+  }
+
+  public var userId: ModelStringInput? {
+    get {
+      return graphQLMap["userId"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "userId")
+    }
+  }
+}
+
+public struct ModelSubscriptionNotificationMessageFilterInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: ModelSubscriptionIDInput? = nil, orgId: ModelSubscriptionStringInput? = nil, title: ModelSubscriptionStringInput? = nil, body: ModelSubscriptionStringInput? = nil, category: ModelSubscriptionStringInput? = nil, recipients: ModelSubscriptionStringInput? = nil, metadata: ModelSubscriptionStringInput? = nil, createdBy: ModelSubscriptionStringInput? = nil, createdAt: ModelSubscriptionStringInput? = nil, updatedAt: ModelSubscriptionStringInput? = nil, and: [ModelSubscriptionNotificationMessageFilterInput?]? = nil, or: [ModelSubscriptionNotificationMessageFilterInput?]? = nil) {
+    graphQLMap = ["id": id, "orgId": orgId, "title": title, "body": body, "category": category, "recipients": recipients, "metadata": metadata, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or]
+  }
+
+  public var id: ModelSubscriptionIDInput? {
+    get {
+      return graphQLMap["id"] as! ModelSubscriptionIDInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  public var orgId: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["orgId"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "orgId")
+    }
+  }
+
+  public var title: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["title"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "title")
+    }
+  }
+
+  public var body: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["body"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "body")
+    }
+  }
+
+  public var category: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["category"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "category")
+    }
+  }
+
+  public var recipients: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["recipients"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "recipients")
+    }
+  }
+
+  public var metadata: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["metadata"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "metadata")
+    }
+  }
+
+  public var createdBy: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["createdBy"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdBy")
+    }
+  }
+
+  public var createdAt: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["createdAt"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["updatedAt"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+
+  public var and: [ModelSubscriptionNotificationMessageFilterInput?]? {
+    get {
+      return graphQLMap["and"] as! [ModelSubscriptionNotificationMessageFilterInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "and")
+    }
+  }
+
+  public var or: [ModelSubscriptionNotificationMessageFilterInput?]? {
+    get {
+      return graphQLMap["or"] as! [ModelSubscriptionNotificationMessageFilterInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "or")
+    }
+  }
+}
+
+public struct ModelSubscriptionNotificationPreferenceFilterInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(id: ModelSubscriptionIDInput? = nil, generalBulletin: ModelSubscriptionBooleanInput? = nil, taskAlert: ModelSubscriptionBooleanInput? = nil, overtime: ModelSubscriptionBooleanInput? = nil, squadMessages: ModelSubscriptionBooleanInput? = nil, other: ModelSubscriptionBooleanInput? = nil, contactPhone: ModelSubscriptionStringInput? = nil, contactEmail: ModelSubscriptionStringInput? = nil, backupEmail: ModelSubscriptionStringInput? = nil, createdAt: ModelSubscriptionStringInput? = nil, updatedAt: ModelSubscriptionStringInput? = nil, and: [ModelSubscriptionNotificationPreferenceFilterInput?]? = nil, or: [ModelSubscriptionNotificationPreferenceFilterInput?]? = nil, userId: ModelStringInput? = nil) {
+    graphQLMap = ["id": id, "generalBulletin": generalBulletin, "taskAlert": taskAlert, "overtime": overtime, "squadMessages": squadMessages, "other": other, "contactPhone": contactPhone, "contactEmail": contactEmail, "backupEmail": backupEmail, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or, "userId": userId]
+  }
+
+  public var id: ModelSubscriptionIDInput? {
+    get {
+      return graphQLMap["id"] as! ModelSubscriptionIDInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  public var generalBulletin: ModelSubscriptionBooleanInput? {
+    get {
+      return graphQLMap["generalBulletin"] as! ModelSubscriptionBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "generalBulletin")
+    }
+  }
+
+  public var taskAlert: ModelSubscriptionBooleanInput? {
+    get {
+      return graphQLMap["taskAlert"] as! ModelSubscriptionBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "taskAlert")
+    }
+  }
+
+  public var overtime: ModelSubscriptionBooleanInput? {
+    get {
+      return graphQLMap["overtime"] as! ModelSubscriptionBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "overtime")
+    }
+  }
+
+  public var squadMessages: ModelSubscriptionBooleanInput? {
+    get {
+      return graphQLMap["squadMessages"] as! ModelSubscriptionBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "squadMessages")
+    }
+  }
+
+  public var other: ModelSubscriptionBooleanInput? {
+    get {
+      return graphQLMap["other"] as! ModelSubscriptionBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "other")
+    }
+  }
+
+  public var contactPhone: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["contactPhone"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "contactPhone")
+    }
+  }
+
+  public var contactEmail: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["contactEmail"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "contactEmail")
+    }
+  }
+
+  public var backupEmail: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["backupEmail"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "backupEmail")
+    }
+  }
+
+  public var createdAt: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["createdAt"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  public var updatedAt: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["updatedAt"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "updatedAt")
+    }
+  }
+
+  public var and: [ModelSubscriptionNotificationPreferenceFilterInput?]? {
+    get {
+      return graphQLMap["and"] as! [ModelSubscriptionNotificationPreferenceFilterInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "and")
+    }
+  }
+
+  public var or: [ModelSubscriptionNotificationPreferenceFilterInput?]? {
+    get {
+      return graphQLMap["or"] as! [ModelSubscriptionNotificationPreferenceFilterInput?]?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "or")
+    }
+  }
+
+  public var userId: ModelStringInput? {
+    get {
+      return graphQLMap["userId"] as! ModelStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "userId")
+    }
+  }
+}
+
+public final class NotifyOvertimeEventMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation NotifyOvertimeEvent($input: OvertimeNotificationInput!) {\n  notifyOvertimeEvent(input: $input) {\n    __typename\n    success\n    delivered\n    recipientCount\n    message\n  }\n}"
+
+  public var input: OvertimeNotificationInput
+
+  public init(input: OvertimeNotificationInput) {
+    self.input = input
+  }
+
+  public var variables: GraphQLMap? {
+    return ["input": input]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("notifyOvertimeEvent", arguments: ["input": GraphQLVariable("input")], type: .object(NotifyOvertimeEvent.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(notifyOvertimeEvent: NotifyOvertimeEvent? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "notifyOvertimeEvent": notifyOvertimeEvent.flatMap { $0.snapshot }])
+    }
+
+    public var notifyOvertimeEvent: NotifyOvertimeEvent? {
+      get {
+        return (snapshot["notifyOvertimeEvent"] as? Snapshot).flatMap { NotifyOvertimeEvent(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "notifyOvertimeEvent")
+      }
+    }
+
+    public struct NotifyOvertimeEvent: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationSendResult"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("success", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("delivered", type: .scalar(Int.self)),
+        GraphQLField("recipientCount", type: .scalar(Int.self)),
+        GraphQLField("message", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(success: Bool, delivered: Int? = nil, recipientCount: Int? = nil, message: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationSendResult", "success": success, "delivered": delivered, "recipientCount": recipientCount, "message": message])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var success: Bool {
+        get {
+          return snapshot["success"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "success")
+        }
+      }
+
+      public var delivered: Int? {
+        get {
+          return snapshot["delivered"] as? Int
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "delivered")
+        }
+      }
+
+      public var recipientCount: Int? {
+        get {
+          return snapshot["recipientCount"] as? Int
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "recipientCount")
+        }
+      }
+
+      public var message: String? {
+        get {
+          return snapshot["message"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "message")
+        }
+      }
     }
   }
 }
@@ -9416,6 +11575,1635 @@ public final class DeleteOvertimeAuditEventMutation: GraphQLMutation {
       public var updatedAt: String {
         get {
           return snapshot["updatedAt"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class CreateNotificationEndpointMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation CreateNotificationEndpoint($input: CreateNotificationEndpointInput!, $condition: ModelNotificationEndpointConditionInput) {\n  createNotificationEndpoint(input: $input, condition: $condition) {\n    __typename\n    id\n    orgId\n    userId\n    deviceToken\n    platform\n    deviceName\n    enabled\n    platformEndpointArn\n    lastUsedAt\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var input: CreateNotificationEndpointInput
+  public var condition: ModelNotificationEndpointConditionInput?
+
+  public init(input: CreateNotificationEndpointInput, condition: ModelNotificationEndpointConditionInput? = nil) {
+    self.input = input
+    self.condition = condition
+  }
+
+  public var variables: GraphQLMap? {
+    return ["input": input, "condition": condition]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("createNotificationEndpoint", arguments: ["input": GraphQLVariable("input"), "condition": GraphQLVariable("condition")], type: .object(CreateNotificationEndpoint.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(createNotificationEndpoint: CreateNotificationEndpoint? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "createNotificationEndpoint": createNotificationEndpoint.flatMap { $0.snapshot }])
+    }
+
+    public var createNotificationEndpoint: CreateNotificationEndpoint? {
+      get {
+        return (snapshot["createNotificationEndpoint"] as? Snapshot).flatMap { CreateNotificationEndpoint(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "createNotificationEndpoint")
+      }
+    }
+
+    public struct CreateNotificationEndpoint: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationEndpoint"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("deviceToken", type: .nonNull(.scalar(String.self))),
+        GraphQLField("platform", type: .nonNull(.scalar(NotificationPlatform.self))),
+        GraphQLField("deviceName", type: .scalar(String.self)),
+        GraphQLField("enabled", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("platformEndpointArn", type: .scalar(String.self)),
+        GraphQLField("lastUsedAt", type: .scalar(String.self)),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, orgId: String, userId: String, deviceToken: String, platform: NotificationPlatform, deviceName: String? = nil, enabled: Bool, platformEndpointArn: String? = nil, lastUsedAt: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationEndpoint", "id": id, "orgId": orgId, "userId": userId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var orgId: String {
+        get {
+          return snapshot["orgId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "orgId")
+        }
+      }
+
+      public var userId: String {
+        get {
+          return snapshot["userId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var deviceToken: String {
+        get {
+          return snapshot["deviceToken"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "deviceToken")
+        }
+      }
+
+      public var platform: NotificationPlatform {
+        get {
+          return snapshot["platform"]! as! NotificationPlatform
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "platform")
+        }
+      }
+
+      public var deviceName: String? {
+        get {
+          return snapshot["deviceName"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "deviceName")
+        }
+      }
+
+      public var enabled: Bool {
+        get {
+          return snapshot["enabled"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "enabled")
+        }
+      }
+
+      public var platformEndpointArn: String? {
+        get {
+          return snapshot["platformEndpointArn"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "platformEndpointArn")
+        }
+      }
+
+      public var lastUsedAt: String? {
+        get {
+          return snapshot["lastUsedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "lastUsedAt")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class UpdateNotificationEndpointMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation UpdateNotificationEndpoint($input: UpdateNotificationEndpointInput!, $condition: ModelNotificationEndpointConditionInput) {\n  updateNotificationEndpoint(input: $input, condition: $condition) {\n    __typename\n    id\n    orgId\n    userId\n    deviceToken\n    platform\n    deviceName\n    enabled\n    platformEndpointArn\n    lastUsedAt\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var input: UpdateNotificationEndpointInput
+  public var condition: ModelNotificationEndpointConditionInput?
+
+  public init(input: UpdateNotificationEndpointInput, condition: ModelNotificationEndpointConditionInput? = nil) {
+    self.input = input
+    self.condition = condition
+  }
+
+  public var variables: GraphQLMap? {
+    return ["input": input, "condition": condition]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("updateNotificationEndpoint", arguments: ["input": GraphQLVariable("input"), "condition": GraphQLVariable("condition")], type: .object(UpdateNotificationEndpoint.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(updateNotificationEndpoint: UpdateNotificationEndpoint? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "updateNotificationEndpoint": updateNotificationEndpoint.flatMap { $0.snapshot }])
+    }
+
+    public var updateNotificationEndpoint: UpdateNotificationEndpoint? {
+      get {
+        return (snapshot["updateNotificationEndpoint"] as? Snapshot).flatMap { UpdateNotificationEndpoint(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "updateNotificationEndpoint")
+      }
+    }
+
+    public struct UpdateNotificationEndpoint: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationEndpoint"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("deviceToken", type: .nonNull(.scalar(String.self))),
+        GraphQLField("platform", type: .nonNull(.scalar(NotificationPlatform.self))),
+        GraphQLField("deviceName", type: .scalar(String.self)),
+        GraphQLField("enabled", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("platformEndpointArn", type: .scalar(String.self)),
+        GraphQLField("lastUsedAt", type: .scalar(String.self)),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, orgId: String, userId: String, deviceToken: String, platform: NotificationPlatform, deviceName: String? = nil, enabled: Bool, platformEndpointArn: String? = nil, lastUsedAt: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationEndpoint", "id": id, "orgId": orgId, "userId": userId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var orgId: String {
+        get {
+          return snapshot["orgId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "orgId")
+        }
+      }
+
+      public var userId: String {
+        get {
+          return snapshot["userId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var deviceToken: String {
+        get {
+          return snapshot["deviceToken"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "deviceToken")
+        }
+      }
+
+      public var platform: NotificationPlatform {
+        get {
+          return snapshot["platform"]! as! NotificationPlatform
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "platform")
+        }
+      }
+
+      public var deviceName: String? {
+        get {
+          return snapshot["deviceName"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "deviceName")
+        }
+      }
+
+      public var enabled: Bool {
+        get {
+          return snapshot["enabled"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "enabled")
+        }
+      }
+
+      public var platformEndpointArn: String? {
+        get {
+          return snapshot["platformEndpointArn"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "platformEndpointArn")
+        }
+      }
+
+      public var lastUsedAt: String? {
+        get {
+          return snapshot["lastUsedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "lastUsedAt")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class DeleteNotificationEndpointMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation DeleteNotificationEndpoint($input: DeleteNotificationEndpointInput!, $condition: ModelNotificationEndpointConditionInput) {\n  deleteNotificationEndpoint(input: $input, condition: $condition) {\n    __typename\n    id\n    orgId\n    userId\n    deviceToken\n    platform\n    deviceName\n    enabled\n    platformEndpointArn\n    lastUsedAt\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var input: DeleteNotificationEndpointInput
+  public var condition: ModelNotificationEndpointConditionInput?
+
+  public init(input: DeleteNotificationEndpointInput, condition: ModelNotificationEndpointConditionInput? = nil) {
+    self.input = input
+    self.condition = condition
+  }
+
+  public var variables: GraphQLMap? {
+    return ["input": input, "condition": condition]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("deleteNotificationEndpoint", arguments: ["input": GraphQLVariable("input"), "condition": GraphQLVariable("condition")], type: .object(DeleteNotificationEndpoint.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(deleteNotificationEndpoint: DeleteNotificationEndpoint? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "deleteNotificationEndpoint": deleteNotificationEndpoint.flatMap { $0.snapshot }])
+    }
+
+    public var deleteNotificationEndpoint: DeleteNotificationEndpoint? {
+      get {
+        return (snapshot["deleteNotificationEndpoint"] as? Snapshot).flatMap { DeleteNotificationEndpoint(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "deleteNotificationEndpoint")
+      }
+    }
+
+    public struct DeleteNotificationEndpoint: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationEndpoint"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("deviceToken", type: .nonNull(.scalar(String.self))),
+        GraphQLField("platform", type: .nonNull(.scalar(NotificationPlatform.self))),
+        GraphQLField("deviceName", type: .scalar(String.self)),
+        GraphQLField("enabled", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("platformEndpointArn", type: .scalar(String.self)),
+        GraphQLField("lastUsedAt", type: .scalar(String.self)),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, orgId: String, userId: String, deviceToken: String, platform: NotificationPlatform, deviceName: String? = nil, enabled: Bool, platformEndpointArn: String? = nil, lastUsedAt: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationEndpoint", "id": id, "orgId": orgId, "userId": userId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var orgId: String {
+        get {
+          return snapshot["orgId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "orgId")
+        }
+      }
+
+      public var userId: String {
+        get {
+          return snapshot["userId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var deviceToken: String {
+        get {
+          return snapshot["deviceToken"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "deviceToken")
+        }
+      }
+
+      public var platform: NotificationPlatform {
+        get {
+          return snapshot["platform"]! as! NotificationPlatform
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "platform")
+        }
+      }
+
+      public var deviceName: String? {
+        get {
+          return snapshot["deviceName"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "deviceName")
+        }
+      }
+
+      public var enabled: Bool {
+        get {
+          return snapshot["enabled"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "enabled")
+        }
+      }
+
+      public var platformEndpointArn: String? {
+        get {
+          return snapshot["platformEndpointArn"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "platformEndpointArn")
+        }
+      }
+
+      public var lastUsedAt: String? {
+        get {
+          return snapshot["lastUsedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "lastUsedAt")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class CreateNotificationMessageMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation CreateNotificationMessage($input: CreateNotificationMessageInput!, $condition: ModelNotificationMessageConditionInput) {\n  createNotificationMessage(input: $input, condition: $condition) {\n    __typename\n    id\n    orgId\n    title\n    body\n    category\n    recipients\n    metadata\n    createdBy\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var input: CreateNotificationMessageInput
+  public var condition: ModelNotificationMessageConditionInput?
+
+  public init(input: CreateNotificationMessageInput, condition: ModelNotificationMessageConditionInput? = nil) {
+    self.input = input
+    self.condition = condition
+  }
+
+  public var variables: GraphQLMap? {
+    return ["input": input, "condition": condition]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("createNotificationMessage", arguments: ["input": GraphQLVariable("input"), "condition": GraphQLVariable("condition")], type: .object(CreateNotificationMessage.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(createNotificationMessage: CreateNotificationMessage? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "createNotificationMessage": createNotificationMessage.flatMap { $0.snapshot }])
+    }
+
+    public var createNotificationMessage: CreateNotificationMessage? {
+      get {
+        return (snapshot["createNotificationMessage"] as? Snapshot).flatMap { CreateNotificationMessage(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "createNotificationMessage")
+      }
+    }
+
+    public struct CreateNotificationMessage: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationMessage"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("title", type: .nonNull(.scalar(String.self))),
+        GraphQLField("body", type: .nonNull(.scalar(String.self))),
+        GraphQLField("category", type: .nonNull(.scalar(NotificationCategory.self))),
+        GraphQLField("recipients", type: .nonNull(.list(.nonNull(.scalar(String.self))))),
+        GraphQLField("metadata", type: .scalar(String.self)),
+        GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, orgId: String, title: String, body: String, category: NotificationCategory, recipients: [String], metadata: String? = nil, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationMessage", "id": id, "orgId": orgId, "title": title, "body": body, "category": category, "recipients": recipients, "metadata": metadata, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var orgId: String {
+        get {
+          return snapshot["orgId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "orgId")
+        }
+      }
+
+      public var title: String {
+        get {
+          return snapshot["title"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "title")
+        }
+      }
+
+      public var body: String {
+        get {
+          return snapshot["body"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "body")
+        }
+      }
+
+      public var category: NotificationCategory {
+        get {
+          return snapshot["category"]! as! NotificationCategory
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "category")
+        }
+      }
+
+      public var recipients: [String] {
+        get {
+          return snapshot["recipients"]! as! [String]
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "recipients")
+        }
+      }
+
+      public var metadata: String? {
+        get {
+          return snapshot["metadata"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "metadata")
+        }
+      }
+
+      public var createdBy: String {
+        get {
+          return snapshot["createdBy"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdBy")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class UpdateNotificationMessageMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation UpdateNotificationMessage($input: UpdateNotificationMessageInput!, $condition: ModelNotificationMessageConditionInput) {\n  updateNotificationMessage(input: $input, condition: $condition) {\n    __typename\n    id\n    orgId\n    title\n    body\n    category\n    recipients\n    metadata\n    createdBy\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var input: UpdateNotificationMessageInput
+  public var condition: ModelNotificationMessageConditionInput?
+
+  public init(input: UpdateNotificationMessageInput, condition: ModelNotificationMessageConditionInput? = nil) {
+    self.input = input
+    self.condition = condition
+  }
+
+  public var variables: GraphQLMap? {
+    return ["input": input, "condition": condition]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("updateNotificationMessage", arguments: ["input": GraphQLVariable("input"), "condition": GraphQLVariable("condition")], type: .object(UpdateNotificationMessage.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(updateNotificationMessage: UpdateNotificationMessage? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "updateNotificationMessage": updateNotificationMessage.flatMap { $0.snapshot }])
+    }
+
+    public var updateNotificationMessage: UpdateNotificationMessage? {
+      get {
+        return (snapshot["updateNotificationMessage"] as? Snapshot).flatMap { UpdateNotificationMessage(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "updateNotificationMessage")
+      }
+    }
+
+    public struct UpdateNotificationMessage: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationMessage"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("title", type: .nonNull(.scalar(String.self))),
+        GraphQLField("body", type: .nonNull(.scalar(String.self))),
+        GraphQLField("category", type: .nonNull(.scalar(NotificationCategory.self))),
+        GraphQLField("recipients", type: .nonNull(.list(.nonNull(.scalar(String.self))))),
+        GraphQLField("metadata", type: .scalar(String.self)),
+        GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, orgId: String, title: String, body: String, category: NotificationCategory, recipients: [String], metadata: String? = nil, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationMessage", "id": id, "orgId": orgId, "title": title, "body": body, "category": category, "recipients": recipients, "metadata": metadata, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var orgId: String {
+        get {
+          return snapshot["orgId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "orgId")
+        }
+      }
+
+      public var title: String {
+        get {
+          return snapshot["title"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "title")
+        }
+      }
+
+      public var body: String {
+        get {
+          return snapshot["body"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "body")
+        }
+      }
+
+      public var category: NotificationCategory {
+        get {
+          return snapshot["category"]! as! NotificationCategory
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "category")
+        }
+      }
+
+      public var recipients: [String] {
+        get {
+          return snapshot["recipients"]! as! [String]
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "recipients")
+        }
+      }
+
+      public var metadata: String? {
+        get {
+          return snapshot["metadata"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "metadata")
+        }
+      }
+
+      public var createdBy: String {
+        get {
+          return snapshot["createdBy"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdBy")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class DeleteNotificationMessageMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation DeleteNotificationMessage($input: DeleteNotificationMessageInput!, $condition: ModelNotificationMessageConditionInput) {\n  deleteNotificationMessage(input: $input, condition: $condition) {\n    __typename\n    id\n    orgId\n    title\n    body\n    category\n    recipients\n    metadata\n    createdBy\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var input: DeleteNotificationMessageInput
+  public var condition: ModelNotificationMessageConditionInput?
+
+  public init(input: DeleteNotificationMessageInput, condition: ModelNotificationMessageConditionInput? = nil) {
+    self.input = input
+    self.condition = condition
+  }
+
+  public var variables: GraphQLMap? {
+    return ["input": input, "condition": condition]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("deleteNotificationMessage", arguments: ["input": GraphQLVariable("input"), "condition": GraphQLVariable("condition")], type: .object(DeleteNotificationMessage.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(deleteNotificationMessage: DeleteNotificationMessage? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "deleteNotificationMessage": deleteNotificationMessage.flatMap { $0.snapshot }])
+    }
+
+    public var deleteNotificationMessage: DeleteNotificationMessage? {
+      get {
+        return (snapshot["deleteNotificationMessage"] as? Snapshot).flatMap { DeleteNotificationMessage(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "deleteNotificationMessage")
+      }
+    }
+
+    public struct DeleteNotificationMessage: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationMessage"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("title", type: .nonNull(.scalar(String.self))),
+        GraphQLField("body", type: .nonNull(.scalar(String.self))),
+        GraphQLField("category", type: .nonNull(.scalar(NotificationCategory.self))),
+        GraphQLField("recipients", type: .nonNull(.list(.nonNull(.scalar(String.self))))),
+        GraphQLField("metadata", type: .scalar(String.self)),
+        GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, orgId: String, title: String, body: String, category: NotificationCategory, recipients: [String], metadata: String? = nil, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationMessage", "id": id, "orgId": orgId, "title": title, "body": body, "category": category, "recipients": recipients, "metadata": metadata, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var orgId: String {
+        get {
+          return snapshot["orgId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "orgId")
+        }
+      }
+
+      public var title: String {
+        get {
+          return snapshot["title"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "title")
+        }
+      }
+
+      public var body: String {
+        get {
+          return snapshot["body"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "body")
+        }
+      }
+
+      public var category: NotificationCategory {
+        get {
+          return snapshot["category"]! as! NotificationCategory
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "category")
+        }
+      }
+
+      public var recipients: [String] {
+        get {
+          return snapshot["recipients"]! as! [String]
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "recipients")
+        }
+      }
+
+      public var metadata: String? {
+        get {
+          return snapshot["metadata"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "metadata")
+        }
+      }
+
+      public var createdBy: String {
+        get {
+          return snapshot["createdBy"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdBy")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class CreateNotificationPreferenceMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation CreateNotificationPreference($input: CreateNotificationPreferenceInput!, $condition: ModelNotificationPreferenceConditionInput) {\n  createNotificationPreference(input: $input, condition: $condition) {\n    __typename\n    id\n    userId\n    generalBulletin\n    taskAlert\n    overtime\n    squadMessages\n    other\n    contactPhone\n    contactEmail\n    backupEmail\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var input: CreateNotificationPreferenceInput
+  public var condition: ModelNotificationPreferenceConditionInput?
+
+  public init(input: CreateNotificationPreferenceInput, condition: ModelNotificationPreferenceConditionInput? = nil) {
+    self.input = input
+    self.condition = condition
+  }
+
+  public var variables: GraphQLMap? {
+    return ["input": input, "condition": condition]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("createNotificationPreference", arguments: ["input": GraphQLVariable("input"), "condition": GraphQLVariable("condition")], type: .object(CreateNotificationPreference.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(createNotificationPreference: CreateNotificationPreference? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "createNotificationPreference": createNotificationPreference.flatMap { $0.snapshot }])
+    }
+
+    public var createNotificationPreference: CreateNotificationPreference? {
+      get {
+        return (snapshot["createNotificationPreference"] as? Snapshot).flatMap { CreateNotificationPreference(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "createNotificationPreference")
+      }
+    }
+
+    public struct CreateNotificationPreference: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationPreference"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("generalBulletin", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("taskAlert", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("overtime", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("squadMessages", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("other", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("contactPhone", type: .scalar(String.self)),
+        GraphQLField("contactEmail", type: .scalar(String.self)),
+        GraphQLField("backupEmail", type: .scalar(String.self)),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, userId: String, generalBulletin: Bool, taskAlert: Bool, overtime: Bool, squadMessages: Bool, other: Bool, contactPhone: String? = nil, contactEmail: String? = nil, backupEmail: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationPreference", "id": id, "userId": userId, "generalBulletin": generalBulletin, "taskAlert": taskAlert, "overtime": overtime, "squadMessages": squadMessages, "other": other, "contactPhone": contactPhone, "contactEmail": contactEmail, "backupEmail": backupEmail, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var userId: String {
+        get {
+          return snapshot["userId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var generalBulletin: Bool {
+        get {
+          return snapshot["generalBulletin"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "generalBulletin")
+        }
+      }
+
+      public var taskAlert: Bool {
+        get {
+          return snapshot["taskAlert"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "taskAlert")
+        }
+      }
+
+      public var overtime: Bool {
+        get {
+          return snapshot["overtime"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "overtime")
+        }
+      }
+
+      public var squadMessages: Bool {
+        get {
+          return snapshot["squadMessages"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "squadMessages")
+        }
+      }
+
+      public var other: Bool {
+        get {
+          return snapshot["other"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "other")
+        }
+      }
+
+      public var contactPhone: String? {
+        get {
+          return snapshot["contactPhone"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contactPhone")
+        }
+      }
+
+      public var contactEmail: String? {
+        get {
+          return snapshot["contactEmail"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contactEmail")
+        }
+      }
+
+      public var backupEmail: String? {
+        get {
+          return snapshot["backupEmail"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "backupEmail")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class UpdateNotificationPreferenceMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation UpdateNotificationPreference($input: UpdateNotificationPreferenceInput!, $condition: ModelNotificationPreferenceConditionInput) {\n  updateNotificationPreference(input: $input, condition: $condition) {\n    __typename\n    id\n    userId\n    generalBulletin\n    taskAlert\n    overtime\n    squadMessages\n    other\n    contactPhone\n    contactEmail\n    backupEmail\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var input: UpdateNotificationPreferenceInput
+  public var condition: ModelNotificationPreferenceConditionInput?
+
+  public init(input: UpdateNotificationPreferenceInput, condition: ModelNotificationPreferenceConditionInput? = nil) {
+    self.input = input
+    self.condition = condition
+  }
+
+  public var variables: GraphQLMap? {
+    return ["input": input, "condition": condition]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("updateNotificationPreference", arguments: ["input": GraphQLVariable("input"), "condition": GraphQLVariable("condition")], type: .object(UpdateNotificationPreference.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(updateNotificationPreference: UpdateNotificationPreference? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "updateNotificationPreference": updateNotificationPreference.flatMap { $0.snapshot }])
+    }
+
+    public var updateNotificationPreference: UpdateNotificationPreference? {
+      get {
+        return (snapshot["updateNotificationPreference"] as? Snapshot).flatMap { UpdateNotificationPreference(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "updateNotificationPreference")
+      }
+    }
+
+    public struct UpdateNotificationPreference: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationPreference"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("generalBulletin", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("taskAlert", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("overtime", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("squadMessages", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("other", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("contactPhone", type: .scalar(String.self)),
+        GraphQLField("contactEmail", type: .scalar(String.self)),
+        GraphQLField("backupEmail", type: .scalar(String.self)),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, userId: String, generalBulletin: Bool, taskAlert: Bool, overtime: Bool, squadMessages: Bool, other: Bool, contactPhone: String? = nil, contactEmail: String? = nil, backupEmail: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationPreference", "id": id, "userId": userId, "generalBulletin": generalBulletin, "taskAlert": taskAlert, "overtime": overtime, "squadMessages": squadMessages, "other": other, "contactPhone": contactPhone, "contactEmail": contactEmail, "backupEmail": backupEmail, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var userId: String {
+        get {
+          return snapshot["userId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var generalBulletin: Bool {
+        get {
+          return snapshot["generalBulletin"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "generalBulletin")
+        }
+      }
+
+      public var taskAlert: Bool {
+        get {
+          return snapshot["taskAlert"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "taskAlert")
+        }
+      }
+
+      public var overtime: Bool {
+        get {
+          return snapshot["overtime"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "overtime")
+        }
+      }
+
+      public var squadMessages: Bool {
+        get {
+          return snapshot["squadMessages"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "squadMessages")
+        }
+      }
+
+      public var other: Bool {
+        get {
+          return snapshot["other"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "other")
+        }
+      }
+
+      public var contactPhone: String? {
+        get {
+          return snapshot["contactPhone"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contactPhone")
+        }
+      }
+
+      public var contactEmail: String? {
+        get {
+          return snapshot["contactEmail"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contactEmail")
+        }
+      }
+
+      public var backupEmail: String? {
+        get {
+          return snapshot["backupEmail"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "backupEmail")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class DeleteNotificationPreferenceMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation DeleteNotificationPreference($input: DeleteNotificationPreferenceInput!, $condition: ModelNotificationPreferenceConditionInput) {\n  deleteNotificationPreference(input: $input, condition: $condition) {\n    __typename\n    id\n    userId\n    generalBulletin\n    taskAlert\n    overtime\n    squadMessages\n    other\n    contactPhone\n    contactEmail\n    backupEmail\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var input: DeleteNotificationPreferenceInput
+  public var condition: ModelNotificationPreferenceConditionInput?
+
+  public init(input: DeleteNotificationPreferenceInput, condition: ModelNotificationPreferenceConditionInput? = nil) {
+    self.input = input
+    self.condition = condition
+  }
+
+  public var variables: GraphQLMap? {
+    return ["input": input, "condition": condition]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("deleteNotificationPreference", arguments: ["input": GraphQLVariable("input"), "condition": GraphQLVariable("condition")], type: .object(DeleteNotificationPreference.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(deleteNotificationPreference: DeleteNotificationPreference? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "deleteNotificationPreference": deleteNotificationPreference.flatMap { $0.snapshot }])
+    }
+
+    public var deleteNotificationPreference: DeleteNotificationPreference? {
+      get {
+        return (snapshot["deleteNotificationPreference"] as? Snapshot).flatMap { DeleteNotificationPreference(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "deleteNotificationPreference")
+      }
+    }
+
+    public struct DeleteNotificationPreference: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationPreference"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("generalBulletin", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("taskAlert", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("overtime", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("squadMessages", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("other", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("contactPhone", type: .scalar(String.self)),
+        GraphQLField("contactEmail", type: .scalar(String.self)),
+        GraphQLField("backupEmail", type: .scalar(String.self)),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, userId: String, generalBulletin: Bool, taskAlert: Bool, overtime: Bool, squadMessages: Bool, other: Bool, contactPhone: String? = nil, contactEmail: String? = nil, backupEmail: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationPreference", "id": id, "userId": userId, "generalBulletin": generalBulletin, "taskAlert": taskAlert, "overtime": overtime, "squadMessages": squadMessages, "other": other, "contactPhone": contactPhone, "contactEmail": contactEmail, "backupEmail": backupEmail, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var userId: String {
+        get {
+          return snapshot["userId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var generalBulletin: Bool {
+        get {
+          return snapshot["generalBulletin"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "generalBulletin")
+        }
+      }
+
+      public var taskAlert: Bool {
+        get {
+          return snapshot["taskAlert"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "taskAlert")
+        }
+      }
+
+      public var overtime: Bool {
+        get {
+          return snapshot["overtime"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "overtime")
+        }
+      }
+
+      public var squadMessages: Bool {
+        get {
+          return snapshot["squadMessages"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "squadMessages")
+        }
+      }
+
+      public var other: Bool {
+        get {
+          return snapshot["other"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "other")
+        }
+      }
+
+      public var contactPhone: String? {
+        get {
+          return snapshot["contactPhone"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contactPhone")
+        }
+      }
+
+      public var contactEmail: String? {
+        get {
+          return snapshot["contactEmail"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contactEmail")
+        }
+      }
+
+      public var backupEmail: String? {
+        get {
+          return snapshot["backupEmail"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "backupEmail")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
         }
         set {
           snapshot.updateValue(newValue, forKey: "updatedAt")
@@ -14256,6 +18044,2175 @@ public final class AuditsByPostingQuery: GraphQLQuery {
   }
 }
 
+public final class GetNotificationEndpointQuery: GraphQLQuery {
+  public static let operationString =
+    "query GetNotificationEndpoint($id: ID!) {\n  getNotificationEndpoint(id: $id) {\n    __typename\n    id\n    orgId\n    userId\n    deviceToken\n    platform\n    deviceName\n    enabled\n    platformEndpointArn\n    lastUsedAt\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var id: GraphQLID
+
+  public init(id: GraphQLID) {
+    self.id = id
+  }
+
+  public var variables: GraphQLMap? {
+    return ["id": id]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("getNotificationEndpoint", arguments: ["id": GraphQLVariable("id")], type: .object(GetNotificationEndpoint.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(getNotificationEndpoint: GetNotificationEndpoint? = nil) {
+      self.init(snapshot: ["__typename": "Query", "getNotificationEndpoint": getNotificationEndpoint.flatMap { $0.snapshot }])
+    }
+
+    public var getNotificationEndpoint: GetNotificationEndpoint? {
+      get {
+        return (snapshot["getNotificationEndpoint"] as? Snapshot).flatMap { GetNotificationEndpoint(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "getNotificationEndpoint")
+      }
+    }
+
+    public struct GetNotificationEndpoint: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationEndpoint"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("deviceToken", type: .nonNull(.scalar(String.self))),
+        GraphQLField("platform", type: .nonNull(.scalar(NotificationPlatform.self))),
+        GraphQLField("deviceName", type: .scalar(String.self)),
+        GraphQLField("enabled", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("platformEndpointArn", type: .scalar(String.self)),
+        GraphQLField("lastUsedAt", type: .scalar(String.self)),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, orgId: String, userId: String, deviceToken: String, platform: NotificationPlatform, deviceName: String? = nil, enabled: Bool, platformEndpointArn: String? = nil, lastUsedAt: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationEndpoint", "id": id, "orgId": orgId, "userId": userId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var orgId: String {
+        get {
+          return snapshot["orgId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "orgId")
+        }
+      }
+
+      public var userId: String {
+        get {
+          return snapshot["userId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var deviceToken: String {
+        get {
+          return snapshot["deviceToken"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "deviceToken")
+        }
+      }
+
+      public var platform: NotificationPlatform {
+        get {
+          return snapshot["platform"]! as! NotificationPlatform
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "platform")
+        }
+      }
+
+      public var deviceName: String? {
+        get {
+          return snapshot["deviceName"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "deviceName")
+        }
+      }
+
+      public var enabled: Bool {
+        get {
+          return snapshot["enabled"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "enabled")
+        }
+      }
+
+      public var platformEndpointArn: String? {
+        get {
+          return snapshot["platformEndpointArn"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "platformEndpointArn")
+        }
+      }
+
+      public var lastUsedAt: String? {
+        get {
+          return snapshot["lastUsedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "lastUsedAt")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class ListNotificationEndpointsQuery: GraphQLQuery {
+  public static let operationString =
+    "query ListNotificationEndpoints($filter: ModelNotificationEndpointFilterInput, $limit: Int, $nextToken: String) {\n  listNotificationEndpoints(filter: $filter, limit: $limit, nextToken: $nextToken) {\n    __typename\n    items {\n      __typename\n      id\n      orgId\n      userId\n      deviceToken\n      platform\n      deviceName\n      enabled\n      platformEndpointArn\n      lastUsedAt\n      createdAt\n      updatedAt\n    }\n    nextToken\n  }\n}"
+
+  public var filter: ModelNotificationEndpointFilterInput?
+  public var limit: Int?
+  public var nextToken: String?
+
+  public init(filter: ModelNotificationEndpointFilterInput? = nil, limit: Int? = nil, nextToken: String? = nil) {
+    self.filter = filter
+    self.limit = limit
+    self.nextToken = nextToken
+  }
+
+  public var variables: GraphQLMap? {
+    return ["filter": filter, "limit": limit, "nextToken": nextToken]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("listNotificationEndpoints", arguments: ["filter": GraphQLVariable("filter"), "limit": GraphQLVariable("limit"), "nextToken": GraphQLVariable("nextToken")], type: .object(ListNotificationEndpoint.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(listNotificationEndpoints: ListNotificationEndpoint? = nil) {
+      self.init(snapshot: ["__typename": "Query", "listNotificationEndpoints": listNotificationEndpoints.flatMap { $0.snapshot }])
+    }
+
+    public var listNotificationEndpoints: ListNotificationEndpoint? {
+      get {
+        return (snapshot["listNotificationEndpoints"] as? Snapshot).flatMap { ListNotificationEndpoint(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "listNotificationEndpoints")
+      }
+    }
+
+    public struct ListNotificationEndpoint: GraphQLSelectionSet {
+      public static let possibleTypes = ["ModelNotificationEndpointConnection"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("items", type: .nonNull(.list(.object(Item.selections)))),
+        GraphQLField("nextToken", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(items: [Item?], nextToken: String? = nil) {
+        self.init(snapshot: ["__typename": "ModelNotificationEndpointConnection", "items": items.map { $0.flatMap { $0.snapshot } }, "nextToken": nextToken])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var items: [Item?] {
+        get {
+          return (snapshot["items"] as! [Snapshot?]).map { $0.flatMap { Item(snapshot: $0) } }
+        }
+        set {
+          snapshot.updateValue(newValue.map { $0.flatMap { $0.snapshot } }, forKey: "items")
+        }
+      }
+
+      public var nextToken: String? {
+        get {
+          return snapshot["nextToken"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "nextToken")
+        }
+      }
+
+      public struct Item: GraphQLSelectionSet {
+        public static let possibleTypes = ["NotificationEndpoint"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+          GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+          GraphQLField("deviceToken", type: .nonNull(.scalar(String.self))),
+          GraphQLField("platform", type: .nonNull(.scalar(NotificationPlatform.self))),
+          GraphQLField("deviceName", type: .scalar(String.self)),
+          GraphQLField("enabled", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("platformEndpointArn", type: .scalar(String.self)),
+          GraphQLField("lastUsedAt", type: .scalar(String.self)),
+          GraphQLField("createdAt", type: .scalar(String.self)),
+          GraphQLField("updatedAt", type: .scalar(String.self)),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(id: GraphQLID, orgId: String, userId: String, deviceToken: String, platform: NotificationPlatform, deviceName: String? = nil, enabled: Bool, platformEndpointArn: String? = nil, lastUsedAt: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+          self.init(snapshot: ["__typename": "NotificationEndpoint", "id": id, "orgId": orgId, "userId": userId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: GraphQLID {
+          get {
+            return snapshot["id"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var orgId: String {
+          get {
+            return snapshot["orgId"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "orgId")
+          }
+        }
+
+        public var userId: String {
+          get {
+            return snapshot["userId"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "userId")
+          }
+        }
+
+        public var deviceToken: String {
+          get {
+            return snapshot["deviceToken"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "deviceToken")
+          }
+        }
+
+        public var platform: NotificationPlatform {
+          get {
+            return snapshot["platform"]! as! NotificationPlatform
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "platform")
+          }
+        }
+
+        public var deviceName: String? {
+          get {
+            return snapshot["deviceName"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "deviceName")
+          }
+        }
+
+        public var enabled: Bool {
+          get {
+            return snapshot["enabled"]! as! Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "enabled")
+          }
+        }
+
+        public var platformEndpointArn: String? {
+          get {
+            return snapshot["platformEndpointArn"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "platformEndpointArn")
+          }
+        }
+
+        public var lastUsedAt: String? {
+          get {
+            return snapshot["lastUsedAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "lastUsedAt")
+          }
+        }
+
+        public var createdAt: String? {
+          get {
+            return snapshot["createdAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdAt")
+          }
+        }
+
+        public var updatedAt: String? {
+          get {
+            return snapshot["updatedAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "updatedAt")
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class NotificationEndpointsByOrgQuery: GraphQLQuery {
+  public static let operationString =
+    "query NotificationEndpointsByOrg($orgId: String!, $updatedAt: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelNotificationEndpointFilterInput, $limit: Int, $nextToken: String) {\n  notificationEndpointsByOrg(\n    orgId: $orgId\n    updatedAt: $updatedAt\n    sortDirection: $sortDirection\n    filter: $filter\n    limit: $limit\n    nextToken: $nextToken\n  ) {\n    __typename\n    items {\n      __typename\n      id\n      orgId\n      userId\n      deviceToken\n      platform\n      deviceName\n      enabled\n      platformEndpointArn\n      lastUsedAt\n      createdAt\n      updatedAt\n    }\n    nextToken\n  }\n}"
+
+  public var orgId: String
+  public var updatedAt: ModelStringKeyConditionInput?
+  public var sortDirection: ModelSortDirection?
+  public var filter: ModelNotificationEndpointFilterInput?
+  public var limit: Int?
+  public var nextToken: String?
+
+  public init(orgId: String, updatedAt: ModelStringKeyConditionInput? = nil, sortDirection: ModelSortDirection? = nil, filter: ModelNotificationEndpointFilterInput? = nil, limit: Int? = nil, nextToken: String? = nil) {
+    self.orgId = orgId
+    self.updatedAt = updatedAt
+    self.sortDirection = sortDirection
+    self.filter = filter
+    self.limit = limit
+    self.nextToken = nextToken
+  }
+
+  public var variables: GraphQLMap? {
+    return ["orgId": orgId, "updatedAt": updatedAt, "sortDirection": sortDirection, "filter": filter, "limit": limit, "nextToken": nextToken]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("notificationEndpointsByOrg", arguments: ["orgId": GraphQLVariable("orgId"), "updatedAt": GraphQLVariable("updatedAt"), "sortDirection": GraphQLVariable("sortDirection"), "filter": GraphQLVariable("filter"), "limit": GraphQLVariable("limit"), "nextToken": GraphQLVariable("nextToken")], type: .object(NotificationEndpointsByOrg.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(notificationEndpointsByOrg: NotificationEndpointsByOrg? = nil) {
+      self.init(snapshot: ["__typename": "Query", "notificationEndpointsByOrg": notificationEndpointsByOrg.flatMap { $0.snapshot }])
+    }
+
+    public var notificationEndpointsByOrg: NotificationEndpointsByOrg? {
+      get {
+        return (snapshot["notificationEndpointsByOrg"] as? Snapshot).flatMap { NotificationEndpointsByOrg(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "notificationEndpointsByOrg")
+      }
+    }
+
+    public struct NotificationEndpointsByOrg: GraphQLSelectionSet {
+      public static let possibleTypes = ["ModelNotificationEndpointConnection"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("items", type: .nonNull(.list(.object(Item.selections)))),
+        GraphQLField("nextToken", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(items: [Item?], nextToken: String? = nil) {
+        self.init(snapshot: ["__typename": "ModelNotificationEndpointConnection", "items": items.map { $0.flatMap { $0.snapshot } }, "nextToken": nextToken])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var items: [Item?] {
+        get {
+          return (snapshot["items"] as! [Snapshot?]).map { $0.flatMap { Item(snapshot: $0) } }
+        }
+        set {
+          snapshot.updateValue(newValue.map { $0.flatMap { $0.snapshot } }, forKey: "items")
+        }
+      }
+
+      public var nextToken: String? {
+        get {
+          return snapshot["nextToken"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "nextToken")
+        }
+      }
+
+      public struct Item: GraphQLSelectionSet {
+        public static let possibleTypes = ["NotificationEndpoint"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+          GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+          GraphQLField("deviceToken", type: .nonNull(.scalar(String.self))),
+          GraphQLField("platform", type: .nonNull(.scalar(NotificationPlatform.self))),
+          GraphQLField("deviceName", type: .scalar(String.self)),
+          GraphQLField("enabled", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("platformEndpointArn", type: .scalar(String.self)),
+          GraphQLField("lastUsedAt", type: .scalar(String.self)),
+          GraphQLField("createdAt", type: .scalar(String.self)),
+          GraphQLField("updatedAt", type: .scalar(String.self)),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(id: GraphQLID, orgId: String, userId: String, deviceToken: String, platform: NotificationPlatform, deviceName: String? = nil, enabled: Bool, platformEndpointArn: String? = nil, lastUsedAt: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+          self.init(snapshot: ["__typename": "NotificationEndpoint", "id": id, "orgId": orgId, "userId": userId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: GraphQLID {
+          get {
+            return snapshot["id"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var orgId: String {
+          get {
+            return snapshot["orgId"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "orgId")
+          }
+        }
+
+        public var userId: String {
+          get {
+            return snapshot["userId"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "userId")
+          }
+        }
+
+        public var deviceToken: String {
+          get {
+            return snapshot["deviceToken"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "deviceToken")
+          }
+        }
+
+        public var platform: NotificationPlatform {
+          get {
+            return snapshot["platform"]! as! NotificationPlatform
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "platform")
+          }
+        }
+
+        public var deviceName: String? {
+          get {
+            return snapshot["deviceName"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "deviceName")
+          }
+        }
+
+        public var enabled: Bool {
+          get {
+            return snapshot["enabled"]! as! Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "enabled")
+          }
+        }
+
+        public var platformEndpointArn: String? {
+          get {
+            return snapshot["platformEndpointArn"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "platformEndpointArn")
+          }
+        }
+
+        public var lastUsedAt: String? {
+          get {
+            return snapshot["lastUsedAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "lastUsedAt")
+          }
+        }
+
+        public var createdAt: String? {
+          get {
+            return snapshot["createdAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdAt")
+          }
+        }
+
+        public var updatedAt: String? {
+          get {
+            return snapshot["updatedAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "updatedAt")
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class NotificationEndpointsByUserQuery: GraphQLQuery {
+  public static let operationString =
+    "query NotificationEndpointsByUser($userId: String!, $updatedAt: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelNotificationEndpointFilterInput, $limit: Int, $nextToken: String) {\n  notificationEndpointsByUser(\n    userId: $userId\n    updatedAt: $updatedAt\n    sortDirection: $sortDirection\n    filter: $filter\n    limit: $limit\n    nextToken: $nextToken\n  ) {\n    __typename\n    items {\n      __typename\n      id\n      orgId\n      userId\n      deviceToken\n      platform\n      deviceName\n      enabled\n      platformEndpointArn\n      lastUsedAt\n      createdAt\n      updatedAt\n    }\n    nextToken\n  }\n}"
+
+  public var userId: String
+  public var updatedAt: ModelStringKeyConditionInput?
+  public var sortDirection: ModelSortDirection?
+  public var filter: ModelNotificationEndpointFilterInput?
+  public var limit: Int?
+  public var nextToken: String?
+
+  public init(userId: String, updatedAt: ModelStringKeyConditionInput? = nil, sortDirection: ModelSortDirection? = nil, filter: ModelNotificationEndpointFilterInput? = nil, limit: Int? = nil, nextToken: String? = nil) {
+    self.userId = userId
+    self.updatedAt = updatedAt
+    self.sortDirection = sortDirection
+    self.filter = filter
+    self.limit = limit
+    self.nextToken = nextToken
+  }
+
+  public var variables: GraphQLMap? {
+    return ["userId": userId, "updatedAt": updatedAt, "sortDirection": sortDirection, "filter": filter, "limit": limit, "nextToken": nextToken]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("notificationEndpointsByUser", arguments: ["userId": GraphQLVariable("userId"), "updatedAt": GraphQLVariable("updatedAt"), "sortDirection": GraphQLVariable("sortDirection"), "filter": GraphQLVariable("filter"), "limit": GraphQLVariable("limit"), "nextToken": GraphQLVariable("nextToken")], type: .object(NotificationEndpointsByUser.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(notificationEndpointsByUser: NotificationEndpointsByUser? = nil) {
+      self.init(snapshot: ["__typename": "Query", "notificationEndpointsByUser": notificationEndpointsByUser.flatMap { $0.snapshot }])
+    }
+
+    public var notificationEndpointsByUser: NotificationEndpointsByUser? {
+      get {
+        return (snapshot["notificationEndpointsByUser"] as? Snapshot).flatMap { NotificationEndpointsByUser(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "notificationEndpointsByUser")
+      }
+    }
+
+    public struct NotificationEndpointsByUser: GraphQLSelectionSet {
+      public static let possibleTypes = ["ModelNotificationEndpointConnection"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("items", type: .nonNull(.list(.object(Item.selections)))),
+        GraphQLField("nextToken", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(items: [Item?], nextToken: String? = nil) {
+        self.init(snapshot: ["__typename": "ModelNotificationEndpointConnection", "items": items.map { $0.flatMap { $0.snapshot } }, "nextToken": nextToken])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var items: [Item?] {
+        get {
+          return (snapshot["items"] as! [Snapshot?]).map { $0.flatMap { Item(snapshot: $0) } }
+        }
+        set {
+          snapshot.updateValue(newValue.map { $0.flatMap { $0.snapshot } }, forKey: "items")
+        }
+      }
+
+      public var nextToken: String? {
+        get {
+          return snapshot["nextToken"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "nextToken")
+        }
+      }
+
+      public struct Item: GraphQLSelectionSet {
+        public static let possibleTypes = ["NotificationEndpoint"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+          GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+          GraphQLField("deviceToken", type: .nonNull(.scalar(String.self))),
+          GraphQLField("platform", type: .nonNull(.scalar(NotificationPlatform.self))),
+          GraphQLField("deviceName", type: .scalar(String.self)),
+          GraphQLField("enabled", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("platformEndpointArn", type: .scalar(String.self)),
+          GraphQLField("lastUsedAt", type: .scalar(String.self)),
+          GraphQLField("createdAt", type: .scalar(String.self)),
+          GraphQLField("updatedAt", type: .scalar(String.self)),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(id: GraphQLID, orgId: String, userId: String, deviceToken: String, platform: NotificationPlatform, deviceName: String? = nil, enabled: Bool, platformEndpointArn: String? = nil, lastUsedAt: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+          self.init(snapshot: ["__typename": "NotificationEndpoint", "id": id, "orgId": orgId, "userId": userId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: GraphQLID {
+          get {
+            return snapshot["id"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var orgId: String {
+          get {
+            return snapshot["orgId"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "orgId")
+          }
+        }
+
+        public var userId: String {
+          get {
+            return snapshot["userId"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "userId")
+          }
+        }
+
+        public var deviceToken: String {
+          get {
+            return snapshot["deviceToken"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "deviceToken")
+          }
+        }
+
+        public var platform: NotificationPlatform {
+          get {
+            return snapshot["platform"]! as! NotificationPlatform
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "platform")
+          }
+        }
+
+        public var deviceName: String? {
+          get {
+            return snapshot["deviceName"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "deviceName")
+          }
+        }
+
+        public var enabled: Bool {
+          get {
+            return snapshot["enabled"]! as! Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "enabled")
+          }
+        }
+
+        public var platformEndpointArn: String? {
+          get {
+            return snapshot["platformEndpointArn"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "platformEndpointArn")
+          }
+        }
+
+        public var lastUsedAt: String? {
+          get {
+            return snapshot["lastUsedAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "lastUsedAt")
+          }
+        }
+
+        public var createdAt: String? {
+          get {
+            return snapshot["createdAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdAt")
+          }
+        }
+
+        public var updatedAt: String? {
+          get {
+            return snapshot["updatedAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "updatedAt")
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class GetNotificationMessageQuery: GraphQLQuery {
+  public static let operationString =
+    "query GetNotificationMessage($id: ID!) {\n  getNotificationMessage(id: $id) {\n    __typename\n    id\n    orgId\n    title\n    body\n    category\n    recipients\n    metadata\n    createdBy\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var id: GraphQLID
+
+  public init(id: GraphQLID) {
+    self.id = id
+  }
+
+  public var variables: GraphQLMap? {
+    return ["id": id]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("getNotificationMessage", arguments: ["id": GraphQLVariable("id")], type: .object(GetNotificationMessage.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(getNotificationMessage: GetNotificationMessage? = nil) {
+      self.init(snapshot: ["__typename": "Query", "getNotificationMessage": getNotificationMessage.flatMap { $0.snapshot }])
+    }
+
+    public var getNotificationMessage: GetNotificationMessage? {
+      get {
+        return (snapshot["getNotificationMessage"] as? Snapshot).flatMap { GetNotificationMessage(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "getNotificationMessage")
+      }
+    }
+
+    public struct GetNotificationMessage: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationMessage"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("title", type: .nonNull(.scalar(String.self))),
+        GraphQLField("body", type: .nonNull(.scalar(String.self))),
+        GraphQLField("category", type: .nonNull(.scalar(NotificationCategory.self))),
+        GraphQLField("recipients", type: .nonNull(.list(.nonNull(.scalar(String.self))))),
+        GraphQLField("metadata", type: .scalar(String.self)),
+        GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, orgId: String, title: String, body: String, category: NotificationCategory, recipients: [String], metadata: String? = nil, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationMessage", "id": id, "orgId": orgId, "title": title, "body": body, "category": category, "recipients": recipients, "metadata": metadata, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var orgId: String {
+        get {
+          return snapshot["orgId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "orgId")
+        }
+      }
+
+      public var title: String {
+        get {
+          return snapshot["title"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "title")
+        }
+      }
+
+      public var body: String {
+        get {
+          return snapshot["body"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "body")
+        }
+      }
+
+      public var category: NotificationCategory {
+        get {
+          return snapshot["category"]! as! NotificationCategory
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "category")
+        }
+      }
+
+      public var recipients: [String] {
+        get {
+          return snapshot["recipients"]! as! [String]
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "recipients")
+        }
+      }
+
+      public var metadata: String? {
+        get {
+          return snapshot["metadata"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "metadata")
+        }
+      }
+
+      public var createdBy: String {
+        get {
+          return snapshot["createdBy"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdBy")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class ListNotificationMessagesQuery: GraphQLQuery {
+  public static let operationString =
+    "query ListNotificationMessages($filter: ModelNotificationMessageFilterInput, $limit: Int, $nextToken: String) {\n  listNotificationMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {\n    __typename\n    items {\n      __typename\n      id\n      orgId\n      title\n      body\n      category\n      recipients\n      metadata\n      createdBy\n      createdAt\n      updatedAt\n    }\n    nextToken\n  }\n}"
+
+  public var filter: ModelNotificationMessageFilterInput?
+  public var limit: Int?
+  public var nextToken: String?
+
+  public init(filter: ModelNotificationMessageFilterInput? = nil, limit: Int? = nil, nextToken: String? = nil) {
+    self.filter = filter
+    self.limit = limit
+    self.nextToken = nextToken
+  }
+
+  public var variables: GraphQLMap? {
+    return ["filter": filter, "limit": limit, "nextToken": nextToken]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("listNotificationMessages", arguments: ["filter": GraphQLVariable("filter"), "limit": GraphQLVariable("limit"), "nextToken": GraphQLVariable("nextToken")], type: .object(ListNotificationMessage.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(listNotificationMessages: ListNotificationMessage? = nil) {
+      self.init(snapshot: ["__typename": "Query", "listNotificationMessages": listNotificationMessages.flatMap { $0.snapshot }])
+    }
+
+    public var listNotificationMessages: ListNotificationMessage? {
+      get {
+        return (snapshot["listNotificationMessages"] as? Snapshot).flatMap { ListNotificationMessage(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "listNotificationMessages")
+      }
+    }
+
+    public struct ListNotificationMessage: GraphQLSelectionSet {
+      public static let possibleTypes = ["ModelNotificationMessageConnection"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("items", type: .nonNull(.list(.object(Item.selections)))),
+        GraphQLField("nextToken", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(items: [Item?], nextToken: String? = nil) {
+        self.init(snapshot: ["__typename": "ModelNotificationMessageConnection", "items": items.map { $0.flatMap { $0.snapshot } }, "nextToken": nextToken])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var items: [Item?] {
+        get {
+          return (snapshot["items"] as! [Snapshot?]).map { $0.flatMap { Item(snapshot: $0) } }
+        }
+        set {
+          snapshot.updateValue(newValue.map { $0.flatMap { $0.snapshot } }, forKey: "items")
+        }
+      }
+
+      public var nextToken: String? {
+        get {
+          return snapshot["nextToken"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "nextToken")
+        }
+      }
+
+      public struct Item: GraphQLSelectionSet {
+        public static let possibleTypes = ["NotificationMessage"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+          GraphQLField("title", type: .nonNull(.scalar(String.self))),
+          GraphQLField("body", type: .nonNull(.scalar(String.self))),
+          GraphQLField("category", type: .nonNull(.scalar(NotificationCategory.self))),
+          GraphQLField("recipients", type: .nonNull(.list(.nonNull(.scalar(String.self))))),
+          GraphQLField("metadata", type: .scalar(String.self)),
+          GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
+          GraphQLField("createdAt", type: .scalar(String.self)),
+          GraphQLField("updatedAt", type: .scalar(String.self)),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(id: GraphQLID, orgId: String, title: String, body: String, category: NotificationCategory, recipients: [String], metadata: String? = nil, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
+          self.init(snapshot: ["__typename": "NotificationMessage", "id": id, "orgId": orgId, "title": title, "body": body, "category": category, "recipients": recipients, "metadata": metadata, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: GraphQLID {
+          get {
+            return snapshot["id"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var orgId: String {
+          get {
+            return snapshot["orgId"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "orgId")
+          }
+        }
+
+        public var title: String {
+          get {
+            return snapshot["title"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "title")
+          }
+        }
+
+        public var body: String {
+          get {
+            return snapshot["body"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "body")
+          }
+        }
+
+        public var category: NotificationCategory {
+          get {
+            return snapshot["category"]! as! NotificationCategory
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "category")
+          }
+        }
+
+        public var recipients: [String] {
+          get {
+            return snapshot["recipients"]! as! [String]
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "recipients")
+          }
+        }
+
+        public var metadata: String? {
+          get {
+            return snapshot["metadata"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "metadata")
+          }
+        }
+
+        public var createdBy: String {
+          get {
+            return snapshot["createdBy"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdBy")
+          }
+        }
+
+        public var createdAt: String? {
+          get {
+            return snapshot["createdAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdAt")
+          }
+        }
+
+        public var updatedAt: String? {
+          get {
+            return snapshot["updatedAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "updatedAt")
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class NotificationMessagesByOrgQuery: GraphQLQuery {
+  public static let operationString =
+    "query NotificationMessagesByOrg($orgId: String!, $createdAt: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelNotificationMessageFilterInput, $limit: Int, $nextToken: String) {\n  notificationMessagesByOrg(\n    orgId: $orgId\n    createdAt: $createdAt\n    sortDirection: $sortDirection\n    filter: $filter\n    limit: $limit\n    nextToken: $nextToken\n  ) {\n    __typename\n    items {\n      __typename\n      id\n      orgId\n      title\n      body\n      category\n      recipients\n      metadata\n      createdBy\n      createdAt\n      updatedAt\n    }\n    nextToken\n  }\n}"
+
+  public var orgId: String
+  public var createdAt: ModelStringKeyConditionInput?
+  public var sortDirection: ModelSortDirection?
+  public var filter: ModelNotificationMessageFilterInput?
+  public var limit: Int?
+  public var nextToken: String?
+
+  public init(orgId: String, createdAt: ModelStringKeyConditionInput? = nil, sortDirection: ModelSortDirection? = nil, filter: ModelNotificationMessageFilterInput? = nil, limit: Int? = nil, nextToken: String? = nil) {
+    self.orgId = orgId
+    self.createdAt = createdAt
+    self.sortDirection = sortDirection
+    self.filter = filter
+    self.limit = limit
+    self.nextToken = nextToken
+  }
+
+  public var variables: GraphQLMap? {
+    return ["orgId": orgId, "createdAt": createdAt, "sortDirection": sortDirection, "filter": filter, "limit": limit, "nextToken": nextToken]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("notificationMessagesByOrg", arguments: ["orgId": GraphQLVariable("orgId"), "createdAt": GraphQLVariable("createdAt"), "sortDirection": GraphQLVariable("sortDirection"), "filter": GraphQLVariable("filter"), "limit": GraphQLVariable("limit"), "nextToken": GraphQLVariable("nextToken")], type: .object(NotificationMessagesByOrg.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(notificationMessagesByOrg: NotificationMessagesByOrg? = nil) {
+      self.init(snapshot: ["__typename": "Query", "notificationMessagesByOrg": notificationMessagesByOrg.flatMap { $0.snapshot }])
+    }
+
+    public var notificationMessagesByOrg: NotificationMessagesByOrg? {
+      get {
+        return (snapshot["notificationMessagesByOrg"] as? Snapshot).flatMap { NotificationMessagesByOrg(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "notificationMessagesByOrg")
+      }
+    }
+
+    public struct NotificationMessagesByOrg: GraphQLSelectionSet {
+      public static let possibleTypes = ["ModelNotificationMessageConnection"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("items", type: .nonNull(.list(.object(Item.selections)))),
+        GraphQLField("nextToken", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(items: [Item?], nextToken: String? = nil) {
+        self.init(snapshot: ["__typename": "ModelNotificationMessageConnection", "items": items.map { $0.flatMap { $0.snapshot } }, "nextToken": nextToken])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var items: [Item?] {
+        get {
+          return (snapshot["items"] as! [Snapshot?]).map { $0.flatMap { Item(snapshot: $0) } }
+        }
+        set {
+          snapshot.updateValue(newValue.map { $0.flatMap { $0.snapshot } }, forKey: "items")
+        }
+      }
+
+      public var nextToken: String? {
+        get {
+          return snapshot["nextToken"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "nextToken")
+        }
+      }
+
+      public struct Item: GraphQLSelectionSet {
+        public static let possibleTypes = ["NotificationMessage"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+          GraphQLField("title", type: .nonNull(.scalar(String.self))),
+          GraphQLField("body", type: .nonNull(.scalar(String.self))),
+          GraphQLField("category", type: .nonNull(.scalar(NotificationCategory.self))),
+          GraphQLField("recipients", type: .nonNull(.list(.nonNull(.scalar(String.self))))),
+          GraphQLField("metadata", type: .scalar(String.self)),
+          GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
+          GraphQLField("createdAt", type: .scalar(String.self)),
+          GraphQLField("updatedAt", type: .scalar(String.self)),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(id: GraphQLID, orgId: String, title: String, body: String, category: NotificationCategory, recipients: [String], metadata: String? = nil, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
+          self.init(snapshot: ["__typename": "NotificationMessage", "id": id, "orgId": orgId, "title": title, "body": body, "category": category, "recipients": recipients, "metadata": metadata, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: GraphQLID {
+          get {
+            return snapshot["id"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var orgId: String {
+          get {
+            return snapshot["orgId"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "orgId")
+          }
+        }
+
+        public var title: String {
+          get {
+            return snapshot["title"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "title")
+          }
+        }
+
+        public var body: String {
+          get {
+            return snapshot["body"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "body")
+          }
+        }
+
+        public var category: NotificationCategory {
+          get {
+            return snapshot["category"]! as! NotificationCategory
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "category")
+          }
+        }
+
+        public var recipients: [String] {
+          get {
+            return snapshot["recipients"]! as! [String]
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "recipients")
+          }
+        }
+
+        public var metadata: String? {
+          get {
+            return snapshot["metadata"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "metadata")
+          }
+        }
+
+        public var createdBy: String {
+          get {
+            return snapshot["createdBy"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdBy")
+          }
+        }
+
+        public var createdAt: String? {
+          get {
+            return snapshot["createdAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdAt")
+          }
+        }
+
+        public var updatedAt: String? {
+          get {
+            return snapshot["updatedAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "updatedAt")
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class GetNotificationPreferenceQuery: GraphQLQuery {
+  public static let operationString =
+    "query GetNotificationPreference($id: ID!) {\n  getNotificationPreference(id: $id) {\n    __typename\n    id\n    userId\n    generalBulletin\n    taskAlert\n    overtime\n    squadMessages\n    other\n    contactPhone\n    contactEmail\n    backupEmail\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var id: GraphQLID
+
+  public init(id: GraphQLID) {
+    self.id = id
+  }
+
+  public var variables: GraphQLMap? {
+    return ["id": id]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("getNotificationPreference", arguments: ["id": GraphQLVariable("id")], type: .object(GetNotificationPreference.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(getNotificationPreference: GetNotificationPreference? = nil) {
+      self.init(snapshot: ["__typename": "Query", "getNotificationPreference": getNotificationPreference.flatMap { $0.snapshot }])
+    }
+
+    public var getNotificationPreference: GetNotificationPreference? {
+      get {
+        return (snapshot["getNotificationPreference"] as? Snapshot).flatMap { GetNotificationPreference(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "getNotificationPreference")
+      }
+    }
+
+    public struct GetNotificationPreference: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationPreference"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("generalBulletin", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("taskAlert", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("overtime", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("squadMessages", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("other", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("contactPhone", type: .scalar(String.self)),
+        GraphQLField("contactEmail", type: .scalar(String.self)),
+        GraphQLField("backupEmail", type: .scalar(String.self)),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, userId: String, generalBulletin: Bool, taskAlert: Bool, overtime: Bool, squadMessages: Bool, other: Bool, contactPhone: String? = nil, contactEmail: String? = nil, backupEmail: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationPreference", "id": id, "userId": userId, "generalBulletin": generalBulletin, "taskAlert": taskAlert, "overtime": overtime, "squadMessages": squadMessages, "other": other, "contactPhone": contactPhone, "contactEmail": contactEmail, "backupEmail": backupEmail, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var userId: String {
+        get {
+          return snapshot["userId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var generalBulletin: Bool {
+        get {
+          return snapshot["generalBulletin"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "generalBulletin")
+        }
+      }
+
+      public var taskAlert: Bool {
+        get {
+          return snapshot["taskAlert"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "taskAlert")
+        }
+      }
+
+      public var overtime: Bool {
+        get {
+          return snapshot["overtime"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "overtime")
+        }
+      }
+
+      public var squadMessages: Bool {
+        get {
+          return snapshot["squadMessages"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "squadMessages")
+        }
+      }
+
+      public var other: Bool {
+        get {
+          return snapshot["other"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "other")
+        }
+      }
+
+      public var contactPhone: String? {
+        get {
+          return snapshot["contactPhone"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contactPhone")
+        }
+      }
+
+      public var contactEmail: String? {
+        get {
+          return snapshot["contactEmail"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contactEmail")
+        }
+      }
+
+      public var backupEmail: String? {
+        get {
+          return snapshot["backupEmail"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "backupEmail")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class ListNotificationPreferencesQuery: GraphQLQuery {
+  public static let operationString =
+    "query ListNotificationPreferences($filter: ModelNotificationPreferenceFilterInput, $limit: Int, $nextToken: String) {\n  listNotificationPreferences(\n    filter: $filter\n    limit: $limit\n    nextToken: $nextToken\n  ) {\n    __typename\n    items {\n      __typename\n      id\n      userId\n      generalBulletin\n      taskAlert\n      overtime\n      squadMessages\n      other\n      contactPhone\n      contactEmail\n      backupEmail\n      createdAt\n      updatedAt\n    }\n    nextToken\n  }\n}"
+
+  public var filter: ModelNotificationPreferenceFilterInput?
+  public var limit: Int?
+  public var nextToken: String?
+
+  public init(filter: ModelNotificationPreferenceFilterInput? = nil, limit: Int? = nil, nextToken: String? = nil) {
+    self.filter = filter
+    self.limit = limit
+    self.nextToken = nextToken
+  }
+
+  public var variables: GraphQLMap? {
+    return ["filter": filter, "limit": limit, "nextToken": nextToken]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("listNotificationPreferences", arguments: ["filter": GraphQLVariable("filter"), "limit": GraphQLVariable("limit"), "nextToken": GraphQLVariable("nextToken")], type: .object(ListNotificationPreference.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(listNotificationPreferences: ListNotificationPreference? = nil) {
+      self.init(snapshot: ["__typename": "Query", "listNotificationPreferences": listNotificationPreferences.flatMap { $0.snapshot }])
+    }
+
+    public var listNotificationPreferences: ListNotificationPreference? {
+      get {
+        return (snapshot["listNotificationPreferences"] as? Snapshot).flatMap { ListNotificationPreference(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "listNotificationPreferences")
+      }
+    }
+
+    public struct ListNotificationPreference: GraphQLSelectionSet {
+      public static let possibleTypes = ["ModelNotificationPreferenceConnection"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("items", type: .nonNull(.list(.object(Item.selections)))),
+        GraphQLField("nextToken", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(items: [Item?], nextToken: String? = nil) {
+        self.init(snapshot: ["__typename": "ModelNotificationPreferenceConnection", "items": items.map { $0.flatMap { $0.snapshot } }, "nextToken": nextToken])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var items: [Item?] {
+        get {
+          return (snapshot["items"] as! [Snapshot?]).map { $0.flatMap { Item(snapshot: $0) } }
+        }
+        set {
+          snapshot.updateValue(newValue.map { $0.flatMap { $0.snapshot } }, forKey: "items")
+        }
+      }
+
+      public var nextToken: String? {
+        get {
+          return snapshot["nextToken"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "nextToken")
+        }
+      }
+
+      public struct Item: GraphQLSelectionSet {
+        public static let possibleTypes = ["NotificationPreference"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+          GraphQLField("generalBulletin", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("taskAlert", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("overtime", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("squadMessages", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("other", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("contactPhone", type: .scalar(String.self)),
+          GraphQLField("contactEmail", type: .scalar(String.self)),
+          GraphQLField("backupEmail", type: .scalar(String.self)),
+          GraphQLField("createdAt", type: .scalar(String.self)),
+          GraphQLField("updatedAt", type: .scalar(String.self)),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(id: GraphQLID, userId: String, generalBulletin: Bool, taskAlert: Bool, overtime: Bool, squadMessages: Bool, other: Bool, contactPhone: String? = nil, contactEmail: String? = nil, backupEmail: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+          self.init(snapshot: ["__typename": "NotificationPreference", "id": id, "userId": userId, "generalBulletin": generalBulletin, "taskAlert": taskAlert, "overtime": overtime, "squadMessages": squadMessages, "other": other, "contactPhone": contactPhone, "contactEmail": contactEmail, "backupEmail": backupEmail, "createdAt": createdAt, "updatedAt": updatedAt])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: GraphQLID {
+          get {
+            return snapshot["id"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var userId: String {
+          get {
+            return snapshot["userId"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "userId")
+          }
+        }
+
+        public var generalBulletin: Bool {
+          get {
+            return snapshot["generalBulletin"]! as! Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "generalBulletin")
+          }
+        }
+
+        public var taskAlert: Bool {
+          get {
+            return snapshot["taskAlert"]! as! Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "taskAlert")
+          }
+        }
+
+        public var overtime: Bool {
+          get {
+            return snapshot["overtime"]! as! Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "overtime")
+          }
+        }
+
+        public var squadMessages: Bool {
+          get {
+            return snapshot["squadMessages"]! as! Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "squadMessages")
+          }
+        }
+
+        public var other: Bool {
+          get {
+            return snapshot["other"]! as! Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "other")
+          }
+        }
+
+        public var contactPhone: String? {
+          get {
+            return snapshot["contactPhone"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "contactPhone")
+          }
+        }
+
+        public var contactEmail: String? {
+          get {
+            return snapshot["contactEmail"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "contactEmail")
+          }
+        }
+
+        public var backupEmail: String? {
+          get {
+            return snapshot["backupEmail"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "backupEmail")
+          }
+        }
+
+        public var createdAt: String? {
+          get {
+            return snapshot["createdAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdAt")
+          }
+        }
+
+        public var updatedAt: String? {
+          get {
+            return snapshot["updatedAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "updatedAt")
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class NotificationPreferencesByUserQuery: GraphQLQuery {
+  public static let operationString =
+    "query NotificationPreferencesByUser($userId: String!, $sortDirection: ModelSortDirection, $filter: ModelNotificationPreferenceFilterInput, $limit: Int, $nextToken: String) {\n  notificationPreferencesByUser(\n    userId: $userId\n    sortDirection: $sortDirection\n    filter: $filter\n    limit: $limit\n    nextToken: $nextToken\n  ) {\n    __typename\n    items {\n      __typename\n      id\n      userId\n      generalBulletin\n      taskAlert\n      overtime\n      squadMessages\n      other\n      contactPhone\n      contactEmail\n      backupEmail\n      createdAt\n      updatedAt\n    }\n    nextToken\n  }\n}"
+
+  public var userId: String
+  public var sortDirection: ModelSortDirection?
+  public var filter: ModelNotificationPreferenceFilterInput?
+  public var limit: Int?
+  public var nextToken: String?
+
+  public init(userId: String, sortDirection: ModelSortDirection? = nil, filter: ModelNotificationPreferenceFilterInput? = nil, limit: Int? = nil, nextToken: String? = nil) {
+    self.userId = userId
+    self.sortDirection = sortDirection
+    self.filter = filter
+    self.limit = limit
+    self.nextToken = nextToken
+  }
+
+  public var variables: GraphQLMap? {
+    return ["userId": userId, "sortDirection": sortDirection, "filter": filter, "limit": limit, "nextToken": nextToken]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("notificationPreferencesByUser", arguments: ["userId": GraphQLVariable("userId"), "sortDirection": GraphQLVariable("sortDirection"), "filter": GraphQLVariable("filter"), "limit": GraphQLVariable("limit"), "nextToken": GraphQLVariable("nextToken")], type: .object(NotificationPreferencesByUser.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(notificationPreferencesByUser: NotificationPreferencesByUser? = nil) {
+      self.init(snapshot: ["__typename": "Query", "notificationPreferencesByUser": notificationPreferencesByUser.flatMap { $0.snapshot }])
+    }
+
+    public var notificationPreferencesByUser: NotificationPreferencesByUser? {
+      get {
+        return (snapshot["notificationPreferencesByUser"] as? Snapshot).flatMap { NotificationPreferencesByUser(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "notificationPreferencesByUser")
+      }
+    }
+
+    public struct NotificationPreferencesByUser: GraphQLSelectionSet {
+      public static let possibleTypes = ["ModelNotificationPreferenceConnection"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("items", type: .nonNull(.list(.object(Item.selections)))),
+        GraphQLField("nextToken", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(items: [Item?], nextToken: String? = nil) {
+        self.init(snapshot: ["__typename": "ModelNotificationPreferenceConnection", "items": items.map { $0.flatMap { $0.snapshot } }, "nextToken": nextToken])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var items: [Item?] {
+        get {
+          return (snapshot["items"] as! [Snapshot?]).map { $0.flatMap { Item(snapshot: $0) } }
+        }
+        set {
+          snapshot.updateValue(newValue.map { $0.flatMap { $0.snapshot } }, forKey: "items")
+        }
+      }
+
+      public var nextToken: String? {
+        get {
+          return snapshot["nextToken"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "nextToken")
+        }
+      }
+
+      public struct Item: GraphQLSelectionSet {
+        public static let possibleTypes = ["NotificationPreference"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+          GraphQLField("generalBulletin", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("taskAlert", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("overtime", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("squadMessages", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("other", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("contactPhone", type: .scalar(String.self)),
+          GraphQLField("contactEmail", type: .scalar(String.self)),
+          GraphQLField("backupEmail", type: .scalar(String.self)),
+          GraphQLField("createdAt", type: .scalar(String.self)),
+          GraphQLField("updatedAt", type: .scalar(String.self)),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(id: GraphQLID, userId: String, generalBulletin: Bool, taskAlert: Bool, overtime: Bool, squadMessages: Bool, other: Bool, contactPhone: String? = nil, contactEmail: String? = nil, backupEmail: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+          self.init(snapshot: ["__typename": "NotificationPreference", "id": id, "userId": userId, "generalBulletin": generalBulletin, "taskAlert": taskAlert, "overtime": overtime, "squadMessages": squadMessages, "other": other, "contactPhone": contactPhone, "contactEmail": contactEmail, "backupEmail": backupEmail, "createdAt": createdAt, "updatedAt": updatedAt])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: GraphQLID {
+          get {
+            return snapshot["id"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var userId: String {
+          get {
+            return snapshot["userId"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "userId")
+          }
+        }
+
+        public var generalBulletin: Bool {
+          get {
+            return snapshot["generalBulletin"]! as! Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "generalBulletin")
+          }
+        }
+
+        public var taskAlert: Bool {
+          get {
+            return snapshot["taskAlert"]! as! Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "taskAlert")
+          }
+        }
+
+        public var overtime: Bool {
+          get {
+            return snapshot["overtime"]! as! Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "overtime")
+          }
+        }
+
+        public var squadMessages: Bool {
+          get {
+            return snapshot["squadMessages"]! as! Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "squadMessages")
+          }
+        }
+
+        public var other: Bool {
+          get {
+            return snapshot["other"]! as! Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "other")
+          }
+        }
+
+        public var contactPhone: String? {
+          get {
+            return snapshot["contactPhone"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "contactPhone")
+          }
+        }
+
+        public var contactEmail: String? {
+          get {
+            return snapshot["contactEmail"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "contactEmail")
+          }
+        }
+
+        public var backupEmail: String? {
+          get {
+            return snapshot["backupEmail"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "backupEmail")
+          }
+        }
+
+        public var createdAt: String? {
+          get {
+            return snapshot["createdAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "createdAt")
+          }
+        }
+
+        public var updatedAt: String? {
+          get {
+            return snapshot["updatedAt"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "updatedAt")
+          }
+        }
+      }
+    }
+  }
+}
+
 public final class OnCreateRosterEntrySubscription: GraphQLSubscription {
   public static let operationString =
     "subscription OnCreateRosterEntry($filter: ModelSubscriptionRosterEntryFilterInput, $badgeNumber: String) {\n  onCreateRosterEntry(filter: $filter, badgeNumber: $badgeNumber) {\n    __typename\n    id\n    orgId\n    badgeNumber\n    shift\n    startsAt\n    endsAt\n    notes\n    createdAt\n    updatedAt\n  }\n}"
@@ -18078,6 +24035,1629 @@ public final class OnDeleteOvertimeAuditEventSubscription: GraphQLSubscription {
       public var updatedAt: String {
         get {
           return snapshot["updatedAt"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class OnCreateNotificationEndpointSubscription: GraphQLSubscription {
+  public static let operationString =
+    "subscription OnCreateNotificationEndpoint($filter: ModelSubscriptionNotificationEndpointFilterInput, $userId: String) {\n  onCreateNotificationEndpoint(filter: $filter, userId: $userId) {\n    __typename\n    id\n    orgId\n    userId\n    deviceToken\n    platform\n    deviceName\n    enabled\n    platformEndpointArn\n    lastUsedAt\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var filter: ModelSubscriptionNotificationEndpointFilterInput?
+  public var userId: String?
+
+  public init(filter: ModelSubscriptionNotificationEndpointFilterInput? = nil, userId: String? = nil) {
+    self.filter = filter
+    self.userId = userId
+  }
+
+  public var variables: GraphQLMap? {
+    return ["filter": filter, "userId": userId]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Subscription"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("onCreateNotificationEndpoint", arguments: ["filter": GraphQLVariable("filter"), "userId": GraphQLVariable("userId")], type: .object(OnCreateNotificationEndpoint.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(onCreateNotificationEndpoint: OnCreateNotificationEndpoint? = nil) {
+      self.init(snapshot: ["__typename": "Subscription", "onCreateNotificationEndpoint": onCreateNotificationEndpoint.flatMap { $0.snapshot }])
+    }
+
+    public var onCreateNotificationEndpoint: OnCreateNotificationEndpoint? {
+      get {
+        return (snapshot["onCreateNotificationEndpoint"] as? Snapshot).flatMap { OnCreateNotificationEndpoint(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "onCreateNotificationEndpoint")
+      }
+    }
+
+    public struct OnCreateNotificationEndpoint: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationEndpoint"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("deviceToken", type: .nonNull(.scalar(String.self))),
+        GraphQLField("platform", type: .nonNull(.scalar(NotificationPlatform.self))),
+        GraphQLField("deviceName", type: .scalar(String.self)),
+        GraphQLField("enabled", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("platformEndpointArn", type: .scalar(String.self)),
+        GraphQLField("lastUsedAt", type: .scalar(String.self)),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, orgId: String, userId: String, deviceToken: String, platform: NotificationPlatform, deviceName: String? = nil, enabled: Bool, platformEndpointArn: String? = nil, lastUsedAt: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationEndpoint", "id": id, "orgId": orgId, "userId": userId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var orgId: String {
+        get {
+          return snapshot["orgId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "orgId")
+        }
+      }
+
+      public var userId: String {
+        get {
+          return snapshot["userId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var deviceToken: String {
+        get {
+          return snapshot["deviceToken"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "deviceToken")
+        }
+      }
+
+      public var platform: NotificationPlatform {
+        get {
+          return snapshot["platform"]! as! NotificationPlatform
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "platform")
+        }
+      }
+
+      public var deviceName: String? {
+        get {
+          return snapshot["deviceName"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "deviceName")
+        }
+      }
+
+      public var enabled: Bool {
+        get {
+          return snapshot["enabled"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "enabled")
+        }
+      }
+
+      public var platformEndpointArn: String? {
+        get {
+          return snapshot["platformEndpointArn"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "platformEndpointArn")
+        }
+      }
+
+      public var lastUsedAt: String? {
+        get {
+          return snapshot["lastUsedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "lastUsedAt")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class OnUpdateNotificationEndpointSubscription: GraphQLSubscription {
+  public static let operationString =
+    "subscription OnUpdateNotificationEndpoint($filter: ModelSubscriptionNotificationEndpointFilterInput, $userId: String) {\n  onUpdateNotificationEndpoint(filter: $filter, userId: $userId) {\n    __typename\n    id\n    orgId\n    userId\n    deviceToken\n    platform\n    deviceName\n    enabled\n    platformEndpointArn\n    lastUsedAt\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var filter: ModelSubscriptionNotificationEndpointFilterInput?
+  public var userId: String?
+
+  public init(filter: ModelSubscriptionNotificationEndpointFilterInput? = nil, userId: String? = nil) {
+    self.filter = filter
+    self.userId = userId
+  }
+
+  public var variables: GraphQLMap? {
+    return ["filter": filter, "userId": userId]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Subscription"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("onUpdateNotificationEndpoint", arguments: ["filter": GraphQLVariable("filter"), "userId": GraphQLVariable("userId")], type: .object(OnUpdateNotificationEndpoint.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(onUpdateNotificationEndpoint: OnUpdateNotificationEndpoint? = nil) {
+      self.init(snapshot: ["__typename": "Subscription", "onUpdateNotificationEndpoint": onUpdateNotificationEndpoint.flatMap { $0.snapshot }])
+    }
+
+    public var onUpdateNotificationEndpoint: OnUpdateNotificationEndpoint? {
+      get {
+        return (snapshot["onUpdateNotificationEndpoint"] as? Snapshot).flatMap { OnUpdateNotificationEndpoint(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "onUpdateNotificationEndpoint")
+      }
+    }
+
+    public struct OnUpdateNotificationEndpoint: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationEndpoint"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("deviceToken", type: .nonNull(.scalar(String.self))),
+        GraphQLField("platform", type: .nonNull(.scalar(NotificationPlatform.self))),
+        GraphQLField("deviceName", type: .scalar(String.self)),
+        GraphQLField("enabled", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("platformEndpointArn", type: .scalar(String.self)),
+        GraphQLField("lastUsedAt", type: .scalar(String.self)),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, orgId: String, userId: String, deviceToken: String, platform: NotificationPlatform, deviceName: String? = nil, enabled: Bool, platformEndpointArn: String? = nil, lastUsedAt: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationEndpoint", "id": id, "orgId": orgId, "userId": userId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var orgId: String {
+        get {
+          return snapshot["orgId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "orgId")
+        }
+      }
+
+      public var userId: String {
+        get {
+          return snapshot["userId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var deviceToken: String {
+        get {
+          return snapshot["deviceToken"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "deviceToken")
+        }
+      }
+
+      public var platform: NotificationPlatform {
+        get {
+          return snapshot["platform"]! as! NotificationPlatform
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "platform")
+        }
+      }
+
+      public var deviceName: String? {
+        get {
+          return snapshot["deviceName"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "deviceName")
+        }
+      }
+
+      public var enabled: Bool {
+        get {
+          return snapshot["enabled"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "enabled")
+        }
+      }
+
+      public var platformEndpointArn: String? {
+        get {
+          return snapshot["platformEndpointArn"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "platformEndpointArn")
+        }
+      }
+
+      public var lastUsedAt: String? {
+        get {
+          return snapshot["lastUsedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "lastUsedAt")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class OnDeleteNotificationEndpointSubscription: GraphQLSubscription {
+  public static let operationString =
+    "subscription OnDeleteNotificationEndpoint($filter: ModelSubscriptionNotificationEndpointFilterInput, $userId: String) {\n  onDeleteNotificationEndpoint(filter: $filter, userId: $userId) {\n    __typename\n    id\n    orgId\n    userId\n    deviceToken\n    platform\n    deviceName\n    enabled\n    platformEndpointArn\n    lastUsedAt\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var filter: ModelSubscriptionNotificationEndpointFilterInput?
+  public var userId: String?
+
+  public init(filter: ModelSubscriptionNotificationEndpointFilterInput? = nil, userId: String? = nil) {
+    self.filter = filter
+    self.userId = userId
+  }
+
+  public var variables: GraphQLMap? {
+    return ["filter": filter, "userId": userId]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Subscription"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("onDeleteNotificationEndpoint", arguments: ["filter": GraphQLVariable("filter"), "userId": GraphQLVariable("userId")], type: .object(OnDeleteNotificationEndpoint.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(onDeleteNotificationEndpoint: OnDeleteNotificationEndpoint? = nil) {
+      self.init(snapshot: ["__typename": "Subscription", "onDeleteNotificationEndpoint": onDeleteNotificationEndpoint.flatMap { $0.snapshot }])
+    }
+
+    public var onDeleteNotificationEndpoint: OnDeleteNotificationEndpoint? {
+      get {
+        return (snapshot["onDeleteNotificationEndpoint"] as? Snapshot).flatMap { OnDeleteNotificationEndpoint(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "onDeleteNotificationEndpoint")
+      }
+    }
+
+    public struct OnDeleteNotificationEndpoint: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationEndpoint"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("deviceToken", type: .nonNull(.scalar(String.self))),
+        GraphQLField("platform", type: .nonNull(.scalar(NotificationPlatform.self))),
+        GraphQLField("deviceName", type: .scalar(String.self)),
+        GraphQLField("enabled", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("platformEndpointArn", type: .scalar(String.self)),
+        GraphQLField("lastUsedAt", type: .scalar(String.self)),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, orgId: String, userId: String, deviceToken: String, platform: NotificationPlatform, deviceName: String? = nil, enabled: Bool, platformEndpointArn: String? = nil, lastUsedAt: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationEndpoint", "id": id, "orgId": orgId, "userId": userId, "deviceToken": deviceToken, "platform": platform, "deviceName": deviceName, "enabled": enabled, "platformEndpointArn": platformEndpointArn, "lastUsedAt": lastUsedAt, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var orgId: String {
+        get {
+          return snapshot["orgId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "orgId")
+        }
+      }
+
+      public var userId: String {
+        get {
+          return snapshot["userId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var deviceToken: String {
+        get {
+          return snapshot["deviceToken"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "deviceToken")
+        }
+      }
+
+      public var platform: NotificationPlatform {
+        get {
+          return snapshot["platform"]! as! NotificationPlatform
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "platform")
+        }
+      }
+
+      public var deviceName: String? {
+        get {
+          return snapshot["deviceName"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "deviceName")
+        }
+      }
+
+      public var enabled: Bool {
+        get {
+          return snapshot["enabled"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "enabled")
+        }
+      }
+
+      public var platformEndpointArn: String? {
+        get {
+          return snapshot["platformEndpointArn"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "platformEndpointArn")
+        }
+      }
+
+      public var lastUsedAt: String? {
+        get {
+          return snapshot["lastUsedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "lastUsedAt")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class OnCreateNotificationMessageSubscription: GraphQLSubscription {
+  public static let operationString =
+    "subscription OnCreateNotificationMessage($filter: ModelSubscriptionNotificationMessageFilterInput) {\n  onCreateNotificationMessage(filter: $filter) {\n    __typename\n    id\n    orgId\n    title\n    body\n    category\n    recipients\n    metadata\n    createdBy\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var filter: ModelSubscriptionNotificationMessageFilterInput?
+
+  public init(filter: ModelSubscriptionNotificationMessageFilterInput? = nil) {
+    self.filter = filter
+  }
+
+  public var variables: GraphQLMap? {
+    return ["filter": filter]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Subscription"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("onCreateNotificationMessage", arguments: ["filter": GraphQLVariable("filter")], type: .object(OnCreateNotificationMessage.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(onCreateNotificationMessage: OnCreateNotificationMessage? = nil) {
+      self.init(snapshot: ["__typename": "Subscription", "onCreateNotificationMessage": onCreateNotificationMessage.flatMap { $0.snapshot }])
+    }
+
+    public var onCreateNotificationMessage: OnCreateNotificationMessage? {
+      get {
+        return (snapshot["onCreateNotificationMessage"] as? Snapshot).flatMap { OnCreateNotificationMessage(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "onCreateNotificationMessage")
+      }
+    }
+
+    public struct OnCreateNotificationMessage: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationMessage"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("title", type: .nonNull(.scalar(String.self))),
+        GraphQLField("body", type: .nonNull(.scalar(String.self))),
+        GraphQLField("category", type: .nonNull(.scalar(NotificationCategory.self))),
+        GraphQLField("recipients", type: .nonNull(.list(.nonNull(.scalar(String.self))))),
+        GraphQLField("metadata", type: .scalar(String.self)),
+        GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, orgId: String, title: String, body: String, category: NotificationCategory, recipients: [String], metadata: String? = nil, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationMessage", "id": id, "orgId": orgId, "title": title, "body": body, "category": category, "recipients": recipients, "metadata": metadata, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var orgId: String {
+        get {
+          return snapshot["orgId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "orgId")
+        }
+      }
+
+      public var title: String {
+        get {
+          return snapshot["title"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "title")
+        }
+      }
+
+      public var body: String {
+        get {
+          return snapshot["body"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "body")
+        }
+      }
+
+      public var category: NotificationCategory {
+        get {
+          return snapshot["category"]! as! NotificationCategory
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "category")
+        }
+      }
+
+      public var recipients: [String] {
+        get {
+          return snapshot["recipients"]! as! [String]
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "recipients")
+        }
+      }
+
+      public var metadata: String? {
+        get {
+          return snapshot["metadata"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "metadata")
+        }
+      }
+
+      public var createdBy: String {
+        get {
+          return snapshot["createdBy"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdBy")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class OnUpdateNotificationMessageSubscription: GraphQLSubscription {
+  public static let operationString =
+    "subscription OnUpdateNotificationMessage($filter: ModelSubscriptionNotificationMessageFilterInput) {\n  onUpdateNotificationMessage(filter: $filter) {\n    __typename\n    id\n    orgId\n    title\n    body\n    category\n    recipients\n    metadata\n    createdBy\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var filter: ModelSubscriptionNotificationMessageFilterInput?
+
+  public init(filter: ModelSubscriptionNotificationMessageFilterInput? = nil) {
+    self.filter = filter
+  }
+
+  public var variables: GraphQLMap? {
+    return ["filter": filter]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Subscription"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("onUpdateNotificationMessage", arguments: ["filter": GraphQLVariable("filter")], type: .object(OnUpdateNotificationMessage.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(onUpdateNotificationMessage: OnUpdateNotificationMessage? = nil) {
+      self.init(snapshot: ["__typename": "Subscription", "onUpdateNotificationMessage": onUpdateNotificationMessage.flatMap { $0.snapshot }])
+    }
+
+    public var onUpdateNotificationMessage: OnUpdateNotificationMessage? {
+      get {
+        return (snapshot["onUpdateNotificationMessage"] as? Snapshot).flatMap { OnUpdateNotificationMessage(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "onUpdateNotificationMessage")
+      }
+    }
+
+    public struct OnUpdateNotificationMessage: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationMessage"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("title", type: .nonNull(.scalar(String.self))),
+        GraphQLField("body", type: .nonNull(.scalar(String.self))),
+        GraphQLField("category", type: .nonNull(.scalar(NotificationCategory.self))),
+        GraphQLField("recipients", type: .nonNull(.list(.nonNull(.scalar(String.self))))),
+        GraphQLField("metadata", type: .scalar(String.self)),
+        GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, orgId: String, title: String, body: String, category: NotificationCategory, recipients: [String], metadata: String? = nil, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationMessage", "id": id, "orgId": orgId, "title": title, "body": body, "category": category, "recipients": recipients, "metadata": metadata, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var orgId: String {
+        get {
+          return snapshot["orgId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "orgId")
+        }
+      }
+
+      public var title: String {
+        get {
+          return snapshot["title"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "title")
+        }
+      }
+
+      public var body: String {
+        get {
+          return snapshot["body"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "body")
+        }
+      }
+
+      public var category: NotificationCategory {
+        get {
+          return snapshot["category"]! as! NotificationCategory
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "category")
+        }
+      }
+
+      public var recipients: [String] {
+        get {
+          return snapshot["recipients"]! as! [String]
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "recipients")
+        }
+      }
+
+      public var metadata: String? {
+        get {
+          return snapshot["metadata"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "metadata")
+        }
+      }
+
+      public var createdBy: String {
+        get {
+          return snapshot["createdBy"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdBy")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class OnDeleteNotificationMessageSubscription: GraphQLSubscription {
+  public static let operationString =
+    "subscription OnDeleteNotificationMessage($filter: ModelSubscriptionNotificationMessageFilterInput) {\n  onDeleteNotificationMessage(filter: $filter) {\n    __typename\n    id\n    orgId\n    title\n    body\n    category\n    recipients\n    metadata\n    createdBy\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var filter: ModelSubscriptionNotificationMessageFilterInput?
+
+  public init(filter: ModelSubscriptionNotificationMessageFilterInput? = nil) {
+    self.filter = filter
+  }
+
+  public var variables: GraphQLMap? {
+    return ["filter": filter]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Subscription"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("onDeleteNotificationMessage", arguments: ["filter": GraphQLVariable("filter")], type: .object(OnDeleteNotificationMessage.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(onDeleteNotificationMessage: OnDeleteNotificationMessage? = nil) {
+      self.init(snapshot: ["__typename": "Subscription", "onDeleteNotificationMessage": onDeleteNotificationMessage.flatMap { $0.snapshot }])
+    }
+
+    public var onDeleteNotificationMessage: OnDeleteNotificationMessage? {
+      get {
+        return (snapshot["onDeleteNotificationMessage"] as? Snapshot).flatMap { OnDeleteNotificationMessage(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "onDeleteNotificationMessage")
+      }
+    }
+
+    public struct OnDeleteNotificationMessage: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationMessage"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("orgId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("title", type: .nonNull(.scalar(String.self))),
+        GraphQLField("body", type: .nonNull(.scalar(String.self))),
+        GraphQLField("category", type: .nonNull(.scalar(NotificationCategory.self))),
+        GraphQLField("recipients", type: .nonNull(.list(.nonNull(.scalar(String.self))))),
+        GraphQLField("metadata", type: .scalar(String.self)),
+        GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, orgId: String, title: String, body: String, category: NotificationCategory, recipients: [String], metadata: String? = nil, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationMessage", "id": id, "orgId": orgId, "title": title, "body": body, "category": category, "recipients": recipients, "metadata": metadata, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var orgId: String {
+        get {
+          return snapshot["orgId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "orgId")
+        }
+      }
+
+      public var title: String {
+        get {
+          return snapshot["title"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "title")
+        }
+      }
+
+      public var body: String {
+        get {
+          return snapshot["body"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "body")
+        }
+      }
+
+      public var category: NotificationCategory {
+        get {
+          return snapshot["category"]! as! NotificationCategory
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "category")
+        }
+      }
+
+      public var recipients: [String] {
+        get {
+          return snapshot["recipients"]! as! [String]
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "recipients")
+        }
+      }
+
+      public var metadata: String? {
+        get {
+          return snapshot["metadata"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "metadata")
+        }
+      }
+
+      public var createdBy: String {
+        get {
+          return snapshot["createdBy"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdBy")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class OnCreateNotificationPreferenceSubscription: GraphQLSubscription {
+  public static let operationString =
+    "subscription OnCreateNotificationPreference($filter: ModelSubscriptionNotificationPreferenceFilterInput, $userId: String) {\n  onCreateNotificationPreference(filter: $filter, userId: $userId) {\n    __typename\n    id\n    userId\n    generalBulletin\n    taskAlert\n    overtime\n    squadMessages\n    other\n    contactPhone\n    contactEmail\n    backupEmail\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var filter: ModelSubscriptionNotificationPreferenceFilterInput?
+  public var userId: String?
+
+  public init(filter: ModelSubscriptionNotificationPreferenceFilterInput? = nil, userId: String? = nil) {
+    self.filter = filter
+    self.userId = userId
+  }
+
+  public var variables: GraphQLMap? {
+    return ["filter": filter, "userId": userId]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Subscription"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("onCreateNotificationPreference", arguments: ["filter": GraphQLVariable("filter"), "userId": GraphQLVariable("userId")], type: .object(OnCreateNotificationPreference.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(onCreateNotificationPreference: OnCreateNotificationPreference? = nil) {
+      self.init(snapshot: ["__typename": "Subscription", "onCreateNotificationPreference": onCreateNotificationPreference.flatMap { $0.snapshot }])
+    }
+
+    public var onCreateNotificationPreference: OnCreateNotificationPreference? {
+      get {
+        return (snapshot["onCreateNotificationPreference"] as? Snapshot).flatMap { OnCreateNotificationPreference(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "onCreateNotificationPreference")
+      }
+    }
+
+    public struct OnCreateNotificationPreference: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationPreference"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("generalBulletin", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("taskAlert", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("overtime", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("squadMessages", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("other", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("contactPhone", type: .scalar(String.self)),
+        GraphQLField("contactEmail", type: .scalar(String.self)),
+        GraphQLField("backupEmail", type: .scalar(String.self)),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, userId: String, generalBulletin: Bool, taskAlert: Bool, overtime: Bool, squadMessages: Bool, other: Bool, contactPhone: String? = nil, contactEmail: String? = nil, backupEmail: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationPreference", "id": id, "userId": userId, "generalBulletin": generalBulletin, "taskAlert": taskAlert, "overtime": overtime, "squadMessages": squadMessages, "other": other, "contactPhone": contactPhone, "contactEmail": contactEmail, "backupEmail": backupEmail, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var userId: String {
+        get {
+          return snapshot["userId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var generalBulletin: Bool {
+        get {
+          return snapshot["generalBulletin"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "generalBulletin")
+        }
+      }
+
+      public var taskAlert: Bool {
+        get {
+          return snapshot["taskAlert"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "taskAlert")
+        }
+      }
+
+      public var overtime: Bool {
+        get {
+          return snapshot["overtime"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "overtime")
+        }
+      }
+
+      public var squadMessages: Bool {
+        get {
+          return snapshot["squadMessages"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "squadMessages")
+        }
+      }
+
+      public var other: Bool {
+        get {
+          return snapshot["other"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "other")
+        }
+      }
+
+      public var contactPhone: String? {
+        get {
+          return snapshot["contactPhone"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contactPhone")
+        }
+      }
+
+      public var contactEmail: String? {
+        get {
+          return snapshot["contactEmail"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contactEmail")
+        }
+      }
+
+      public var backupEmail: String? {
+        get {
+          return snapshot["backupEmail"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "backupEmail")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class OnUpdateNotificationPreferenceSubscription: GraphQLSubscription {
+  public static let operationString =
+    "subscription OnUpdateNotificationPreference($filter: ModelSubscriptionNotificationPreferenceFilterInput, $userId: String) {\n  onUpdateNotificationPreference(filter: $filter, userId: $userId) {\n    __typename\n    id\n    userId\n    generalBulletin\n    taskAlert\n    overtime\n    squadMessages\n    other\n    contactPhone\n    contactEmail\n    backupEmail\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var filter: ModelSubscriptionNotificationPreferenceFilterInput?
+  public var userId: String?
+
+  public init(filter: ModelSubscriptionNotificationPreferenceFilterInput? = nil, userId: String? = nil) {
+    self.filter = filter
+    self.userId = userId
+  }
+
+  public var variables: GraphQLMap? {
+    return ["filter": filter, "userId": userId]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Subscription"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("onUpdateNotificationPreference", arguments: ["filter": GraphQLVariable("filter"), "userId": GraphQLVariable("userId")], type: .object(OnUpdateNotificationPreference.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(onUpdateNotificationPreference: OnUpdateNotificationPreference? = nil) {
+      self.init(snapshot: ["__typename": "Subscription", "onUpdateNotificationPreference": onUpdateNotificationPreference.flatMap { $0.snapshot }])
+    }
+
+    public var onUpdateNotificationPreference: OnUpdateNotificationPreference? {
+      get {
+        return (snapshot["onUpdateNotificationPreference"] as? Snapshot).flatMap { OnUpdateNotificationPreference(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "onUpdateNotificationPreference")
+      }
+    }
+
+    public struct OnUpdateNotificationPreference: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationPreference"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("generalBulletin", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("taskAlert", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("overtime", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("squadMessages", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("other", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("contactPhone", type: .scalar(String.self)),
+        GraphQLField("contactEmail", type: .scalar(String.self)),
+        GraphQLField("backupEmail", type: .scalar(String.self)),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, userId: String, generalBulletin: Bool, taskAlert: Bool, overtime: Bool, squadMessages: Bool, other: Bool, contactPhone: String? = nil, contactEmail: String? = nil, backupEmail: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationPreference", "id": id, "userId": userId, "generalBulletin": generalBulletin, "taskAlert": taskAlert, "overtime": overtime, "squadMessages": squadMessages, "other": other, "contactPhone": contactPhone, "contactEmail": contactEmail, "backupEmail": backupEmail, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var userId: String {
+        get {
+          return snapshot["userId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var generalBulletin: Bool {
+        get {
+          return snapshot["generalBulletin"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "generalBulletin")
+        }
+      }
+
+      public var taskAlert: Bool {
+        get {
+          return snapshot["taskAlert"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "taskAlert")
+        }
+      }
+
+      public var overtime: Bool {
+        get {
+          return snapshot["overtime"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "overtime")
+        }
+      }
+
+      public var squadMessages: Bool {
+        get {
+          return snapshot["squadMessages"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "squadMessages")
+        }
+      }
+
+      public var other: Bool {
+        get {
+          return snapshot["other"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "other")
+        }
+      }
+
+      public var contactPhone: String? {
+        get {
+          return snapshot["contactPhone"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contactPhone")
+        }
+      }
+
+      public var contactEmail: String? {
+        get {
+          return snapshot["contactEmail"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contactEmail")
+        }
+      }
+
+      public var backupEmail: String? {
+        get {
+          return snapshot["backupEmail"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "backupEmail")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "updatedAt")
+        }
+      }
+    }
+  }
+}
+
+public final class OnDeleteNotificationPreferenceSubscription: GraphQLSubscription {
+  public static let operationString =
+    "subscription OnDeleteNotificationPreference($filter: ModelSubscriptionNotificationPreferenceFilterInput, $userId: String) {\n  onDeleteNotificationPreference(filter: $filter, userId: $userId) {\n    __typename\n    id\n    userId\n    generalBulletin\n    taskAlert\n    overtime\n    squadMessages\n    other\n    contactPhone\n    contactEmail\n    backupEmail\n    createdAt\n    updatedAt\n  }\n}"
+
+  public var filter: ModelSubscriptionNotificationPreferenceFilterInput?
+  public var userId: String?
+
+  public init(filter: ModelSubscriptionNotificationPreferenceFilterInput? = nil, userId: String? = nil) {
+    self.filter = filter
+    self.userId = userId
+  }
+
+  public var variables: GraphQLMap? {
+    return ["filter": filter, "userId": userId]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Subscription"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("onDeleteNotificationPreference", arguments: ["filter": GraphQLVariable("filter"), "userId": GraphQLVariable("userId")], type: .object(OnDeleteNotificationPreference.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(onDeleteNotificationPreference: OnDeleteNotificationPreference? = nil) {
+      self.init(snapshot: ["__typename": "Subscription", "onDeleteNotificationPreference": onDeleteNotificationPreference.flatMap { $0.snapshot }])
+    }
+
+    public var onDeleteNotificationPreference: OnDeleteNotificationPreference? {
+      get {
+        return (snapshot["onDeleteNotificationPreference"] as? Snapshot).flatMap { OnDeleteNotificationPreference(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "onDeleteNotificationPreference")
+      }
+    }
+
+    public struct OnDeleteNotificationPreference: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationPreference"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("userId", type: .nonNull(.scalar(String.self))),
+        GraphQLField("generalBulletin", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("taskAlert", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("overtime", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("squadMessages", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("other", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("contactPhone", type: .scalar(String.self)),
+        GraphQLField("contactEmail", type: .scalar(String.self)),
+        GraphQLField("backupEmail", type: .scalar(String.self)),
+        GraphQLField("createdAt", type: .scalar(String.self)),
+        GraphQLField("updatedAt", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, userId: String, generalBulletin: Bool, taskAlert: Bool, overtime: Bool, squadMessages: Bool, other: Bool, contactPhone: String? = nil, contactEmail: String? = nil, backupEmail: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationPreference", "id": id, "userId": userId, "generalBulletin": generalBulletin, "taskAlert": taskAlert, "overtime": overtime, "squadMessages": squadMessages, "other": other, "contactPhone": contactPhone, "contactEmail": contactEmail, "backupEmail": backupEmail, "createdAt": createdAt, "updatedAt": updatedAt])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var userId: String {
+        get {
+          return snapshot["userId"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var generalBulletin: Bool {
+        get {
+          return snapshot["generalBulletin"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "generalBulletin")
+        }
+      }
+
+      public var taskAlert: Bool {
+        get {
+          return snapshot["taskAlert"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "taskAlert")
+        }
+      }
+
+      public var overtime: Bool {
+        get {
+          return snapshot["overtime"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "overtime")
+        }
+      }
+
+      public var squadMessages: Bool {
+        get {
+          return snapshot["squadMessages"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "squadMessages")
+        }
+      }
+
+      public var other: Bool {
+        get {
+          return snapshot["other"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "other")
+        }
+      }
+
+      public var contactPhone: String? {
+        get {
+          return snapshot["contactPhone"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contactPhone")
+        }
+      }
+
+      public var contactEmail: String? {
+        get {
+          return snapshot["contactEmail"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contactEmail")
+        }
+      }
+
+      public var backupEmail: String? {
+        get {
+          return snapshot["backupEmail"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "backupEmail")
+        }
+      }
+
+      public var createdAt: String? {
+        get {
+          return snapshot["createdAt"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var updatedAt: String? {
+        get {
+          return snapshot["updatedAt"] as? String
         }
         set {
           snapshot.updateValue(newValue, forKey: "updatedAt")

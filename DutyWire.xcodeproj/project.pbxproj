@@ -61,6 +61,7 @@
 
 /* Begin PBXFileReference section */
 		9EDF4779F31D43BE4013F524 /* awsconfiguration.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
+		A443A9252EC6BFE8002EC376 /* DutyWire-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "DutyWire-Info.plist"; sourceTree = "<group>"; };
 		A48808442EBF99BC0086EADE /* amplifyconfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
 		A4AC8DD92EB7E5AB00CD5FBD /* DutyWire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DutyWire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4AC8DE72EB7E5AD00CD5FBD /* DutyWireTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DutyWireTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +142,7 @@
 		A4AC8DD02EB7E5AB00CD5FBD = {
 			isa = PBXGroup;
 			children = (
+				A443A9252EC6BFE8002EC376 /* DutyWire-Info.plist */,
 				A4AC8DDB2EB7E5AB00CD5FBD /* ShiftLinkMain */,
 				A4AC8DEA2EB7E5AD00CD5FBD /* ShiftlinkMainTests */,
 				A4AC8DF42EB7E5AD00CD5FBD /* ShiftlinkMainUITests */,
@@ -200,6 +202,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A4AC8DFB2EB7E5AD00CD5FBD /* Build configuration list for PBXNativeTarget "DutyWire" */;
 			buildPhases = (
+				A4F0D5002F01D5C2004B4E21 /* Bootstrap Amplify Config */,
 				A4AC8DD52EB7E5AB00CD5FBD /* Sources */,
 				A4AC8DD62EB7E5AB00CD5FBD /* Frameworks */,
 				A4AC8DD72EB7E5AB00CD5FBD /* Resources */,
@@ -355,6 +358,30 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A4F0D5002F01D5C2004B4E21 /* Bootstrap Amplify Config */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/scripts/bootstrap-amplify-config.sh",
+			);
+			name = "Bootstrap Amplify Config";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/awsconfiguration.json",
+				"$(SRCROOT)/amplify_outputs.json",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$SRCROOT/scripts/bootstrap-amplify-config.sh\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A4AC8DD52EB7E5AB00CD5FBD /* Sources */ = {
@@ -538,6 +565,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "DutyWire-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = DutyWire;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -579,6 +607,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "DutyWire-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = DutyWire;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;

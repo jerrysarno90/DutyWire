@@ -599,3 +599,279 @@ query AuditsByPosting(
     __typename
   }
 }
+
+query GetNotificationEndpoint($id: ID!) {
+  getNotificationEndpoint(id: $id) {
+    id
+    orgId
+    userId
+    deviceToken
+    platform
+    deviceName
+    enabled
+    platformEndpointArn
+    lastUsedAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListNotificationEndpoints(
+  $filter: ModelNotificationEndpointFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listNotificationEndpoints(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      orgId
+      userId
+      deviceToken
+      platform
+      deviceName
+      enabled
+      platformEndpointArn
+      lastUsedAt
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query NotificationEndpointsByOrg(
+  $orgId: String!
+  $updatedAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelNotificationEndpointFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  notificationEndpointsByOrg(
+    orgId: $orgId
+    updatedAt: $updatedAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      orgId
+      userId
+      deviceToken
+      platform
+      deviceName
+      enabled
+      platformEndpointArn
+      lastUsedAt
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query NotificationEndpointsByUser(
+  $userId: String!
+  $updatedAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelNotificationEndpointFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  notificationEndpointsByUser(
+    userId: $userId
+    updatedAt: $updatedAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      orgId
+      userId
+      deviceToken
+      platform
+      deviceName
+      enabled
+      platformEndpointArn
+      lastUsedAt
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetNotificationMessage($id: ID!) {
+  getNotificationMessage(id: $id) {
+    id
+    orgId
+    title
+    body
+    category
+    recipients
+    metadata
+    createdBy
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListNotificationMessages(
+  $filter: ModelNotificationMessageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listNotificationMessages(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      orgId
+      title
+      body
+      category
+      recipients
+      metadata
+      createdBy
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query NotificationMessagesByOrg(
+  $orgId: String!
+  $createdAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelNotificationMessageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  notificationMessagesByOrg(
+    orgId: $orgId
+    createdAt: $createdAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      orgId
+      title
+      body
+      category
+      recipients
+      metadata
+      createdBy
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetNotificationPreference($id: ID!) {
+  getNotificationPreference(id: $id) {
+    id
+    userId
+    generalBulletin
+    taskAlert
+    overtime
+    squadMessages
+    other
+    contactPhone
+    contactEmail
+    backupEmail
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListNotificationPreferences(
+  $filter: ModelNotificationPreferenceFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listNotificationPreferences(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      userId
+      generalBulletin
+      taskAlert
+      overtime
+      squadMessages
+      other
+      contactPhone
+      contactEmail
+      backupEmail
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query NotificationPreferencesByUser(
+  $userId: String!
+  $sortDirection: ModelSortDirection
+  $filter: ModelNotificationPreferenceFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  notificationPreferencesByUser(
+    userId: $userId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      userId
+      generalBulletin
+      taskAlert
+      overtime
+      squadMessages
+      other
+      contactPhone
+      contactEmail
+      backupEmail
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}

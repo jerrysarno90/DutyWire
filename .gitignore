@@ -24,3 +24,11 @@ amplifytools.xcconfig
 DutyWire.xcodeproj/amplify/
 DutyWire.xcodeproj/node_modules/
 DutyWire.xcodeproj/package*.json
+awsconfig.b64
+amplify_outputs.b64
+.amplify/
+.aws/
+.config/
+.npm/
+.venv/
+.vscode/

@@ -17,6 +17,18 @@
       },
       "auth": {
         "shiftlinkmain32f72376": {}
+      },
+      "function": {
+        "rotationEscalationWatcher": {
+          "deploymentBucketName": "amplify-shiftlinkmain-dev-43163-deployment",
+          "s3Key": "amplify-builds/rotationEscalationWatcher-7a387a2b553934327377-build.zip"
+        },
+        "overtimeNotifier": {
+          "deploymentBucketName": "amplify-shiftlinkmain-dev-43163-deployment",
+          "s3Key": "amplify-builds/overtimeNotifier-2b705269585a462b3642-build.zip",
+          "snsPlatformApplicationArnIOS": "",
+          "snsPlatformApplicationArnAndroid": ""
+        }
       }
     }
   }
