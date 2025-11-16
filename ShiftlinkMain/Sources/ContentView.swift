@@ -9425,7 +9425,7 @@ private final class MyCalendarViewModel: ObservableObject {
         isLoading = true
         defer { isLoading = false }
         do {
-            let events = try await ShiftlinkAPI.listCalendarEvents(ownerIds: sanitized)
+            let events = try await CalendarService.fetchEvents(forOwnerIds: sanitized)
             entries = events.map { ShiftScheduleEntry(calendarEvent: $0) }
                 .sorted { $0.start < $1.start }
         } catch {
@@ -9435,7 +9435,7 @@ private final class MyCalendarViewModel: ObservableObject {
 
     func addEvent(ownerId: String, orgId: String?, input: NewCalendarEventInput) async throws {
         let created = try await performCalendarMutation {
-            try await ShiftlinkAPI.createCalendarEvent(ownerId: ownerId, orgId: orgId, input: input)
+            try await CalendarService.createEvent(ownerId: ownerId, orgId: orgId, input: input)
         }
         entries.append(ShiftScheduleEntry(calendarEvent: created))
         entries.sort { $0.start < $1.start }
@@ -9443,7 +9443,7 @@ private final class MyCalendarViewModel: ObservableObject {
 
     func updateEvent(ownerId: String, eventId: String, input: NewCalendarEventInput) async throws {
         let updated = try await performCalendarMutation {
-            try await ShiftlinkAPI.updateCalendarEvent(id: eventId, ownerId: ownerId, input: input)
+            try await CalendarService.updateEvent(id: eventId, ownerId: ownerId, input: input)
         }
         if let index = entries.firstIndex(where: { $0.calendarEventId == eventId }) {
             entries[index] = ShiftScheduleEntry(calendarEvent: updated)
@@ -9455,7 +9455,7 @@ private final class MyCalendarViewModel: ObservableObject {
 
     func deleteEvent(eventId: String) async throws {
         try await performCalendarMutation {
-            try await ShiftlinkAPI.deleteCalendarEvent(id: eventId)
+            try await CalendarService.deleteEvent(id: eventId)
         }
         entries.removeAll { $0.calendarEventId == eventId }
     }
