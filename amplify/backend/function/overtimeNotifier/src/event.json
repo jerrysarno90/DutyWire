@@ -1,0 +1,12 @@
+{
+  "arguments": {
+    "input": {
+      "orgId": "demo-org",
+      "recipients": ["user-123"],
+      "title": "Test Notification",
+      "body": "Hello from notifier",
+      "category": "OVERTIME",
+      "postingId": "demo"
+    }
+  }
+}

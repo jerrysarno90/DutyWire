@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "api": {
+      "shiftlinkmain": [
+        "Query",
+        "Mutation"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

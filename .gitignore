@@ -32,3 +32,9 @@ amplify_outputs.b64
 .npm/
 .venv/
 .vscode/
+
+# Sensitive local artifacts
+AuthKey_*.p8
+DutyWireImporter_accessKeys.csv
+DutyWire_Roster*.csv
+DutyWire_Roster*.numbers

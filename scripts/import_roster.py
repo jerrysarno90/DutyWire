@@ -7,7 +7,8 @@ Usage:
 
 Prereqs:
     pip install boto3 requests
-    Export DW_USER_POOL_ID, DW_APP_CLIENT_ID, DW_APPSYNC_URL if you need to override defaults.
+    The script will auto-read `amplify/backend/amplify-meta.json` for pool/app IDs.
+    Export DW_USER_POOL_ID, DW_APP_CLIENT_ID, or DW_APPSYNC_URL to override.
 """
 
 import argparse
@@ -17,7 +18,7 @@ import os
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 import boto3
 import requests
@@ -33,12 +34,44 @@ GROUP_LOOKUP = {
     "admin": "Admin",
 }
 
-USER_POOL_ID = os.environ.get("DW_USER_POOL_ID", "us-east-1_59rtx0vcO")
-APP_CLIENT_ID = os.environ.get("DW_APP_CLIENT_ID", "2efdllcd7rtqmu07djuiii34i")
-APPSYNC_URL = os.environ.get(
-    "DW_APPSYNC_URL",
-    "https://qxcmvpayzbadhbrj4ead6egixy.appsync-api.us-east-1.amazonaws.com/graphql",
-)
+AMPLIFY_META_PATH = Path(__file__).resolve().parents[1] / "amplify" / "backend" / "amplify-meta.json"
+
+
+def _first_value(mapping: Dict[str, dict]) -> dict:
+    for value in mapping.values():
+        if isinstance(value, dict):
+            return value
+    return {}
+
+
+def _load_amplify_defaults() -> Dict[str, Optional[str]]:
+    try:
+        with AMPLIFY_META_PATH.open("r", encoding="utf-8") as fh:
+            meta = json.load(fh)
+    except FileNotFoundError:
+        return {}
+    except json.JSONDecodeError:
+        return {}
+
+    defaults: Dict[str, Optional[str]] = {}
+    auth_output = _first_value(meta.get("auth", {})).get("output", {})
+    api_output = _first_value(meta.get("api", {})).get("output", {})
+
+    defaults["userPoolId"] = auth_output.get("UserPoolId")
+    defaults["appClientId"] = auth_output.get("AppClientID") or auth_output.get("AppClientIDWeb")
+    defaults["appsyncUrl"] = api_output.get("GraphQLAPIEndpointOutput")
+    return defaults
+
+
+_AMPLIFY_DEFAULTS = _load_amplify_defaults()
+
+FALLBACK_USER_POOL_ID = "us-east-1_59rtx0vcO"
+FALLBACK_APP_CLIENT_ID = "2efdllcd7rtqmu07djuiii34i"
+FALLBACK_APPSYNC_URL = "https://qxcmvpayzbadhbrj4ead6egixy.appsync-api.us-east-1.amazonaws.com/graphql"
+
+USER_POOL_ID = os.environ.get("DW_USER_POOL_ID") or _AMPLIFY_DEFAULTS.get("userPoolId") or FALLBACK_USER_POOL_ID
+APP_CLIENT_ID = os.environ.get("DW_APP_CLIENT_ID") or _AMPLIFY_DEFAULTS.get("appClientId") or FALLBACK_APP_CLIENT_ID
+APPSYNC_URL = os.environ.get("DW_APPSYNC_URL") or _AMPLIFY_DEFAULTS.get("appsyncUrl") or FALLBACK_APPSYNC_URL
 IAM_REGION = os.environ.get("DW_REGION", "us-east-1")
 TEMP_PASSWORD = os.environ.get("DW_TEMP_PASSWORD", "DutyWire#123")
 AWS_PROFILE = os.environ.get("AWS_PROFILE")
