@@ -230,6 +230,8 @@ subscription OnCreateOvertimePosting(
     endsAt
     slots
     policySnapshot
+    selectionPolicy
+    needsEscalation
     state
     createdBy
     invites {
@@ -260,6 +262,8 @@ subscription OnUpdateOvertimePosting(
     endsAt
     slots
     policySnapshot
+    selectionPolicy
+    needsEscalation
     state
     createdBy
     invites {
@@ -290,6 +294,8 @@ subscription OnDeleteOvertimePosting(
     endsAt
     slots
     policySnapshot
+    selectionPolicy
+    needsEscalation
     state
     createdBy
     invites {

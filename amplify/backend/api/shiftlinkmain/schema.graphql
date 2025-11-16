@@ -85,14 +85,20 @@
   PATROL_SHORT_SHIFT
   SERGEANT_SHORT_SHIFT
   SPECIAL_EVENT
-  OTHER_OVERTIME
- }
+ OTHER_OVERTIME
+}
 
- enum OvertimePostingState {
-  OPEN
-  FILLED
-  CLOSED
- }
+enum OvertimePostingState {
+ OPEN
+ FILLED
+ CLOSED
+}
+
+enum OvertimeSelectionPolicy {
+  ROTATION
+  SENIORITY
+  FIRST_COME
+}
 
  enum OvertimeInviteStatus {
   PENDING
@@ -116,6 +122,8 @@
   endsAt: AWSDateTime!
   slots: Int!
   policySnapshot: AWSJSON!
+  selectionPolicy: OvertimeSelectionPolicy
+  needsEscalation: Boolean
   state: OvertimePostingState!
   createdBy: String!
   invites: [OvertimeInvite] @hasMany(indexName: "invitesByPosting", fields: ["id"])
@@ -236,7 +244,9 @@ type NotificationEndpoint @model
   message: String
  }
 
- type Mutation {
+type Mutation {
   notifyOvertimeEvent(input: OvertimeNotificationInput!): NotificationSendResult
     @function(name: "overtimeNotifier-${env}")
- }
+  sendNotification(input: OvertimeNotificationInput!): NotificationSendResult
+    @function(name: "overtimeNotifier-${env}")
+}

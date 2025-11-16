@@ -11,8 +11,9 @@ extension RosterEntry {
     case shift
     case startsAt
     case endsAt
-    case updatedAt
+    case notes
     case createdAt
+    case updatedAt
   }
   
   public static let keys = CodingKeys.self
@@ -22,15 +23,16 @@ extension RosterEntry {
     let rosterEntry = RosterEntry.keys
     
     model.authRules = [
-      rule(allow: .groups, groupClaim: "cognito:groups", groups: ["Admin", "Supervisor"], provider: .userPools, operations: [.create, .update, .delete]),
-      rule(allow: .private, operations: [.read])
+      rule(allow: .owner, ownerField: "badgeNumber", identityClaim: "cognito:username", provider: .userPools, operations: [.create, .update, .delete, .read]),
+      rule(allow: .groups, groupClaim: "cognito:groups", groups: ["Admin"], provider: .userPools, operations: [.create, .update, .delete, .read]),
+      rule(allow: .groups, groupClaim: "cognito:groups", groups: ["Supervisor"], provider: .userPools, operations: [.read])
     ]
     
     model.listPluralName = "RosterEntries"
     model.syncPluralName = "RosterEntries"
     
     model.attributes(
-      .index(fields: ["id"], name: nil),
+      .index(fields: ["orgId", "startsAt"], name: "rosterEntriesByOrg"),
       .primaryKey(fields: [rosterEntry.id])
     )
     
@@ -41,42 +43,14 @@ extension RosterEntry {
       .field(rosterEntry.shift, is: .optional, ofType: .string),
       .field(rosterEntry.startsAt, is: .required, ofType: .dateTime),
       .field(rosterEntry.endsAt, is: .required, ofType: .dateTime),
-      .field(rosterEntry.updatedAt, is: .required, ofType: .dateTime),
-      .field(rosterEntry.createdAt, is: .required, ofType: .dateTime)
+      .field(rosterEntry.notes, is: .optional, ofType: .string),
+      .field(rosterEntry.createdAt, is: .optional, ofType: .dateTime),
+      .field(rosterEntry.updatedAt, is: .optional, ofType: .dateTime)
     )
     }
-    public class Path: ModelPath<RosterEntry> { }
-    
-    public static var rootPath: PropertyContainerPath? { Path() }
 }
 
 extension RosterEntry: ModelIdentifiable {
   public typealias IdentifierFormat = ModelIdentifierFormat.Default
   public typealias IdentifierProtocol = DefaultModelIdentifier<Self>
-}
-extension ModelPath where ModelType == RosterEntry {
-  public var id: FieldPath<String>   {
-      string("id") 
-    }
-  public var orgId: FieldPath<String>   {
-      string("orgId") 
-    }
-  public var badgeNumber: FieldPath<String>   {
-      string("badgeNumber") 
-    }
-  public var shift: FieldPath<String>   {
-      string("shift") 
-    }
-  public var startsAt: FieldPath<Temporal.DateTime>   {
-      datetime("startsAt") 
-    }
-  public var endsAt: FieldPath<Temporal.DateTime>   {
-      datetime("endsAt") 
-    }
-  public var updatedAt: FieldPath<Temporal.DateTime>   {
-      datetime("updatedAt") 
-    }
-  public var createdAt: FieldPath<Temporal.DateTime>   {
-      datetime("createdAt") 
-    }
 }

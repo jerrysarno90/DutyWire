@@ -377,6 +377,8 @@ query GetOvertimePosting($id: ID!) {
     endsAt
     slots
     policySnapshot
+    selectionPolicy
+    needsEscalation
     state
     createdBy
     invites {
@@ -409,6 +411,8 @@ query ListOvertimePostings(
       endsAt
       slots
       policySnapshot
+      selectionPolicy
+      needsEscalation
       state
       createdBy
       createdAt
@@ -446,6 +450,8 @@ query OvertimePostingsByOrg(
       endsAt
       slots
       policySnapshot
+      selectionPolicy
+      needsEscalation
       state
       createdBy
       createdAt

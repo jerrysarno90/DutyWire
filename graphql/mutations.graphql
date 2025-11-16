@@ -259,6 +259,8 @@ mutation CreateOvertimePosting(
     endsAt
     slots
     policySnapshot
+    selectionPolicy
+    needsEscalation
     state
     createdBy
     invites {
@@ -289,6 +291,8 @@ mutation UpdateOvertimePosting(
     endsAt
     slots
     policySnapshot
+    selectionPolicy
+    needsEscalation
     state
     createdBy
     invites {
@@ -319,6 +323,8 @@ mutation DeleteOvertimePosting(
     endsAt
     slots
     policySnapshot
+    selectionPolicy
+    needsEscalation
     state
     createdBy
     invites {

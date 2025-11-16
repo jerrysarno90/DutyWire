@@ -9,8 +9,9 @@ public struct RosterEntry: Model {
   public var shift: String?
   public var startsAt: Temporal.DateTime
   public var endsAt: Temporal.DateTime
-  public var updatedAt: Temporal.DateTime
-  public var createdAt: Temporal.DateTime
+  public var notes: String?
+  public var createdAt: Temporal.DateTime?
+  public var updatedAt: Temporal.DateTime?
   
   public init(id: String = UUID().uuidString,
       orgId: String,
@@ -18,15 +19,17 @@ public struct RosterEntry: Model {
       shift: String? = nil,
       startsAt: Temporal.DateTime,
       endsAt: Temporal.DateTime,
-      updatedAt: Temporal.DateTime,
-      createdAt: Temporal.DateTime) {
+      notes: String? = nil,
+      createdAt: Temporal.DateTime? = nil,
+      updatedAt: Temporal.DateTime? = nil) {
       self.id = id
       self.orgId = orgId
       self.badgeNumber = badgeNumber
       self.shift = shift
       self.startsAt = startsAt
       self.endsAt = endsAt
-      self.updatedAt = updatedAt
+      self.notes = notes
       self.createdAt = createdAt
+      self.updatedAt = updatedAt
   }
 }

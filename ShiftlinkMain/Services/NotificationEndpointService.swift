@@ -379,7 +379,7 @@ enum NotificationEndpointService {
         var nextToken: String? = nil
 
         repeat {
-            var filter: [String: Any] = [
+            let filter: [String: Any] = [
                 "userId": ["eq": userId]
             ]
             var variables: [String: Any] = [

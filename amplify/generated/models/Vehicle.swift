@@ -10,8 +10,8 @@ public struct Vehicle: Model {
   public var model: String?
   public var plate: String?
   public var inService: Bool?
-  public var updatedAt: Temporal.DateTime
-  public var createdAt: Temporal.DateTime
+  public var createdAt: Temporal.DateTime?
+  public var updatedAt: Temporal.DateTime?
   
   public init(id: String = UUID().uuidString,
       orgId: String,
@@ -20,8 +20,8 @@ public struct Vehicle: Model {
       model: String? = nil,
       plate: String? = nil,
       inService: Bool? = nil,
-      updatedAt: Temporal.DateTime,
-      createdAt: Temporal.DateTime) {
+      createdAt: Temporal.DateTime? = nil,
+      updatedAt: Temporal.DateTime? = nil) {
       self.id = id
       self.orgId = orgId
       self.callsign = callsign
@@ -29,7 +29,7 @@ public struct Vehicle: Model {
       self.model = model
       self.plate = plate
       self.inService = inService
-      self.updatedAt = updatedAt
       self.createdAt = createdAt
+      self.updatedAt = updatedAt
   }
 }

@@ -12,8 +12,8 @@ extension Vehicle {
     case model
     case plate
     case inService
-    case updatedAt
     case createdAt
+    case updatedAt
   }
   
   public static let keys = CodingKeys.self
@@ -23,7 +23,8 @@ extension Vehicle {
     let vehicle = Vehicle.keys
     
     model.authRules = [
-      rule(allow: .groups, groupClaim: "cognito:groups", groups: ["Admin", "Supervisor"], provider: .userPools, operations: [.create, .update, .delete]),
+      rule(allow: .groups, groupClaim: "cognito:groups", groups: ["Admin"], provider: .userPools, operations: [.create, .update, .delete, .read]),
+      rule(allow: .groups, groupClaim: "cognito:groups", groups: ["Supervisor"], provider: .userPools, operations: [.read, .update]),
       rule(allow: .private, operations: [.read])
     ]
     
@@ -31,7 +32,7 @@ extension Vehicle {
     model.syncPluralName = "Vehicles"
     
     model.attributes(
-      .index(fields: ["id"], name: nil),
+      .index(fields: ["orgId", "callsign"], name: "vehiclesByOrg"),
       .primaryKey(fields: [vehicle.id])
     )
     
@@ -43,45 +44,13 @@ extension Vehicle {
       .field(vehicle.model, is: .optional, ofType: .string),
       .field(vehicle.plate, is: .optional, ofType: .string),
       .field(vehicle.inService, is: .optional, ofType: .bool),
-      .field(vehicle.updatedAt, is: .required, ofType: .dateTime),
-      .field(vehicle.createdAt, is: .required, ofType: .dateTime)
+      .field(vehicle.createdAt, is: .optional, ofType: .dateTime),
+      .field(vehicle.updatedAt, is: .optional, ofType: .dateTime)
     )
     }
-    public class Path: ModelPath<Vehicle> { }
-    
-    public static var rootPath: PropertyContainerPath? { Path() }
 }
 
 extension Vehicle: ModelIdentifiable {
   public typealias IdentifierFormat = ModelIdentifierFormat.Default
   public typealias IdentifierProtocol = DefaultModelIdentifier<Self>
-}
-extension ModelPath where ModelType == Vehicle {
-  public var id: FieldPath<String>   {
-      string("id") 
-    }
-  public var orgId: FieldPath<String>   {
-      string("orgId") 
-    }
-  public var callsign: FieldPath<String>   {
-      string("callsign") 
-    }
-  public var make: FieldPath<String>   {
-      string("make") 
-    }
-  public var model: FieldPath<String>   {
-      string("model") 
-    }
-  public var plate: FieldPath<String>   {
-      string("plate") 
-    }
-  public var inService: FieldPath<Bool>   {
-      bool("inService") 
-    }
-  public var updatedAt: FieldPath<Temporal.DateTime>   {
-      datetime("updatedAt") 
-    }
-  public var createdAt: FieldPath<Temporal.DateTime>   {
-      datetime("createdAt") 
-    }
 }

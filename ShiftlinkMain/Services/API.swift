@@ -2228,8 +2228,8 @@ public struct DeleteOfficerAssignmentInput: GraphQLMapConvertible {
 public struct CreateOvertimePostingInput: GraphQLMapConvertible {
   public var graphQLMap: GraphQLMap
 
-  public init(id: GraphQLID? = nil, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, state: OvertimePostingState, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
-    graphQLMap = ["id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "state": state, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt]
+  public init(id: GraphQLID? = nil, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, selectionPolicy: OvertimeSelectionPolicy? = nil, needsEscalation: Bool? = nil, state: OvertimePostingState, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
+    graphQLMap = ["id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "selectionPolicy": selectionPolicy, "needsEscalation": needsEscalation, "state": state, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt]
   }
 
   public var id: GraphQLID? {
@@ -2313,6 +2313,24 @@ public struct CreateOvertimePostingInput: GraphQLMapConvertible {
     }
   }
 
+  public var selectionPolicy: OvertimeSelectionPolicy? {
+    get {
+      return graphQLMap["selectionPolicy"] as! OvertimeSelectionPolicy?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "selectionPolicy")
+    }
+  }
+
+  public var needsEscalation: Bool? {
+    get {
+      return graphQLMap["needsEscalation"] as! Bool?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "needsEscalation")
+    }
+  }
+
   public var state: OvertimePostingState {
     get {
       return graphQLMap["state"] as! OvertimePostingState
@@ -2391,6 +2409,43 @@ public enum OvertimeScenario: RawRepresentable, Equatable, JSONDecodable, JSONEn
   }
 }
 
+public enum OvertimeSelectionPolicy: RawRepresentable, Equatable, JSONDecodable, JSONEncodable {
+  public typealias RawValue = String
+  case rotation
+  case seniority
+  case firstCome
+  /// Auto generated constant for unknown enum values
+  case unknown(RawValue)
+
+  public init?(rawValue: RawValue) {
+    switch rawValue {
+      case "ROTATION": self = .rotation
+      case "SENIORITY": self = .seniority
+      case "FIRST_COME": self = .firstCome
+      default: self = .unknown(rawValue)
+    }
+  }
+
+  public var rawValue: RawValue {
+    switch self {
+      case .rotation: return "ROTATION"
+      case .seniority: return "SENIORITY"
+      case .firstCome: return "FIRST_COME"
+      case .unknown(let value): return value
+    }
+  }
+
+  public static func == (lhs: OvertimeSelectionPolicy, rhs: OvertimeSelectionPolicy) -> Bool {
+    switch (lhs, rhs) {
+      case (.rotation, .rotation): return true
+      case (.seniority, .seniority): return true
+      case (.firstCome, .firstCome): return true
+      case (.unknown(let lhsValue), .unknown(let rhsValue)): return lhsValue == rhsValue
+      default: return false
+    }
+  }
+}
+
 public enum OvertimePostingState: RawRepresentable, Equatable, JSONDecodable, JSONEncodable {
   public typealias RawValue = String
   case `open`
@@ -2431,8 +2486,8 @@ public enum OvertimePostingState: RawRepresentable, Equatable, JSONDecodable, JS
 public struct ModelOvertimePostingConditionInput: GraphQLMapConvertible {
   public var graphQLMap: GraphQLMap
 
-  public init(orgId: ModelStringInput? = nil, title: ModelStringInput? = nil, location: ModelStringInput? = nil, scenario: ModelOvertimeScenarioInput? = nil, startsAt: ModelStringInput? = nil, endsAt: ModelStringInput? = nil, slots: ModelIntInput? = nil, policySnapshot: ModelStringInput? = nil, state: ModelOvertimePostingStateInput? = nil, createdBy: ModelStringInput? = nil, createdAt: ModelStringInput? = nil, updatedAt: ModelStringInput? = nil, and: [ModelOvertimePostingConditionInput?]? = nil, or: [ModelOvertimePostingConditionInput?]? = nil, not: ModelOvertimePostingConditionInput? = nil) {
-    graphQLMap = ["orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "state": state, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or, "not": not]
+  public init(orgId: ModelStringInput? = nil, title: ModelStringInput? = nil, location: ModelStringInput? = nil, scenario: ModelOvertimeScenarioInput? = nil, startsAt: ModelStringInput? = nil, endsAt: ModelStringInput? = nil, slots: ModelIntInput? = nil, policySnapshot: ModelStringInput? = nil, selectionPolicy: ModelOvertimeSelectionPolicyInput? = nil, needsEscalation: ModelBooleanInput? = nil, state: ModelOvertimePostingStateInput? = nil, createdBy: ModelStringInput? = nil, createdAt: ModelStringInput? = nil, updatedAt: ModelStringInput? = nil, and: [ModelOvertimePostingConditionInput?]? = nil, or: [ModelOvertimePostingConditionInput?]? = nil, not: ModelOvertimePostingConditionInput? = nil) {
+    graphQLMap = ["orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "selectionPolicy": selectionPolicy, "needsEscalation": needsEscalation, "state": state, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or, "not": not]
   }
 
   public var orgId: ModelStringInput? {
@@ -2504,6 +2559,24 @@ public struct ModelOvertimePostingConditionInput: GraphQLMapConvertible {
     }
     set {
       graphQLMap.updateValue(newValue, forKey: "policySnapshot")
+    }
+  }
+
+  public var selectionPolicy: ModelOvertimeSelectionPolicyInput? {
+    get {
+      return graphQLMap["selectionPolicy"] as! ModelOvertimeSelectionPolicyInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "selectionPolicy")
+    }
+  }
+
+  public var needsEscalation: ModelBooleanInput? {
+    get {
+      return graphQLMap["needsEscalation"] as! ModelBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "needsEscalation")
     }
   }
 
@@ -2597,6 +2670,32 @@ public struct ModelOvertimeScenarioInput: GraphQLMapConvertible {
   }
 }
 
+public struct ModelOvertimeSelectionPolicyInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  public init(eq: OvertimeSelectionPolicy? = nil, ne: OvertimeSelectionPolicy? = nil) {
+    graphQLMap = ["eq": eq, "ne": ne]
+  }
+
+  public var eq: OvertimeSelectionPolicy? {
+    get {
+      return graphQLMap["eq"] as! OvertimeSelectionPolicy?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "eq")
+    }
+  }
+
+  public var ne: OvertimeSelectionPolicy? {
+    get {
+      return graphQLMap["ne"] as! OvertimeSelectionPolicy?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "ne")
+    }
+  }
+}
+
 public struct ModelOvertimePostingStateInput: GraphQLMapConvertible {
   public var graphQLMap: GraphQLMap
 
@@ -2671,8 +2770,8 @@ public enum OvertimeInviteStatus: RawRepresentable, Equatable, JSONDecodable, JS
 public struct UpdateOvertimePostingInput: GraphQLMapConvertible {
   public var graphQLMap: GraphQLMap
 
-  public init(id: GraphQLID, orgId: String? = nil, title: String? = nil, location: String? = nil, scenario: OvertimeScenario? = nil, startsAt: String? = nil, endsAt: String? = nil, slots: Int? = nil, policySnapshot: String? = nil, state: OvertimePostingState? = nil, createdBy: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
-    graphQLMap = ["id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "state": state, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt]
+  public init(id: GraphQLID, orgId: String? = nil, title: String? = nil, location: String? = nil, scenario: OvertimeScenario? = nil, startsAt: String? = nil, endsAt: String? = nil, slots: Int? = nil, policySnapshot: String? = nil, selectionPolicy: OvertimeSelectionPolicy? = nil, needsEscalation: Bool? = nil, state: OvertimePostingState? = nil, createdBy: String? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+    graphQLMap = ["id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "selectionPolicy": selectionPolicy, "needsEscalation": needsEscalation, "state": state, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt]
   }
 
   public var id: GraphQLID {
@@ -2753,6 +2852,24 @@ public struct UpdateOvertimePostingInput: GraphQLMapConvertible {
     }
     set {
       graphQLMap.updateValue(newValue, forKey: "policySnapshot")
+    }
+  }
+
+  public var selectionPolicy: OvertimeSelectionPolicy? {
+    get {
+      return graphQLMap["selectionPolicy"] as! OvertimeSelectionPolicy?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "selectionPolicy")
+    }
+  }
+
+  public var needsEscalation: Bool? {
+    get {
+      return graphQLMap["needsEscalation"] as! Bool?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "needsEscalation")
     }
   }
 
@@ -5271,8 +5388,8 @@ public struct ModelOfficerAssignmentFilterInput: GraphQLMapConvertible {
 public struct ModelOvertimePostingFilterInput: GraphQLMapConvertible {
   public var graphQLMap: GraphQLMap
 
-  public init(id: ModelIDInput? = nil, orgId: ModelStringInput? = nil, title: ModelStringInput? = nil, location: ModelStringInput? = nil, scenario: ModelOvertimeScenarioInput? = nil, startsAt: ModelStringInput? = nil, endsAt: ModelStringInput? = nil, slots: ModelIntInput? = nil, policySnapshot: ModelStringInput? = nil, state: ModelOvertimePostingStateInput? = nil, createdBy: ModelStringInput? = nil, createdAt: ModelStringInput? = nil, updatedAt: ModelStringInput? = nil, and: [ModelOvertimePostingFilterInput?]? = nil, or: [ModelOvertimePostingFilterInput?]? = nil, not: ModelOvertimePostingFilterInput? = nil) {
-    graphQLMap = ["id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "state": state, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or, "not": not]
+  public init(id: ModelIDInput? = nil, orgId: ModelStringInput? = nil, title: ModelStringInput? = nil, location: ModelStringInput? = nil, scenario: ModelOvertimeScenarioInput? = nil, startsAt: ModelStringInput? = nil, endsAt: ModelStringInput? = nil, slots: ModelIntInput? = nil, policySnapshot: ModelStringInput? = nil, selectionPolicy: ModelOvertimeSelectionPolicyInput? = nil, needsEscalation: ModelBooleanInput? = nil, state: ModelOvertimePostingStateInput? = nil, createdBy: ModelStringInput? = nil, createdAt: ModelStringInput? = nil, updatedAt: ModelStringInput? = nil, and: [ModelOvertimePostingFilterInput?]? = nil, or: [ModelOvertimePostingFilterInput?]? = nil, not: ModelOvertimePostingFilterInput? = nil) {
+    graphQLMap = ["id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "selectionPolicy": selectionPolicy, "needsEscalation": needsEscalation, "state": state, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or, "not": not]
   }
 
   public var id: ModelIDInput? {
@@ -5353,6 +5470,24 @@ public struct ModelOvertimePostingFilterInput: GraphQLMapConvertible {
     }
     set {
       graphQLMap.updateValue(newValue, forKey: "policySnapshot")
+    }
+  }
+
+  public var selectionPolicy: ModelOvertimeSelectionPolicyInput? {
+    get {
+      return graphQLMap["selectionPolicy"] as! ModelOvertimeSelectionPolicyInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "selectionPolicy")
+    }
+  }
+
+  public var needsEscalation: ModelBooleanInput? {
+    get {
+      return graphQLMap["needsEscalation"] as! ModelBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "needsEscalation")
     }
   }
 
@@ -6912,8 +7047,8 @@ public struct ModelSubscriptionOfficerAssignmentFilterInput: GraphQLMapConvertib
 public struct ModelSubscriptionOvertimePostingFilterInput: GraphQLMapConvertible {
   public var graphQLMap: GraphQLMap
 
-  public init(id: ModelSubscriptionIDInput? = nil, orgId: ModelSubscriptionStringInput? = nil, title: ModelSubscriptionStringInput? = nil, location: ModelSubscriptionStringInput? = nil, scenario: ModelSubscriptionStringInput? = nil, startsAt: ModelSubscriptionStringInput? = nil, endsAt: ModelSubscriptionStringInput? = nil, slots: ModelSubscriptionIntInput? = nil, policySnapshot: ModelSubscriptionStringInput? = nil, state: ModelSubscriptionStringInput? = nil, createdAt: ModelSubscriptionStringInput? = nil, updatedAt: ModelSubscriptionStringInput? = nil, and: [ModelSubscriptionOvertimePostingFilterInput?]? = nil, or: [ModelSubscriptionOvertimePostingFilterInput?]? = nil, createdBy: ModelStringInput? = nil) {
-    graphQLMap = ["id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "state": state, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or, "createdBy": createdBy]
+  public init(id: ModelSubscriptionIDInput? = nil, orgId: ModelSubscriptionStringInput? = nil, title: ModelSubscriptionStringInput? = nil, location: ModelSubscriptionStringInput? = nil, scenario: ModelSubscriptionStringInput? = nil, startsAt: ModelSubscriptionStringInput? = nil, endsAt: ModelSubscriptionStringInput? = nil, slots: ModelSubscriptionIntInput? = nil, policySnapshot: ModelSubscriptionStringInput? = nil, selectionPolicy: ModelSubscriptionStringInput? = nil, needsEscalation: ModelSubscriptionBooleanInput? = nil, state: ModelSubscriptionStringInput? = nil, createdAt: ModelSubscriptionStringInput? = nil, updatedAt: ModelSubscriptionStringInput? = nil, and: [ModelSubscriptionOvertimePostingFilterInput?]? = nil, or: [ModelSubscriptionOvertimePostingFilterInput?]? = nil, createdBy: ModelStringInput? = nil) {
+    graphQLMap = ["id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "selectionPolicy": selectionPolicy, "needsEscalation": needsEscalation, "state": state, "createdAt": createdAt, "updatedAt": updatedAt, "and": and, "or": or, "createdBy": createdBy]
   }
 
   public var id: ModelSubscriptionIDInput? {
@@ -6994,6 +7129,24 @@ public struct ModelSubscriptionOvertimePostingFilterInput: GraphQLMapConvertible
     }
     set {
       graphQLMap.updateValue(newValue, forKey: "policySnapshot")
+    }
+  }
+
+  public var selectionPolicy: ModelSubscriptionStringInput? {
+    get {
+      return graphQLMap["selectionPolicy"] as! ModelSubscriptionStringInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "selectionPolicy")
+    }
+  }
+
+  public var needsEscalation: ModelSubscriptionBooleanInput? {
+    get {
+      return graphQLMap["needsEscalation"] as! ModelSubscriptionBooleanInput?
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "needsEscalation")
     }
   }
 
@@ -7673,6 +7826,115 @@ public final class NotifyOvertimeEventMutation: GraphQLMutation {
     }
 
     public struct NotifyOvertimeEvent: GraphQLSelectionSet {
+      public static let possibleTypes = ["NotificationSendResult"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("success", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("delivered", type: .scalar(Int.self)),
+        GraphQLField("recipientCount", type: .scalar(Int.self)),
+        GraphQLField("message", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(success: Bool, delivered: Int? = nil, recipientCount: Int? = nil, message: String? = nil) {
+        self.init(snapshot: ["__typename": "NotificationSendResult", "success": success, "delivered": delivered, "recipientCount": recipientCount, "message": message])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var success: Bool {
+        get {
+          return snapshot["success"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "success")
+        }
+      }
+
+      public var delivered: Int? {
+        get {
+          return snapshot["delivered"] as? Int
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "delivered")
+        }
+      }
+
+      public var recipientCount: Int? {
+        get {
+          return snapshot["recipientCount"] as? Int
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "recipientCount")
+        }
+      }
+
+      public var message: String? {
+        get {
+          return snapshot["message"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "message")
+        }
+      }
+    }
+  }
+}
+
+public final class SendNotificationMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation SendNotification($input: OvertimeNotificationInput!) {\n  sendNotification(input: $input) {\n    __typename\n    success\n    delivered\n    recipientCount\n    message\n  }\n}"
+
+  public var input: OvertimeNotificationInput
+
+  public init(input: OvertimeNotificationInput) {
+    self.input = input
+  }
+
+  public var variables: GraphQLMap? {
+    return ["input": input]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("sendNotification", arguments: ["input": GraphQLVariable("input")], type: .object(SendNotification.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(sendNotification: SendNotification? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "sendNotification": sendNotification.flatMap { $0.snapshot }])
+    }
+
+    public var sendNotification: SendNotification? {
+      get {
+        return (snapshot["sendNotification"] as? Snapshot).flatMap { SendNotification(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "sendNotification")
+      }
+    }
+
+    public struct SendNotification: GraphQLSelectionSet {
       public static let possibleTypes = ["NotificationSendResult"]
 
       public static let selections: [GraphQLSelection] = [
@@ -9765,7 +10027,7 @@ public final class DeleteOfficerAssignmentMutation: GraphQLMutation {
 
 public final class CreateOvertimePostingMutation: GraphQLMutation {
   public static let operationString =
-    "mutation CreateOvertimePosting($input: CreateOvertimePostingInput!, $condition: ModelOvertimePostingConditionInput) {\n  createOvertimePosting(input: $input, condition: $condition) {\n    __typename\n    id\n    orgId\n    title\n    location\n    scenario\n    startsAt\n    endsAt\n    slots\n    policySnapshot\n    state\n    createdBy\n    invites {\n      __typename\n      nextToken\n    }\n    auditTrail {\n      __typename\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
+    "mutation CreateOvertimePosting($input: CreateOvertimePostingInput!, $condition: ModelOvertimePostingConditionInput) {\n  createOvertimePosting(input: $input, condition: $condition) {\n    __typename\n    id\n    orgId\n    title\n    location\n    scenario\n    startsAt\n    endsAt\n    slots\n    policySnapshot\n    selectionPolicy\n    needsEscalation\n    state\n    createdBy\n    invites {\n      __typename\n      nextToken\n    }\n    auditTrail {\n      __typename\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
 
   public var input: CreateOvertimePostingInput
   public var condition: ModelOvertimePostingConditionInput?
@@ -9819,6 +10081,8 @@ public final class CreateOvertimePostingMutation: GraphQLMutation {
         GraphQLField("endsAt", type: .nonNull(.scalar(String.self))),
         GraphQLField("slots", type: .nonNull(.scalar(Int.self))),
         GraphQLField("policySnapshot", type: .nonNull(.scalar(String.self))),
+        GraphQLField("selectionPolicy", type: .scalar(OvertimeSelectionPolicy.self)),
+        GraphQLField("needsEscalation", type: .scalar(Bool.self)),
         GraphQLField("state", type: .nonNull(.scalar(OvertimePostingState.self))),
         GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
         GraphQLField("invites", type: .object(Invite.selections)),
@@ -9833,8 +10097,8 @@ public final class CreateOvertimePostingMutation: GraphQLMutation {
         self.snapshot = snapshot
       }
 
-      public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, state: OvertimePostingState, createdBy: String, invites: Invite? = nil, auditTrail: AuditTrail? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
-        self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "state": state, "createdBy": createdBy, "invites": invites.flatMap { $0.snapshot }, "auditTrail": auditTrail.flatMap { $0.snapshot }, "createdAt": createdAt, "updatedAt": updatedAt])
+      public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, selectionPolicy: OvertimeSelectionPolicy? = nil, needsEscalation: Bool? = nil, state: OvertimePostingState, createdBy: String, invites: Invite? = nil, auditTrail: AuditTrail? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "selectionPolicy": selectionPolicy, "needsEscalation": needsEscalation, "state": state, "createdBy": createdBy, "invites": invites.flatMap { $0.snapshot }, "auditTrail": auditTrail.flatMap { $0.snapshot }, "createdAt": createdAt, "updatedAt": updatedAt])
       }
 
       public var __typename: String {
@@ -9924,6 +10188,24 @@ public final class CreateOvertimePostingMutation: GraphQLMutation {
         }
         set {
           snapshot.updateValue(newValue, forKey: "policySnapshot")
+        }
+      }
+
+      public var selectionPolicy: OvertimeSelectionPolicy? {
+        get {
+          return snapshot["selectionPolicy"] as? OvertimeSelectionPolicy
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "selectionPolicy")
+        }
+      }
+
+      public var needsEscalation: Bool? {
+        get {
+          return snapshot["needsEscalation"] as? Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "needsEscalation")
         }
       }
 
@@ -10060,7 +10342,7 @@ public final class CreateOvertimePostingMutation: GraphQLMutation {
 
 public final class UpdateOvertimePostingMutation: GraphQLMutation {
   public static let operationString =
-    "mutation UpdateOvertimePosting($input: UpdateOvertimePostingInput!, $condition: ModelOvertimePostingConditionInput) {\n  updateOvertimePosting(input: $input, condition: $condition) {\n    __typename\n    id\n    orgId\n    title\n    location\n    scenario\n    startsAt\n    endsAt\n    slots\n    policySnapshot\n    state\n    createdBy\n    invites {\n      __typename\n      nextToken\n    }\n    auditTrail {\n      __typename\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
+    "mutation UpdateOvertimePosting($input: UpdateOvertimePostingInput!, $condition: ModelOvertimePostingConditionInput) {\n  updateOvertimePosting(input: $input, condition: $condition) {\n    __typename\n    id\n    orgId\n    title\n    location\n    scenario\n    startsAt\n    endsAt\n    slots\n    policySnapshot\n    selectionPolicy\n    needsEscalation\n    state\n    createdBy\n    invites {\n      __typename\n      nextToken\n    }\n    auditTrail {\n      __typename\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
 
   public var input: UpdateOvertimePostingInput
   public var condition: ModelOvertimePostingConditionInput?
@@ -10114,6 +10396,8 @@ public final class UpdateOvertimePostingMutation: GraphQLMutation {
         GraphQLField("endsAt", type: .nonNull(.scalar(String.self))),
         GraphQLField("slots", type: .nonNull(.scalar(Int.self))),
         GraphQLField("policySnapshot", type: .nonNull(.scalar(String.self))),
+        GraphQLField("selectionPolicy", type: .scalar(OvertimeSelectionPolicy.self)),
+        GraphQLField("needsEscalation", type: .scalar(Bool.self)),
         GraphQLField("state", type: .nonNull(.scalar(OvertimePostingState.self))),
         GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
         GraphQLField("invites", type: .object(Invite.selections)),
@@ -10128,8 +10412,8 @@ public final class UpdateOvertimePostingMutation: GraphQLMutation {
         self.snapshot = snapshot
       }
 
-      public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, state: OvertimePostingState, createdBy: String, invites: Invite? = nil, auditTrail: AuditTrail? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
-        self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "state": state, "createdBy": createdBy, "invites": invites.flatMap { $0.snapshot }, "auditTrail": auditTrail.flatMap { $0.snapshot }, "createdAt": createdAt, "updatedAt": updatedAt])
+      public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, selectionPolicy: OvertimeSelectionPolicy? = nil, needsEscalation: Bool? = nil, state: OvertimePostingState, createdBy: String, invites: Invite? = nil, auditTrail: AuditTrail? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "selectionPolicy": selectionPolicy, "needsEscalation": needsEscalation, "state": state, "createdBy": createdBy, "invites": invites.flatMap { $0.snapshot }, "auditTrail": auditTrail.flatMap { $0.snapshot }, "createdAt": createdAt, "updatedAt": updatedAt])
       }
 
       public var __typename: String {
@@ -10219,6 +10503,24 @@ public final class UpdateOvertimePostingMutation: GraphQLMutation {
         }
         set {
           snapshot.updateValue(newValue, forKey: "policySnapshot")
+        }
+      }
+
+      public var selectionPolicy: OvertimeSelectionPolicy? {
+        get {
+          return snapshot["selectionPolicy"] as? OvertimeSelectionPolicy
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "selectionPolicy")
+        }
+      }
+
+      public var needsEscalation: Bool? {
+        get {
+          return snapshot["needsEscalation"] as? Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "needsEscalation")
         }
       }
 
@@ -10355,7 +10657,7 @@ public final class UpdateOvertimePostingMutation: GraphQLMutation {
 
 public final class DeleteOvertimePostingMutation: GraphQLMutation {
   public static let operationString =
-    "mutation DeleteOvertimePosting($input: DeleteOvertimePostingInput!, $condition: ModelOvertimePostingConditionInput) {\n  deleteOvertimePosting(input: $input, condition: $condition) {\n    __typename\n    id\n    orgId\n    title\n    location\n    scenario\n    startsAt\n    endsAt\n    slots\n    policySnapshot\n    state\n    createdBy\n    invites {\n      __typename\n      nextToken\n    }\n    auditTrail {\n      __typename\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
+    "mutation DeleteOvertimePosting($input: DeleteOvertimePostingInput!, $condition: ModelOvertimePostingConditionInput) {\n  deleteOvertimePosting(input: $input, condition: $condition) {\n    __typename\n    id\n    orgId\n    title\n    location\n    scenario\n    startsAt\n    endsAt\n    slots\n    policySnapshot\n    selectionPolicy\n    needsEscalation\n    state\n    createdBy\n    invites {\n      __typename\n      nextToken\n    }\n    auditTrail {\n      __typename\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
 
   public var input: DeleteOvertimePostingInput
   public var condition: ModelOvertimePostingConditionInput?
@@ -10409,6 +10711,8 @@ public final class DeleteOvertimePostingMutation: GraphQLMutation {
         GraphQLField("endsAt", type: .nonNull(.scalar(String.self))),
         GraphQLField("slots", type: .nonNull(.scalar(Int.self))),
         GraphQLField("policySnapshot", type: .nonNull(.scalar(String.self))),
+        GraphQLField("selectionPolicy", type: .scalar(OvertimeSelectionPolicy.self)),
+        GraphQLField("needsEscalation", type: .scalar(Bool.self)),
         GraphQLField("state", type: .nonNull(.scalar(OvertimePostingState.self))),
         GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
         GraphQLField("invites", type: .object(Invite.selections)),
@@ -10423,8 +10727,8 @@ public final class DeleteOvertimePostingMutation: GraphQLMutation {
         self.snapshot = snapshot
       }
 
-      public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, state: OvertimePostingState, createdBy: String, invites: Invite? = nil, auditTrail: AuditTrail? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
-        self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "state": state, "createdBy": createdBy, "invites": invites.flatMap { $0.snapshot }, "auditTrail": auditTrail.flatMap { $0.snapshot }, "createdAt": createdAt, "updatedAt": updatedAt])
+      public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, selectionPolicy: OvertimeSelectionPolicy? = nil, needsEscalation: Bool? = nil, state: OvertimePostingState, createdBy: String, invites: Invite? = nil, auditTrail: AuditTrail? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "selectionPolicy": selectionPolicy, "needsEscalation": needsEscalation, "state": state, "createdBy": createdBy, "invites": invites.flatMap { $0.snapshot }, "auditTrail": auditTrail.flatMap { $0.snapshot }, "createdAt": createdAt, "updatedAt": updatedAt])
       }
 
       public var __typename: String {
@@ -10514,6 +10818,24 @@ public final class DeleteOvertimePostingMutation: GraphQLMutation {
         }
         set {
           snapshot.updateValue(newValue, forKey: "policySnapshot")
+        }
+      }
+
+      public var selectionPolicy: OvertimeSelectionPolicy? {
+        get {
+          return snapshot["selectionPolicy"] as? OvertimeSelectionPolicy
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "selectionPolicy")
+        }
+      }
+
+      public var needsEscalation: Bool? {
+        get {
+          return snapshot["needsEscalation"] as? Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "needsEscalation")
         }
       }
 
@@ -16107,7 +16429,7 @@ public final class AssignmentsByOfficerQuery: GraphQLQuery {
 
 public final class GetOvertimePostingQuery: GraphQLQuery {
   public static let operationString =
-    "query GetOvertimePosting($id: ID!) {\n  getOvertimePosting(id: $id) {\n    __typename\n    id\n    orgId\n    title\n    location\n    scenario\n    startsAt\n    endsAt\n    slots\n    policySnapshot\n    state\n    createdBy\n    invites {\n      __typename\n      nextToken\n    }\n    auditTrail {\n      __typename\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
+    "query GetOvertimePosting($id: ID!) {\n  getOvertimePosting(id: $id) {\n    __typename\n    id\n    orgId\n    title\n    location\n    scenario\n    startsAt\n    endsAt\n    slots\n    policySnapshot\n    selectionPolicy\n    needsEscalation\n    state\n    createdBy\n    invites {\n      __typename\n      nextToken\n    }\n    auditTrail {\n      __typename\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
 
   public var id: GraphQLID
 
@@ -16159,6 +16481,8 @@ public final class GetOvertimePostingQuery: GraphQLQuery {
         GraphQLField("endsAt", type: .nonNull(.scalar(String.self))),
         GraphQLField("slots", type: .nonNull(.scalar(Int.self))),
         GraphQLField("policySnapshot", type: .nonNull(.scalar(String.self))),
+        GraphQLField("selectionPolicy", type: .scalar(OvertimeSelectionPolicy.self)),
+        GraphQLField("needsEscalation", type: .scalar(Bool.self)),
         GraphQLField("state", type: .nonNull(.scalar(OvertimePostingState.self))),
         GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
         GraphQLField("invites", type: .object(Invite.selections)),
@@ -16173,8 +16497,8 @@ public final class GetOvertimePostingQuery: GraphQLQuery {
         self.snapshot = snapshot
       }
 
-      public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, state: OvertimePostingState, createdBy: String, invites: Invite? = nil, auditTrail: AuditTrail? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
-        self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "state": state, "createdBy": createdBy, "invites": invites.flatMap { $0.snapshot }, "auditTrail": auditTrail.flatMap { $0.snapshot }, "createdAt": createdAt, "updatedAt": updatedAt])
+      public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, selectionPolicy: OvertimeSelectionPolicy? = nil, needsEscalation: Bool? = nil, state: OvertimePostingState, createdBy: String, invites: Invite? = nil, auditTrail: AuditTrail? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "selectionPolicy": selectionPolicy, "needsEscalation": needsEscalation, "state": state, "createdBy": createdBy, "invites": invites.flatMap { $0.snapshot }, "auditTrail": auditTrail.flatMap { $0.snapshot }, "createdAt": createdAt, "updatedAt": updatedAt])
       }
 
       public var __typename: String {
@@ -16264,6 +16588,24 @@ public final class GetOvertimePostingQuery: GraphQLQuery {
         }
         set {
           snapshot.updateValue(newValue, forKey: "policySnapshot")
+        }
+      }
+
+      public var selectionPolicy: OvertimeSelectionPolicy? {
+        get {
+          return snapshot["selectionPolicy"] as? OvertimeSelectionPolicy
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "selectionPolicy")
+        }
+      }
+
+      public var needsEscalation: Bool? {
+        get {
+          return snapshot["needsEscalation"] as? Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "needsEscalation")
         }
       }
 
@@ -16400,7 +16742,7 @@ public final class GetOvertimePostingQuery: GraphQLQuery {
 
 public final class ListOvertimePostingsQuery: GraphQLQuery {
   public static let operationString =
-    "query ListOvertimePostings($filter: ModelOvertimePostingFilterInput, $limit: Int, $nextToken: String) {\n  listOvertimePostings(filter: $filter, limit: $limit, nextToken: $nextToken) {\n    __typename\n    items {\n      __typename\n      id\n      orgId\n      title\n      location\n      scenario\n      startsAt\n      endsAt\n      slots\n      policySnapshot\n      state\n      createdBy\n      createdAt\n      updatedAt\n    }\n    nextToken\n  }\n}"
+    "query ListOvertimePostings($filter: ModelOvertimePostingFilterInput, $limit: Int, $nextToken: String) {\n  listOvertimePostings(filter: $filter, limit: $limit, nextToken: $nextToken) {\n    __typename\n    items {\n      __typename\n      id\n      orgId\n      title\n      location\n      scenario\n      startsAt\n      endsAt\n      slots\n      policySnapshot\n      selectionPolicy\n      needsEscalation\n      state\n      createdBy\n      createdAt\n      updatedAt\n    }\n    nextToken\n  }\n}"
 
   public var filter: ModelOvertimePostingFilterInput?
   public var limit: Int?
@@ -16502,6 +16844,8 @@ public final class ListOvertimePostingsQuery: GraphQLQuery {
           GraphQLField("endsAt", type: .nonNull(.scalar(String.self))),
           GraphQLField("slots", type: .nonNull(.scalar(Int.self))),
           GraphQLField("policySnapshot", type: .nonNull(.scalar(String.self))),
+          GraphQLField("selectionPolicy", type: .scalar(OvertimeSelectionPolicy.self)),
+          GraphQLField("needsEscalation", type: .scalar(Bool.self)),
           GraphQLField("state", type: .nonNull(.scalar(OvertimePostingState.self))),
           GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
           GraphQLField("createdAt", type: .scalar(String.self)),
@@ -16514,8 +16858,8 @@ public final class ListOvertimePostingsQuery: GraphQLQuery {
           self.snapshot = snapshot
         }
 
-        public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, state: OvertimePostingState, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
-          self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "state": state, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt])
+        public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, selectionPolicy: OvertimeSelectionPolicy? = nil, needsEscalation: Bool? = nil, state: OvertimePostingState, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
+          self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "selectionPolicy": selectionPolicy, "needsEscalation": needsEscalation, "state": state, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt])
         }
 
         public var __typename: String {
@@ -16608,6 +16952,24 @@ public final class ListOvertimePostingsQuery: GraphQLQuery {
           }
         }
 
+        public var selectionPolicy: OvertimeSelectionPolicy? {
+          get {
+            return snapshot["selectionPolicy"] as? OvertimeSelectionPolicy
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "selectionPolicy")
+          }
+        }
+
+        public var needsEscalation: Bool? {
+          get {
+            return snapshot["needsEscalation"] as? Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "needsEscalation")
+          }
+        }
+
         public var state: OvertimePostingState {
           get {
             return snapshot["state"]! as! OvertimePostingState
@@ -16650,7 +17012,7 @@ public final class ListOvertimePostingsQuery: GraphQLQuery {
 
 public final class OvertimePostingsByOrgQuery: GraphQLQuery {
   public static let operationString =
-    "query OvertimePostingsByOrg($orgId: String!, $startsAt: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelOvertimePostingFilterInput, $limit: Int, $nextToken: String) {\n  overtimePostingsByOrg(\n    orgId: $orgId\n    startsAt: $startsAt\n    sortDirection: $sortDirection\n    filter: $filter\n    limit: $limit\n    nextToken: $nextToken\n  ) {\n    __typename\n    items {\n      __typename\n      id\n      orgId\n      title\n      location\n      scenario\n      startsAt\n      endsAt\n      slots\n      policySnapshot\n      state\n      createdBy\n      createdAt\n      updatedAt\n    }\n    nextToken\n  }\n}"
+    "query OvertimePostingsByOrg($orgId: String!, $startsAt: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelOvertimePostingFilterInput, $limit: Int, $nextToken: String) {\n  overtimePostingsByOrg(\n    orgId: $orgId\n    startsAt: $startsAt\n    sortDirection: $sortDirection\n    filter: $filter\n    limit: $limit\n    nextToken: $nextToken\n  ) {\n    __typename\n    items {\n      __typename\n      id\n      orgId\n      title\n      location\n      scenario\n      startsAt\n      endsAt\n      slots\n      policySnapshot\n      selectionPolicy\n      needsEscalation\n      state\n      createdBy\n      createdAt\n      updatedAt\n    }\n    nextToken\n  }\n}"
 
   public var orgId: String
   public var startsAt: ModelStringKeyConditionInput?
@@ -16758,6 +17120,8 @@ public final class OvertimePostingsByOrgQuery: GraphQLQuery {
           GraphQLField("endsAt", type: .nonNull(.scalar(String.self))),
           GraphQLField("slots", type: .nonNull(.scalar(Int.self))),
           GraphQLField("policySnapshot", type: .nonNull(.scalar(String.self))),
+          GraphQLField("selectionPolicy", type: .scalar(OvertimeSelectionPolicy.self)),
+          GraphQLField("needsEscalation", type: .scalar(Bool.self)),
           GraphQLField("state", type: .nonNull(.scalar(OvertimePostingState.self))),
           GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
           GraphQLField("createdAt", type: .scalar(String.self)),
@@ -16770,8 +17134,8 @@ public final class OvertimePostingsByOrgQuery: GraphQLQuery {
           self.snapshot = snapshot
         }
 
-        public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, state: OvertimePostingState, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
-          self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "state": state, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt])
+        public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, selectionPolicy: OvertimeSelectionPolicy? = nil, needsEscalation: Bool? = nil, state: OvertimePostingState, createdBy: String, createdAt: String? = nil, updatedAt: String? = nil) {
+          self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "selectionPolicy": selectionPolicy, "needsEscalation": needsEscalation, "state": state, "createdBy": createdBy, "createdAt": createdAt, "updatedAt": updatedAt])
         }
 
         public var __typename: String {
@@ -16861,6 +17225,24 @@ public final class OvertimePostingsByOrgQuery: GraphQLQuery {
           }
           set {
             snapshot.updateValue(newValue, forKey: "policySnapshot")
+          }
+        }
+
+        public var selectionPolicy: OvertimeSelectionPolicy? {
+          get {
+            return snapshot["selectionPolicy"] as? OvertimeSelectionPolicy
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "selectionPolicy")
+          }
+        }
+
+        public var needsEscalation: Bool? {
+          get {
+            return snapshot["needsEscalation"] as? Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "needsEscalation")
           }
         }
 
@@ -22231,7 +22613,7 @@ public final class OnDeleteOfficerAssignmentSubscription: GraphQLSubscription {
 
 public final class OnCreateOvertimePostingSubscription: GraphQLSubscription {
   public static let operationString =
-    "subscription OnCreateOvertimePosting($filter: ModelSubscriptionOvertimePostingFilterInput, $createdBy: String) {\n  onCreateOvertimePosting(filter: $filter, createdBy: $createdBy) {\n    __typename\n    id\n    orgId\n    title\n    location\n    scenario\n    startsAt\n    endsAt\n    slots\n    policySnapshot\n    state\n    createdBy\n    invites {\n      __typename\n      nextToken\n    }\n    auditTrail {\n      __typename\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
+    "subscription OnCreateOvertimePosting($filter: ModelSubscriptionOvertimePostingFilterInput, $createdBy: String) {\n  onCreateOvertimePosting(filter: $filter, createdBy: $createdBy) {\n    __typename\n    id\n    orgId\n    title\n    location\n    scenario\n    startsAt\n    endsAt\n    slots\n    policySnapshot\n    selectionPolicy\n    needsEscalation\n    state\n    createdBy\n    invites {\n      __typename\n      nextToken\n    }\n    auditTrail {\n      __typename\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
 
   public var filter: ModelSubscriptionOvertimePostingFilterInput?
   public var createdBy: String?
@@ -22285,6 +22667,8 @@ public final class OnCreateOvertimePostingSubscription: GraphQLSubscription {
         GraphQLField("endsAt", type: .nonNull(.scalar(String.self))),
         GraphQLField("slots", type: .nonNull(.scalar(Int.self))),
         GraphQLField("policySnapshot", type: .nonNull(.scalar(String.self))),
+        GraphQLField("selectionPolicy", type: .scalar(OvertimeSelectionPolicy.self)),
+        GraphQLField("needsEscalation", type: .scalar(Bool.self)),
         GraphQLField("state", type: .nonNull(.scalar(OvertimePostingState.self))),
         GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
         GraphQLField("invites", type: .object(Invite.selections)),
@@ -22299,8 +22683,8 @@ public final class OnCreateOvertimePostingSubscription: GraphQLSubscription {
         self.snapshot = snapshot
       }
 
-      public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, state: OvertimePostingState, createdBy: String, invites: Invite? = nil, auditTrail: AuditTrail? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
-        self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "state": state, "createdBy": createdBy, "invites": invites.flatMap { $0.snapshot }, "auditTrail": auditTrail.flatMap { $0.snapshot }, "createdAt": createdAt, "updatedAt": updatedAt])
+      public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, selectionPolicy: OvertimeSelectionPolicy? = nil, needsEscalation: Bool? = nil, state: OvertimePostingState, createdBy: String, invites: Invite? = nil, auditTrail: AuditTrail? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "selectionPolicy": selectionPolicy, "needsEscalation": needsEscalation, "state": state, "createdBy": createdBy, "invites": invites.flatMap { $0.snapshot }, "auditTrail": auditTrail.flatMap { $0.snapshot }, "createdAt": createdAt, "updatedAt": updatedAt])
       }
 
       public var __typename: String {
@@ -22390,6 +22774,24 @@ public final class OnCreateOvertimePostingSubscription: GraphQLSubscription {
         }
         set {
           snapshot.updateValue(newValue, forKey: "policySnapshot")
+        }
+      }
+
+      public var selectionPolicy: OvertimeSelectionPolicy? {
+        get {
+          return snapshot["selectionPolicy"] as? OvertimeSelectionPolicy
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "selectionPolicy")
+        }
+      }
+
+      public var needsEscalation: Bool? {
+        get {
+          return snapshot["needsEscalation"] as? Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "needsEscalation")
         }
       }
 
@@ -22526,7 +22928,7 @@ public final class OnCreateOvertimePostingSubscription: GraphQLSubscription {
 
 public final class OnUpdateOvertimePostingSubscription: GraphQLSubscription {
   public static let operationString =
-    "subscription OnUpdateOvertimePosting($filter: ModelSubscriptionOvertimePostingFilterInput, $createdBy: String) {\n  onUpdateOvertimePosting(filter: $filter, createdBy: $createdBy) {\n    __typename\n    id\n    orgId\n    title\n    location\n    scenario\n    startsAt\n    endsAt\n    slots\n    policySnapshot\n    state\n    createdBy\n    invites {\n      __typename\n      nextToken\n    }\n    auditTrail {\n      __typename\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
+    "subscription OnUpdateOvertimePosting($filter: ModelSubscriptionOvertimePostingFilterInput, $createdBy: String) {\n  onUpdateOvertimePosting(filter: $filter, createdBy: $createdBy) {\n    __typename\n    id\n    orgId\n    title\n    location\n    scenario\n    startsAt\n    endsAt\n    slots\n    policySnapshot\n    selectionPolicy\n    needsEscalation\n    state\n    createdBy\n    invites {\n      __typename\n      nextToken\n    }\n    auditTrail {\n      __typename\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
 
   public var filter: ModelSubscriptionOvertimePostingFilterInput?
   public var createdBy: String?
@@ -22580,6 +22982,8 @@ public final class OnUpdateOvertimePostingSubscription: GraphQLSubscription {
         GraphQLField("endsAt", type: .nonNull(.scalar(String.self))),
         GraphQLField("slots", type: .nonNull(.scalar(Int.self))),
         GraphQLField("policySnapshot", type: .nonNull(.scalar(String.self))),
+        GraphQLField("selectionPolicy", type: .scalar(OvertimeSelectionPolicy.self)),
+        GraphQLField("needsEscalation", type: .scalar(Bool.self)),
         GraphQLField("state", type: .nonNull(.scalar(OvertimePostingState.self))),
         GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
         GraphQLField("invites", type: .object(Invite.selections)),
@@ -22594,8 +22998,8 @@ public final class OnUpdateOvertimePostingSubscription: GraphQLSubscription {
         self.snapshot = snapshot
       }
 
-      public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, state: OvertimePostingState, createdBy: String, invites: Invite? = nil, auditTrail: AuditTrail? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
-        self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "state": state, "createdBy": createdBy, "invites": invites.flatMap { $0.snapshot }, "auditTrail": auditTrail.flatMap { $0.snapshot }, "createdAt": createdAt, "updatedAt": updatedAt])
+      public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, selectionPolicy: OvertimeSelectionPolicy? = nil, needsEscalation: Bool? = nil, state: OvertimePostingState, createdBy: String, invites: Invite? = nil, auditTrail: AuditTrail? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "selectionPolicy": selectionPolicy, "needsEscalation": needsEscalation, "state": state, "createdBy": createdBy, "invites": invites.flatMap { $0.snapshot }, "auditTrail": auditTrail.flatMap { $0.snapshot }, "createdAt": createdAt, "updatedAt": updatedAt])
       }
 
       public var __typename: String {
@@ -22685,6 +23089,24 @@ public final class OnUpdateOvertimePostingSubscription: GraphQLSubscription {
         }
         set {
           snapshot.updateValue(newValue, forKey: "policySnapshot")
+        }
+      }
+
+      public var selectionPolicy: OvertimeSelectionPolicy? {
+        get {
+          return snapshot["selectionPolicy"] as? OvertimeSelectionPolicy
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "selectionPolicy")
+        }
+      }
+
+      public var needsEscalation: Bool? {
+        get {
+          return snapshot["needsEscalation"] as? Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "needsEscalation")
         }
       }
 
@@ -22821,7 +23243,7 @@ public final class OnUpdateOvertimePostingSubscription: GraphQLSubscription {
 
 public final class OnDeleteOvertimePostingSubscription: GraphQLSubscription {
   public static let operationString =
-    "subscription OnDeleteOvertimePosting($filter: ModelSubscriptionOvertimePostingFilterInput, $createdBy: String) {\n  onDeleteOvertimePosting(filter: $filter, createdBy: $createdBy) {\n    __typename\n    id\n    orgId\n    title\n    location\n    scenario\n    startsAt\n    endsAt\n    slots\n    policySnapshot\n    state\n    createdBy\n    invites {\n      __typename\n      nextToken\n    }\n    auditTrail {\n      __typename\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
+    "subscription OnDeleteOvertimePosting($filter: ModelSubscriptionOvertimePostingFilterInput, $createdBy: String) {\n  onDeleteOvertimePosting(filter: $filter, createdBy: $createdBy) {\n    __typename\n    id\n    orgId\n    title\n    location\n    scenario\n    startsAt\n    endsAt\n    slots\n    policySnapshot\n    selectionPolicy\n    needsEscalation\n    state\n    createdBy\n    invites {\n      __typename\n      nextToken\n    }\n    auditTrail {\n      __typename\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
 
   public var filter: ModelSubscriptionOvertimePostingFilterInput?
   public var createdBy: String?
@@ -22875,6 +23297,8 @@ public final class OnDeleteOvertimePostingSubscription: GraphQLSubscription {
         GraphQLField("endsAt", type: .nonNull(.scalar(String.self))),
         GraphQLField("slots", type: .nonNull(.scalar(Int.self))),
         GraphQLField("policySnapshot", type: .nonNull(.scalar(String.self))),
+        GraphQLField("selectionPolicy", type: .scalar(OvertimeSelectionPolicy.self)),
+        GraphQLField("needsEscalation", type: .scalar(Bool.self)),
         GraphQLField("state", type: .nonNull(.scalar(OvertimePostingState.self))),
         GraphQLField("createdBy", type: .nonNull(.scalar(String.self))),
         GraphQLField("invites", type: .object(Invite.selections)),
@@ -22889,8 +23313,8 @@ public final class OnDeleteOvertimePostingSubscription: GraphQLSubscription {
         self.snapshot = snapshot
       }
 
-      public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, state: OvertimePostingState, createdBy: String, invites: Invite? = nil, auditTrail: AuditTrail? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
-        self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "state": state, "createdBy": createdBy, "invites": invites.flatMap { $0.snapshot }, "auditTrail": auditTrail.flatMap { $0.snapshot }, "createdAt": createdAt, "updatedAt": updatedAt])
+      public init(id: GraphQLID, orgId: String, title: String, location: String? = nil, scenario: OvertimeScenario, startsAt: String, endsAt: String, slots: Int, policySnapshot: String, selectionPolicy: OvertimeSelectionPolicy? = nil, needsEscalation: Bool? = nil, state: OvertimePostingState, createdBy: String, invites: Invite? = nil, auditTrail: AuditTrail? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
+        self.init(snapshot: ["__typename": "OvertimePosting", "id": id, "orgId": orgId, "title": title, "location": location, "scenario": scenario, "startsAt": startsAt, "endsAt": endsAt, "slots": slots, "policySnapshot": policySnapshot, "selectionPolicy": selectionPolicy, "needsEscalation": needsEscalation, "state": state, "createdBy": createdBy, "invites": invites.flatMap { $0.snapshot }, "auditTrail": auditTrail.flatMap { $0.snapshot }, "createdAt": createdAt, "updatedAt": updatedAt])
       }
 
       public var __typename: String {
@@ -22980,6 +23404,24 @@ public final class OnDeleteOvertimePostingSubscription: GraphQLSubscription {
         }
         set {
           snapshot.updateValue(newValue, forKey: "policySnapshot")
+        }
+      }
+
+      public var selectionPolicy: OvertimeSelectionPolicy? {
+        get {
+          return snapshot["selectionPolicy"] as? OvertimeSelectionPolicy
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "selectionPolicy")
+        }
+      }
+
+      public var needsEscalation: Bool? {
+        get {
+          return snapshot["needsEscalation"] as? Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "needsEscalation")
         }
       }
 

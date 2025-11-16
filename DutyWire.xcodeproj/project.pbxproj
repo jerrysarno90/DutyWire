@@ -7,7 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0CE33334719FBAA2022BD4CB /* CalendarEvent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABBCF7331B1BF40DF577A82 /* CalendarEvent+Schema.swift */; };
+		17C1FFC8FD0E44685841B25C /* OvertimeInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791FAF0547B3C881AF6FF08D /* OvertimeInvite.swift */; };
+		2DCC651CF052ACD178776CCB /* NotificationPreference+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = B826640F44F9259933B72D7B /* NotificationPreference+Schema.swift */; };
+		459BE67F5E1B54A276F2FC02 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28014DD71E7B8CE726DF33C2 /* AmplifyModels.swift */; };
+		473897771F4EEC7C45A1BE2D /* OvertimePosting+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B7469946ECDD5756BDD4D /* OvertimePosting+Schema.swift */; };
+		543B2335033A4A6958AD87B3 /* CalendarEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A989399D774355532F71811 /* CalendarEvent.swift */; };
+		60B37DB1159AF84F01BF59D1 /* NotificationSendResult+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F06EC64D66E310FAB676CA9 /* NotificationSendResult+Schema.swift */; };
+		651F21104D5A6640569C672E /* OvertimeAuditEvent+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773D6F1EF0ACDC7ACBD19F5B /* OvertimeAuditEvent+Schema.swift */; };
+		6AE7B6AB9A8E97ABD02D9FEA /* NotificationMessage+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0661E363B468AC6D64F3B96D /* NotificationMessage+Schema.swift */; };
+		6B4416F142B23AFB1F56EF95 /* OfficerAssignment+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB46A8CD8B72DCEB299BA340 /* OfficerAssignment+Schema.swift */; };
+		72EC7C563BED467153BAC6FD /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AD7B320251FBFAB740AC94 /* Vehicle.swift */; };
+		7404CEA970190EB5B27EAB9A /* OvertimeSelectionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABD1C82552B46D0AAEB3B2 /* OvertimeSelectionPolicy.swift */; };
+		743DB27179F8E40B83F2D65C /* OvertimeInviteStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC4D4A122A5CAE967600334 /* OvertimeInviteStatus.swift */; };
+		750A6F6DE8B733151125EE99 /* NotificationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0694069AFF0D4DE067F1E531 /* NotificationMessage.swift */; };
+		76C15500222D08D88C5CEE5D /* NotificationPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2356A5B728AFB6BE1C83EA /* NotificationPlatform.swift */; };
 		80AD93968A5D58B34C752262 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EDF4779F31D43BE4013F524 /* awsconfiguration.json */; };
+		9978E5D77B376AF7BADAF244 /* NotificationSendResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAE300A9298694B8916BB9C /* NotificationSendResult.swift */; };
+		A3F016FF4186C8F5EE810FAC /* NotificationCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678FDCCE5A25C88C91A5FE81 /* NotificationCategory.swift */; };
 		A48808452EBF99BC0086EADE /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = A48808442EBF99BC0086EADE /* amplifyconfiguration.json */; };
 		A48808462EBF99BC0086EADE /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = A48808442EBF99BC0086EADE /* amplifyconfiguration.json */; };
 		A48808472EBF99BC0086EADE /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = A48808442EBF99BC0086EADE /* amplifyconfiguration.json */; };
@@ -40,6 +57,18 @@
 		A4D24BF82EB9503B00FFACC2 /* RosterEntry+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BE92EB9503B00FFACC2 /* RosterEntry+Schema.swift */; };
 		A4D24BFA2EB9503B00FFACC2 /* RosterEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BE82EB9503B00FFACC2 /* RosterEntry.swift */; };
 		A4D24BFB2EB9503B00FFACC2 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BEA2EB9503B00FFACC2 /* Vehicle.swift */; };
+		ADDDA6BD60D814F1A79A2646 /* OvertimeAuditEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D32CA043D6057DC0DD5B712 /* OvertimeAuditEvent.swift */; };
+		B1BA0C883DBDFD9E14A71750 /* RosterEntry+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E234B2679576D950E948BE /* RosterEntry+Schema.swift */; };
+		B2B15359C8AF57240FC07F23 /* OvertimeScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7BD02C12CA87D82DB71B78 /* OvertimeScenario.swift */; };
+		B35B540D768022A1E4EB31A7 /* NotificationEndpoint+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F58DACF27686A0B6962A081 /* NotificationEndpoint+Schema.swift */; };
+		BC24BEC44207B43FD04FB02F /* NotificationEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDBE6E74F700943CBF168F5 /* NotificationEndpoint.swift */; };
+		C622E820B497A4DA0C245476 /* OvertimePosting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4366CE535EEE0F48D2668D3E /* OvertimePosting.swift */; };
+		D215F1D5D90046E87E93C702 /* RosterEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A353FD9973C9C2BEAA5DC611 /* RosterEntry.swift */; };
+		DCB89F641CC1FF0E9AA330AF /* OvertimePostingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8695028738FFC69D501657 /* OvertimePostingState.swift */; };
+		DF194BA4043849E0144D007E /* Vehicle+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FCE5C098AC5C959FB8C0F9 /* Vehicle+Schema.swift */; };
+		E7E7FF954EA1C099364FCDD2 /* NotificationPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FD3A4BBD40EEB51E86F616 /* NotificationPreference.swift */; };
+		F039A1C5916CD96FE1C7A090 /* OfficerAssignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C88098F6B8A01B468F5934 /* OfficerAssignment.swift */; };
+		F8CAA082663FE3209FF17BBE /* OvertimeInvite+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0A63CAC1FDF263979C79C5 /* OvertimeInvite+Schema.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +89,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03E234B2679576D950E948BE /* RosterEntry+Schema.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = "RosterEntry+Schema.swift"; path = "amplify/generated/models/RosterEntry+Schema.swift"; sourceTree = "<group>"; };
+		0661E363B468AC6D64F3B96D /* NotificationMessage+Schema.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = "NotificationMessage+Schema.swift"; path = "amplify/generated/models/NotificationMessage+Schema.swift"; sourceTree = "<group>"; };
+		0694069AFF0D4DE067F1E531 /* NotificationMessage.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = NotificationMessage.swift; path = amplify/generated/models/NotificationMessage.swift; sourceTree = "<group>"; };
+		0F06EC64D66E310FAB676CA9 /* NotificationSendResult+Schema.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = "NotificationSendResult+Schema.swift"; path = "amplify/generated/models/NotificationSendResult+Schema.swift"; sourceTree = "<group>"; };
+		10FD3A4BBD40EEB51E86F616 /* NotificationPreference.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = NotificationPreference.swift; path = amplify/generated/models/NotificationPreference.swift; sourceTree = "<group>"; };
+		11C88098F6B8A01B468F5934 /* OfficerAssignment.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = OfficerAssignment.swift; path = amplify/generated/models/OfficerAssignment.swift; sourceTree = "<group>"; };
+		1F7B7469946ECDD5756BDD4D /* OvertimePosting+Schema.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = "OvertimePosting+Schema.swift"; path = "amplify/generated/models/OvertimePosting+Schema.swift"; sourceTree = "<group>"; };
+		24ABD1C82552B46D0AAEB3B2 /* OvertimeSelectionPolicy.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = OvertimeSelectionPolicy.swift; path = amplify/generated/models/OvertimeSelectionPolicy.swift; sourceTree = "<group>"; };
+		28014DD71E7B8CE726DF33C2 /* AmplifyModels.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = AmplifyModels.swift; path = amplify/generated/models/AmplifyModels.swift; sourceTree = "<group>"; };
+		3F8695028738FFC69D501657 /* OvertimePostingState.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = OvertimePostingState.swift; path = amplify/generated/models/OvertimePostingState.swift; sourceTree = "<group>"; };
+		4366CE535EEE0F48D2668D3E /* OvertimePosting.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = OvertimePosting.swift; path = amplify/generated/models/OvertimePosting.swift; sourceTree = "<group>"; };
+		5D32CA043D6057DC0DD5B712 /* OvertimeAuditEvent.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = OvertimeAuditEvent.swift; path = amplify/generated/models/OvertimeAuditEvent.swift; sourceTree = "<group>"; };
+		678FDCCE5A25C88C91A5FE81 /* NotificationCategory.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = NotificationCategory.swift; path = amplify/generated/models/NotificationCategory.swift; sourceTree = "<group>"; };
+		6F58DACF27686A0B6962A081 /* NotificationEndpoint+Schema.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = "NotificationEndpoint+Schema.swift"; path = "amplify/generated/models/NotificationEndpoint+Schema.swift"; sourceTree = "<group>"; };
+		773D6F1EF0ACDC7ACBD19F5B /* OvertimeAuditEvent+Schema.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = "OvertimeAuditEvent+Schema.swift"; path = "amplify/generated/models/OvertimeAuditEvent+Schema.swift"; sourceTree = "<group>"; };
+		791FAF0547B3C881AF6FF08D /* OvertimeInvite.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = OvertimeInvite.swift; path = amplify/generated/models/OvertimeInvite.swift; sourceTree = "<group>"; };
+		7A989399D774355532F71811 /* CalendarEvent.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = CalendarEvent.swift; path = amplify/generated/models/CalendarEvent.swift; sourceTree = "<group>"; };
+		89FCE5C098AC5C959FB8C0F9 /* Vehicle+Schema.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = "Vehicle+Schema.swift"; path = "amplify/generated/models/Vehicle+Schema.swift"; sourceTree = "<group>"; };
+		96AD7B320251FBFAB740AC94 /* Vehicle.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = Vehicle.swift; path = amplify/generated/models/Vehicle.swift; sourceTree = "<group>"; };
 		9EDF4779F31D43BE4013F524 /* awsconfiguration.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
+		9F0A63CAC1FDF263979C79C5 /* OvertimeInvite+Schema.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = "OvertimeInvite+Schema.swift"; path = "amplify/generated/models/OvertimeInvite+Schema.swift"; sourceTree = "<group>"; };
+		A353FD9973C9C2BEAA5DC611 /* RosterEntry.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = RosterEntry.swift; path = amplify/generated/models/RosterEntry.swift; sourceTree = "<group>"; };
 		A443A9252EC6BFE8002EC376 /* DutyWire-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "DutyWire-Info.plist"; sourceTree = "<group>"; };
 		A48808442EBF99BC0086EADE /* amplifyconfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
 		A4AC8DD92EB7E5AB00CD5FBD /* DutyWire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DutyWire.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +124,14 @@
 		A4D24BE92EB9503B00FFACC2 /* RosterEntry+Schema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RosterEntry+Schema.swift"; sourceTree = "<group>"; };
 		A4D24BEA2EB9503B00FFACC2 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		A4D24BEB2EB9503B00FFACC2 /* Vehicle+Schema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vehicle+Schema.swift"; sourceTree = "<group>"; };
+		B826640F44F9259933B72D7B /* NotificationPreference+Schema.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = "NotificationPreference+Schema.swift"; path = "amplify/generated/models/NotificationPreference+Schema.swift"; sourceTree = "<group>"; };
+		CA2356A5B728AFB6BE1C83EA /* NotificationPlatform.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = NotificationPlatform.swift; path = amplify/generated/models/NotificationPlatform.swift; sourceTree = "<group>"; };
+		CABBCF7331B1BF40DF577A82 /* CalendarEvent+Schema.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = "CalendarEvent+Schema.swift"; path = "amplify/generated/models/CalendarEvent+Schema.swift"; sourceTree = "<group>"; };
+		CBDBE6E74F700943CBF168F5 /* NotificationEndpoint.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = NotificationEndpoint.swift; path = amplify/generated/models/NotificationEndpoint.swift; sourceTree = "<group>"; };
+		DB46A8CD8B72DCEB299BA340 /* OfficerAssignment+Schema.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = "OfficerAssignment+Schema.swift"; path = "amplify/generated/models/OfficerAssignment+Schema.swift"; sourceTree = "<group>"; };
+		EDAE300A9298694B8916BB9C /* NotificationSendResult.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = NotificationSendResult.swift; path = amplify/generated/models/NotificationSendResult.swift; sourceTree = "<group>"; };
+		EDC4D4A122A5CAE967600334 /* OvertimeInviteStatus.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = OvertimeInviteStatus.swift; path = amplify/generated/models/OvertimeInviteStatus.swift; sourceTree = "<group>"; };
+		EF7BD02C12CA87D82DB71B78 /* OvertimeScenario.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = OvertimeScenario.swift; path = amplify/generated/models/OvertimeScenario.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -135,6 +193,35 @@
 		152E201D1F47CF5164A6040B /* AmplifyModels */ = {
 			isa = PBXGroup;
 			children = (
+				28014DD71E7B8CE726DF33C2 /* AmplifyModels.swift */,
+				CABBCF7331B1BF40DF577A82 /* CalendarEvent+Schema.swift */,
+				7A989399D774355532F71811 /* CalendarEvent.swift */,
+				678FDCCE5A25C88C91A5FE81 /* NotificationCategory.swift */,
+				6F58DACF27686A0B6962A081 /* NotificationEndpoint+Schema.swift */,
+				CBDBE6E74F700943CBF168F5 /* NotificationEndpoint.swift */,
+				0661E363B468AC6D64F3B96D /* NotificationMessage+Schema.swift */,
+				0694069AFF0D4DE067F1E531 /* NotificationMessage.swift */,
+				CA2356A5B728AFB6BE1C83EA /* NotificationPlatform.swift */,
+				B826640F44F9259933B72D7B /* NotificationPreference+Schema.swift */,
+				10FD3A4BBD40EEB51E86F616 /* NotificationPreference.swift */,
+				0F06EC64D66E310FAB676CA9 /* NotificationSendResult+Schema.swift */,
+				EDAE300A9298694B8916BB9C /* NotificationSendResult.swift */,
+				DB46A8CD8B72DCEB299BA340 /* OfficerAssignment+Schema.swift */,
+				11C88098F6B8A01B468F5934 /* OfficerAssignment.swift */,
+				773D6F1EF0ACDC7ACBD19F5B /* OvertimeAuditEvent+Schema.swift */,
+				5D32CA043D6057DC0DD5B712 /* OvertimeAuditEvent.swift */,
+				9F0A63CAC1FDF263979C79C5 /* OvertimeInvite+Schema.swift */,
+				791FAF0547B3C881AF6FF08D /* OvertimeInvite.swift */,
+				EDC4D4A122A5CAE967600334 /* OvertimeInviteStatus.swift */,
+				1F7B7469946ECDD5756BDD4D /* OvertimePosting+Schema.swift */,
+				4366CE535EEE0F48D2668D3E /* OvertimePosting.swift */,
+				3F8695028738FFC69D501657 /* OvertimePostingState.swift */,
+				EF7BD02C12CA87D82DB71B78 /* OvertimeScenario.swift */,
+				24ABD1C82552B46D0AAEB3B2 /* OvertimeSelectionPolicy.swift */,
+				03E234B2679576D950E948BE /* RosterEntry+Schema.swift */,
+				A353FD9973C9C2BEAA5DC611 /* RosterEntry.swift */,
+				89FCE5C098AC5C959FB8C0F9 /* Vehicle+Schema.swift */,
+				96AD7B320251FBFAB740AC94 /* Vehicle.swift */,
 			);
 			name = AmplifyModels;
 			sourceTree = "<group>";
@@ -393,6 +480,35 @@
 				A4D24BF82EB9503B00FFACC2 /* RosterEntry+Schema.swift in Sources */,
 				A4D24BFA2EB9503B00FFACC2 /* RosterEntry.swift in Sources */,
 				A4D24BFB2EB9503B00FFACC2 /* Vehicle.swift in Sources */,
+				459BE67F5E1B54A276F2FC02 /* AmplifyModels.swift in Sources */,
+				0CE33334719FBAA2022BD4CB /* CalendarEvent+Schema.swift in Sources */,
+				543B2335033A4A6958AD87B3 /* CalendarEvent.swift in Sources */,
+				A3F016FF4186C8F5EE810FAC /* NotificationCategory.swift in Sources */,
+				B35B540D768022A1E4EB31A7 /* NotificationEndpoint+Schema.swift in Sources */,
+				BC24BEC44207B43FD04FB02F /* NotificationEndpoint.swift in Sources */,
+				6AE7B6AB9A8E97ABD02D9FEA /* NotificationMessage+Schema.swift in Sources */,
+				750A6F6DE8B733151125EE99 /* NotificationMessage.swift in Sources */,
+				76C15500222D08D88C5CEE5D /* NotificationPlatform.swift in Sources */,
+				2DCC651CF052ACD178776CCB /* NotificationPreference+Schema.swift in Sources */,
+				E7E7FF954EA1C099364FCDD2 /* NotificationPreference.swift in Sources */,
+				60B37DB1159AF84F01BF59D1 /* NotificationSendResult+Schema.swift in Sources */,
+				9978E5D77B376AF7BADAF244 /* NotificationSendResult.swift in Sources */,
+				6B4416F142B23AFB1F56EF95 /* OfficerAssignment+Schema.swift in Sources */,
+				F039A1C5916CD96FE1C7A090 /* OfficerAssignment.swift in Sources */,
+				651F21104D5A6640569C672E /* OvertimeAuditEvent+Schema.swift in Sources */,
+				ADDDA6BD60D814F1A79A2646 /* OvertimeAuditEvent.swift in Sources */,
+				F8CAA082663FE3209FF17BBE /* OvertimeInvite+Schema.swift in Sources */,
+				17C1FFC8FD0E44685841B25C /* OvertimeInvite.swift in Sources */,
+				743DB27179F8E40B83F2D65C /* OvertimeInviteStatus.swift in Sources */,
+				473897771F4EEC7C45A1BE2D /* OvertimePosting+Schema.swift in Sources */,
+				C622E820B497A4DA0C245476 /* OvertimePosting.swift in Sources */,
+				DCB89F641CC1FF0E9AA330AF /* OvertimePostingState.swift in Sources */,
+				B2B15359C8AF57240FC07F23 /* OvertimeScenario.swift in Sources */,
+				7404CEA970190EB5B27EAB9A /* OvertimeSelectionPolicy.swift in Sources */,
+				B1BA0C883DBDFD9E14A71750 /* RosterEntry+Schema.swift in Sources */,
+				D215F1D5D90046E87E93C702 /* RosterEntry.swift in Sources */,
+				DF194BA4043849E0144D007E /* Vehicle+Schema.swift in Sources */,
+				72EC7C563BED467153BAC6FD /* Vehicle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
