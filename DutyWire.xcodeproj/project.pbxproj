@@ -44,19 +44,6 @@
 		A4D24BD62EB90A5C00FFACC2 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = A4D24BD52EB90A5C00FFACC2 /* Amplify */; };
 		A4D24BD82EB90A5C00FFACC2 /* CoreMLPredictionsPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = A4D24BD72EB90A5C00FFACC2 /* CoreMLPredictionsPlugin */; };
 		A4D24BDB2EB9104A00FFACC2 /* Authenticator in Frameworks */ = {isa = PBXBuildFile; productRef = A4D24BDA2EB9104A00FFACC2 /* Authenticator */; };
-		A4D24BED2EB9503B00FFACC2 /* Vehicle+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BEB2EB9503B00FFACC2 /* Vehicle+Schema.swift */; };
-		A4D24BEE2EB9503B00FFACC2 /* RosterEntry+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BE92EB9503B00FFACC2 /* RosterEntry+Schema.swift */; };
-		A4D24BF02EB9503B00FFACC2 /* RosterEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BE82EB9503B00FFACC2 /* RosterEntry.swift */; };
-		A4D24BF12EB9503B00FFACC2 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BEA2EB9503B00FFACC2 /* Vehicle.swift */; };
-		A4D24BF22EB9503B00FFACC2 /* Vehicle+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BEB2EB9503B00FFACC2 /* Vehicle+Schema.swift */; };
-		A4D24BF32EB9503B00FFACC2 /* RosterEntry+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BE92EB9503B00FFACC2 /* RosterEntry+Schema.swift */; };
-		A4D24BF42EB9503B00FFACC2 /* AmplifyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BE72EB9503B00FFACC2 /* AmplifyModels.swift */; };
-		A4D24BF52EB9503B00FFACC2 /* RosterEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BE82EB9503B00FFACC2 /* RosterEntry.swift */; };
-		A4D24BF62EB9503B00FFACC2 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BEA2EB9503B00FFACC2 /* Vehicle.swift */; };
-		A4D24BF72EB9503B00FFACC2 /* Vehicle+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BEB2EB9503B00FFACC2 /* Vehicle+Schema.swift */; };
-		A4D24BF82EB9503B00FFACC2 /* RosterEntry+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BE92EB9503B00FFACC2 /* RosterEntry+Schema.swift */; };
-		A4D24BFA2EB9503B00FFACC2 /* RosterEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BE82EB9503B00FFACC2 /* RosterEntry.swift */; };
-		A4D24BFB2EB9503B00FFACC2 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D24BEA2EB9503B00FFACC2 /* Vehicle.swift */; };
 		ADDDA6BD60D814F1A79A2646 /* OvertimeAuditEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D32CA043D6057DC0DD5B712 /* OvertimeAuditEvent.swift */; };
 		B1BA0C883DBDFD9E14A71750 /* RosterEntry+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E234B2679576D950E948BE /* RosterEntry+Schema.swift */; };
 		B2B15359C8AF57240FC07F23 /* OvertimeScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7BD02C12CA87D82DB71B78 /* OvertimeScenario.swift */; };
@@ -119,11 +106,6 @@
 		A4B6B8412EB9923B00162FB3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A4B6B8422EB9923B00162FB3 /* ShiftlinkMainApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftlinkMainApp.swift; sourceTree = "<group>"; };
 		A4D24BBC2EB909F200FFACC2 /* amplify_outputs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplify_outputs.json; sourceTree = "<group>"; };
-		A4D24BE72EB9503B00FFACC2 /* AmplifyModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmplifyModels.swift; sourceTree = "<group>"; };
-		A4D24BE82EB9503B00FFACC2 /* RosterEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RosterEntry.swift; sourceTree = "<group>"; };
-		A4D24BE92EB9503B00FFACC2 /* RosterEntry+Schema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RosterEntry+Schema.swift"; sourceTree = "<group>"; };
-		A4D24BEA2EB9503B00FFACC2 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
-		A4D24BEB2EB9503B00FFACC2 /* Vehicle+Schema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vehicle+Schema.swift"; sourceTree = "<group>"; };
 		B826640F44F9259933B72D7B /* NotificationPreference+Schema.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = "NotificationPreference+Schema.swift"; path = "amplify/generated/models/NotificationPreference+Schema.swift"; sourceTree = "<group>"; };
 		CA2356A5B728AFB6BE1C83EA /* NotificationPlatform.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = NotificationPlatform.swift; path = amplify/generated/models/NotificationPlatform.swift; sourceTree = "<group>"; };
 		CABBCF7331B1BF40DF577A82 /* CalendarEvent+Schema.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = "CalendarEvent+Schema.swift"; path = "amplify/generated/models/CalendarEvent+Schema.swift"; sourceTree = "<group>"; };
@@ -235,7 +217,6 @@
 				A4AC8DF42EB7E5AD00CD5FBD /* ShiftlinkMainUITests */,
 				A4AC8DDA2EB7E5AB00CD5FBD /* Products */,
 				A4D24BBC2EB909F200FFACC2 /* amplify_outputs.json */,
-				A4D24BEC2EB9503B00FFACC2 /* AmplifyModels */,
 				A4B6B8432EB9923B00162FB3 /* ShiftlinkMain/Sources */,
 				E94A8E5E8CD38D791A94BA2C /* AmplifyConfig */,
 				152E201D1F47CF5164A6040B /* AmplifyModels */,
@@ -259,18 +240,6 @@
 				A4B6B8422EB9923B00162FB3 /* ShiftlinkMainApp.swift */,
 			);
 			path = ShiftlinkMain/Sources;
-			sourceTree = "<group>";
-		};
-		A4D24BEC2EB9503B00FFACC2 /* AmplifyModels */ = {
-			isa = PBXGroup;
-			children = (
-				A4D24BE72EB9503B00FFACC2 /* AmplifyModels.swift */,
-				A4D24BE82EB9503B00FFACC2 /* RosterEntry.swift */,
-				A4D24BE92EB9503B00FFACC2 /* RosterEntry+Schema.swift */,
-				A4D24BEA2EB9503B00FFACC2 /* Vehicle.swift */,
-				A4D24BEB2EB9503B00FFACC2 /* Vehicle+Schema.swift */,
-			);
-			path = AmplifyModels;
 			sourceTree = "<group>";
 		};
 		E94A8E5E8CD38D791A94BA2C /* AmplifyConfig */ = {
@@ -475,11 +444,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4D24BF42EB9503B00FFACC2 /* AmplifyModels.swift in Sources */,
-				A4D24BF72EB9503B00FFACC2 /* Vehicle+Schema.swift in Sources */,
-				A4D24BF82EB9503B00FFACC2 /* RosterEntry+Schema.swift in Sources */,
-				A4D24BFA2EB9503B00FFACC2 /* RosterEntry.swift in Sources */,
-				A4D24BFB2EB9503B00FFACC2 /* Vehicle.swift in Sources */,
 				459BE67F5E1B54A276F2FC02 /* AmplifyModels.swift in Sources */,
 				0CE33334719FBAA2022BD4CB /* CalendarEvent+Schema.swift in Sources */,
 				543B2335033A4A6958AD87B3 /* CalendarEvent.swift in Sources */,
@@ -516,10 +480,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4D24BF22EB9503B00FFACC2 /* Vehicle+Schema.swift in Sources */,
-				A4D24BF32EB9503B00FFACC2 /* RosterEntry+Schema.swift in Sources */,
-				A4D24BF52EB9503B00FFACC2 /* RosterEntry.swift in Sources */,
-				A4D24BF62EB9503B00FFACC2 /* Vehicle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,10 +487,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4D24BED2EB9503B00FFACC2 /* Vehicle+Schema.swift in Sources */,
-				A4D24BEE2EB9503B00FFACC2 /* RosterEntry+Schema.swift in Sources */,
-				A4D24BF02EB9503B00FFACC2 /* RosterEntry.swift in Sources */,
-				A4D24BF12EB9503B00FFACC2 /* Vehicle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
