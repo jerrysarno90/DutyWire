@@ -376,16 +376,12 @@ query GetOvertimePosting($id: ID!) {
     startsAt
     endsAt
     slots
-    policySnapshot
-    selectionPolicy
-    needsEscalation
+    policy
+    notes
+    deadline
     state
     createdBy
-    invites {
-      nextToken
-      __typename
-    }
-    auditTrail {
+    signups {
       nextToken
       __typename
     }
@@ -410,9 +406,9 @@ query ListOvertimePostings(
       startsAt
       endsAt
       slots
-      policySnapshot
-      selectionPolicy
-      needsEscalation
+      policy
+      notes
+      deadline
       state
       createdBy
       createdAt
@@ -449,9 +445,9 @@ query OvertimePostingsByOrg(
       startsAt
       endsAt
       slots
-      policySnapshot
-      selectionPolicy
-      needsEscalation
+      policy
+      notes
+      deadline
       state
       createdBy
       createdAt
@@ -463,37 +459,47 @@ query OvertimePostingsByOrg(
   }
 }
 
-query GetOvertimeInvite($id: ID!) {
-  getOvertimeInvite(id: $id) {
+query GetOvertimeSignup($id: ID!) {
+  getOvertimeSignup(id: $id) {
     id
     postingId
+    orgId
     officerId
-    bucket
-    sequence
-    reason
     status
-    respondedAt
+    rank
+    rankPriority
+    badgeNumber
+    tieBreakerKey
+    submittedAt
+    forcedBy
+    forcedReason
+    notes
     createdAt
     updatedAt
     __typename
   }
 }
 
-query ListOvertimeInvites(
-  $filter: ModelOvertimeInviteFilterInput
+query ListOvertimeSignups(
+  $filter: ModelOvertimeSignupFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listOvertimeInvites(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listOvertimeSignups(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       postingId
+      orgId
       officerId
-      bucket
-      sequence
-      reason
       status
-      respondedAt
+      rank
+      rankPriority
+      badgeNumber
+      tieBreakerKey
+      submittedAt
+      forcedBy
+      forcedReason
+      notes
       createdAt
       updatedAt
       __typename
@@ -503,17 +509,17 @@ query ListOvertimeInvites(
   }
 }
 
-query InvitesByPosting(
+query SignupsByPosting(
   $postingId: ID!
-  $sequence: ModelIntKeyConditionInput
+  $submittedAt: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
-  $filter: ModelOvertimeInviteFilterInput
+  $filter: ModelOvertimeSignupFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  invitesByPosting(
+  signupsByPosting(
     postingId: $postingId
-    sequence: $sequence
+    submittedAt: $submittedAt
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -522,12 +528,17 @@ query InvitesByPosting(
     items {
       id
       postingId
+      orgId
       officerId
-      bucket
-      sequence
-      reason
       status
-      respondedAt
+      rank
+      rankPriority
+      badgeNumber
+      tieBreakerKey
+      submittedAt
+      forcedBy
+      forcedReason
+      notes
       createdAt
       updatedAt
       __typename
@@ -537,55 +548,17 @@ query InvitesByPosting(
   }
 }
 
-query GetOvertimeAuditEvent($id: ID!) {
-  getOvertimeAuditEvent(id: $id) {
-    id
-    postingId
-    type
-    details
-    createdBy
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-query ListOvertimeAuditEvents(
-  $filter: ModelOvertimeAuditEventFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listOvertimeAuditEvents(
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      postingId
-      type
-      details
-      createdBy
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-
-query AuditsByPosting(
-  $postingId: ID!
-  $createdAt: ModelStringKeyConditionInput
+query OvertimeSignupsByOrg(
+  $orgId: String!
+  $submittedAt: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
-  $filter: ModelOvertimeAuditEventFilterInput
+  $filter: ModelOvertimeSignupFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  auditsByPosting(
-    postingId: $postingId
-    createdAt: $createdAt
+  overtimeSignupsByOrg(
+    orgId: $orgId
+    submittedAt: $submittedAt
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -594,9 +567,56 @@ query AuditsByPosting(
     items {
       id
       postingId
-      type
-      details
-      createdBy
+      orgId
+      officerId
+      status
+      rank
+      rankPriority
+      badgeNumber
+      tieBreakerKey
+      submittedAt
+      forcedBy
+      forcedReason
+      notes
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query OvertimeSignupsByOfficer(
+  $officerId: String!
+  $status: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelOvertimeSignupFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  overtimeSignupsByOfficer(
+    officerId: $officerId
+    status: $status
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      postingId
+      orgId
+      officerId
+      status
+      rank
+      rankPriority
+      badgeNumber
+      tieBreakerKey
+      submittedAt
+      forcedBy
+      forcedReason
+      notes
       createdAt
       updatedAt
       __typename
@@ -873,6 +893,281 @@ query NotificationPreferencesByUser(
       contactPhone
       contactEmail
       backupEmail
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetSquad($id: ID!) {
+  getSquad(id: $id) {
+    id
+    orgId
+    name
+    bureau
+    shift
+    notes
+    isActive
+    memberships {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListSquads(
+  $filter: ModelSquadFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listSquads(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      orgId
+      name
+      bureau
+      shift
+      notes
+      isActive
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query SquadsByOrg(
+  $orgId: String!
+  $name: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelSquadFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  squadsByOrg(
+    orgId: $orgId
+    name: $name
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      orgId
+      name
+      bureau
+      shift
+      notes
+      isActive
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetSquadMembership($id: ID!) {
+  getSquadMembership(id: $id) {
+    id
+    squadId
+    userId
+    roleInSquad
+    isPrimary
+    isActive
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListSquadMemberships(
+  $filter: ModelSquadMembershipFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listSquadMemberships(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      squadId
+      userId
+      roleInSquad
+      isPrimary
+      isActive
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query SquadMembershipsBySquad(
+  $squadId: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelSquadMembershipFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  squadMembershipsBySquad(
+    squadId: $squadId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      squadId
+      userId
+      roleInSquad
+      isPrimary
+      isActive
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query SquadMembershipsByUser(
+  $userId: String!
+  $sortDirection: ModelSortDirection
+  $filter: ModelSquadMembershipFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  squadMembershipsByUser(
+    userId: $userId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      squadId
+      userId
+      roleInSquad
+      isPrimary
+      isActive
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetNotificationReceipt($id: ID!) {
+  getNotificationReceipt(id: $id) {
+    id
+    notificationId
+    userId
+    orgId
+    isRead
+    readAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListNotificationReceipts(
+  $filter: ModelNotificationReceiptFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listNotificationReceipts(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      notificationId
+      userId
+      orgId
+      isRead
+      readAt
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query NotificationReceiptsByNotification(
+  $notificationId: ID!
+  $userId: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelNotificationReceiptFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  notificationReceiptsByNotification(
+    notificationId: $notificationId
+    userId: $userId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      notificationId
+      userId
+      orgId
+      isRead
+      readAt
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query NotificationReceiptsByUser(
+  $userId: String!
+  $notificationId: ModelIDKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelNotificationReceiptFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  notificationReceiptsByUser(
+    userId: $userId
+    notificationId: $notificationId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      notificationId
+      userId
+      orgId
+      isRead
+      readAt
       createdAt
       updatedAt
       __typename

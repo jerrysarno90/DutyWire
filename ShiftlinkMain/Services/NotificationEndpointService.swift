@@ -8,7 +8,7 @@ enum NotificationPlatformKind: String {
 
 struct NotificationEndpointRecord: Decodable, Identifiable {
     let id: String
-    let orgId: String
+    var orgId: String?
     let userId: String
     let deviceToken: String
     let platform: String
@@ -263,7 +263,16 @@ enum NotificationEndpointService {
 
     private static func findEndpoint(userId: String, orgId: String, token: String) async throws -> NotificationEndpointRecord? {
         let endpoints = try await listEndpointsByUser(userId: userId, limit: 25)
-        return endpoints.first { $0.orgId == orgId && $0.deviceToken == token }
+        if var match = endpoints.first(where: {
+            let matchesOrg = $0.orgId == nil || $0.orgId == orgId
+            return matchesOrg && $0.deviceToken == token
+        }) {
+            if match.orgId == nil {
+                match.orgId = orgId
+            }
+            return match
+        }
+        return nil
     }
 
     static func listEndpointsForUser(userId: String) async throws -> [NotificationEndpointRecord] {
@@ -292,7 +301,12 @@ enum NotificationEndpointService {
             let result = try await Amplify.API.query(request: request)
             switch result {
             case .success(let payload):
-                let items = payload.notificationEndpointsByOrg?.items.compactMap { $0 } ?? []
+                let items = payload.notificationEndpointsByOrg?.items.compactMap { record -> NotificationEndpointRecord? in
+                    guard let record = record, record.orgId != nil else {
+                        return nil
+                    }
+                    return record
+                } ?? []
                 collected.append(contentsOf: items)
                 nextToken = payload.notificationEndpointsByOrg?.nextToken
             case .failure(let error):
@@ -413,6 +427,9 @@ enum NotificationEndpointService {
     private static func shouldFallbackToLegacyUserQuery(error: Error) -> Bool {
         let description = String(describing: error).lowercased()
         if description.contains("notificationendpointsbyuser") || description.contains("endpointsbyuser") {
+            return true
+        }
+        if description.contains("listnotificationendpoints") || description.contains("cannot return null") {
             return true
         }
         return false

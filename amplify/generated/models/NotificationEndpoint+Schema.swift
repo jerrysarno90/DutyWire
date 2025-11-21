@@ -40,7 +40,7 @@ extension NotificationEndpoint {
     
     model.fields(
       .field(notificationEndpoint.id, is: .required, ofType: .string),
-      .field(notificationEndpoint.orgId, is: .required, ofType: .string),
+      .field(notificationEndpoint.orgId, is: .optional, ofType: .string),
       .field(notificationEndpoint.userId, is: .required, ofType: .string),
       .field(notificationEndpoint.deviceToken, is: .required, ofType: .string),
       .field(notificationEndpoint.platform, is: .required, ofType: .enum(type: NotificationPlatform.self)),

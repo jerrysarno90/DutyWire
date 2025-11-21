@@ -13,13 +13,12 @@ extension OvertimePosting {
     case startsAt
     case endsAt
     case slots
-    case policySnapshot
-    case selectionPolicy
-    case needsEscalation
+    case policy
+    case notes
+    case deadline
     case state
     case createdBy
-    case invites
-    case auditTrail
+    case signups
     case createdAt
     case updatedAt
   }
@@ -52,13 +51,12 @@ extension OvertimePosting {
       .field(overtimePosting.startsAt, is: .required, ofType: .dateTime),
       .field(overtimePosting.endsAt, is: .required, ofType: .dateTime),
       .field(overtimePosting.slots, is: .required, ofType: .int),
-      .field(overtimePosting.policySnapshot, is: .required, ofType: .string),
-      .field(overtimePosting.selectionPolicy, is: .optional, ofType: .enum(type: OvertimeSelectionPolicy.self)),
-      .field(overtimePosting.needsEscalation, is: .optional, ofType: .bool),
+      .field(overtimePosting.policy, is: .required, ofType: .enum(type: OvertimePolicy.self)),
+      .field(overtimePosting.notes, is: .optional, ofType: .string),
+      .field(overtimePosting.deadline, is: .optional, ofType: .dateTime),
       .field(overtimePosting.state, is: .required, ofType: .enum(type: OvertimePostingState.self)),
       .field(overtimePosting.createdBy, is: .required, ofType: .string),
-      .hasMany(overtimePosting.invites, is: .optional, ofType: OvertimeInvite.self, associatedWith: OvertimeInvite.keys.postingId),
-      .hasMany(overtimePosting.auditTrail, is: .optional, ofType: OvertimeAuditEvent.self, associatedWith: OvertimeAuditEvent.keys.postingId),
+      .hasMany(overtimePosting.signups, is: .optional, ofType: OvertimeSignup.self, associatedWith: OvertimeSignup.keys.postingId),
       .field(overtimePosting.createdAt, is: .optional, ofType: .dateTime),
       .field(overtimePosting.updatedAt, is: .optional, ofType: .dateTime)
     )

@@ -1,11 +1,53 @@
 import { useEffect, useMemo, useState } from 'react';
 import { generateClient } from 'aws-amplify/data';
-import type { Schema } from '../ShiftlinkMain.xcodeproj/amplify/data/resource';
 
-const client = generateClient<Schema>();
+const client = generateClient();
 
-type CalendarEventModel = Schema['models']['CalendarEvent']['type'];
-type RosterEntryModel = Schema['models']['RosterEntry']['type'];
+type IsoDateTime = string;
+
+type CalendarEventModel = {
+  id: string;
+  orgId: string;
+  ownerId: string;
+  title: string;
+  category: string;
+  color: string;
+  notes?: string | null;
+  startsAt: IsoDateTime;
+  endsAt: IsoDateTime;
+  reminderMinutesBefore?: number | null;
+  createdAt?: IsoDateTime | null;
+  updatedAt?: IsoDateTime | null;
+};
+
+type RosterEntryModel = {
+  id: string;
+  orgId: string;
+  badgeNumber: string;
+  shift?: string | null;
+  notes?: string | null;
+  startsAt: IsoDateTime;
+  endsAt: IsoDateTime;
+  createdAt?: IsoDateTime | null;
+  updatedAt?: IsoDateTime | null;
+};
+
+type ModelListOptions = {
+  filter?: Record<string, unknown>;
+};
+
+type ModelListResult<T> = Promise<{
+  data?: T[] | null;
+}>;
+
+type ModelListApi<T> = {
+  list(options: ModelListOptions): ModelListResult<T>;
+};
+
+const models = client.models as unknown as {
+  CalendarEvent: ModelListApi<CalendarEventModel>;
+  RosterEntry: ModelListApi<RosterEntryModel>;
+};
 
 const sortByStart = (a: CalendarEventModel, b: CalendarEventModel) =>
   new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime();
@@ -48,8 +90,8 @@ export default function App() {
     };
 
     Promise.all([
-      client.models.CalendarEvent.list({ filter: calendarFilter }),
-      client.models.RosterEntry.list({ filter: rosterFilter }),
+      models.CalendarEvent.list({ filter: calendarFilter }),
+      models.RosterEntry.list({ filter: rosterFilter }),
     ])
       .then(([calendarResult, rosterResult]) => {
         setEvents((calendarResult.data ?? []).sort(sortByStart));

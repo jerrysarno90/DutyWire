@@ -34,6 +34,33 @@ struct TenantSecurityPolicy: Codable, Hashable {
     var defaultRole: String
 }
 
+struct TenantLexicon: Codable, Hashable {
+    var squadSingular: String
+    var squadPlural: String
+    var bureauSingular: String
+    var bureauPlural: String
+    var taskSingular: String
+    var taskPlural: String
+
+    init(
+        squadSingular: String = "Squad",
+        squadPlural: String = "Squads",
+        bureauSingular: String = "Bureau",
+        bureauPlural: String = "Bureaus",
+        taskSingular: String = "Task",
+        taskPlural: String = "Tasks"
+    ) {
+        self.squadSingular = squadSingular
+        self.squadPlural = squadPlural
+        self.bureauSingular = bureauSingular
+        self.bureauPlural = bureauPlural
+        self.taskSingular = taskSingular
+        self.taskPlural = taskPlural
+    }
+
+    static let `standard` = TenantLexicon()
+}
+
 struct TenantMetadata: Identifiable, Codable, Hashable {
     let id: UUID
     let orgId: String
@@ -44,6 +71,7 @@ struct TenantMetadata: Identifiable, Codable, Hashable {
     var securityOfficerUsernames: [String]
     var onboardingStatus: TenantOnboardingStatus
     var securityPolicy: TenantSecurityPolicy
+    var lexicon: TenantLexicon
     var createdAt: Date
     var updatedAt: Date
 
@@ -57,6 +85,7 @@ struct TenantMetadata: Identifiable, Codable, Hashable {
         securityOfficerUsernames: [String],
         onboardingStatus: TenantOnboardingStatus,
         securityPolicy: TenantSecurityPolicy,
+        lexicon: TenantLexicon = .standard,
         createdAt: Date = Date(),
         updatedAt: Date = Date()
     ) {
@@ -69,6 +98,7 @@ struct TenantMetadata: Identifiable, Codable, Hashable {
         self.securityOfficerUsernames = securityOfficerUsernames
         self.onboardingStatus = onboardingStatus
         self.securityPolicy = securityPolicy
+        self.lexicon = lexicon
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
@@ -86,16 +116,17 @@ extension TenantMetadata {
             orgId: "demo-pd",
             siteKey: "DEMO-PD",
             displayName: "Demo Police Department",
-            verifiedDomains: ["demopd.example", "ops.demopd.example"],
-            ownerUsernames: ["owner.demopd"],
-            securityOfficerUsernames: ["aso.demopd"],
+            verifiedDomains: ["demopd.example", "ops.demopd.example", "gmail.com"],
+            ownerUsernames: ["gmail.com", "sheriff.demopd", "chief.demopd"],
+            securityOfficerUsernames: ["gmail.com", "aso.demopd"],
             onboardingStatus: .ready,
             securityPolicy: TenantSecurityPolicy(
                 requiresPhishingResistantMFA: true,
                 inviteExpiryHours: 24,
                 allowSelfRegistration: false,
                 defaultRole: "Officer"
-            )
+            ),
+            lexicon: .standard
         ),
         TenantMetadata(
             orgId: "alpha-sheriff",
@@ -110,6 +141,14 @@ extension TenantMetadata {
                 inviteExpiryHours: 12,
                 allowSelfRegistration: false,
                 defaultRole: "Officer"
+            ),
+            lexicon: TenantLexicon(
+                squadSingular: "Platoon",
+                squadPlural: "Platoons",
+                bureauSingular: "Division",
+                bureauPlural: "Divisions",
+                taskSingular: "Directive",
+                taskPlural: "Directives"
             )
         ),
         TenantMetadata(
@@ -125,6 +164,14 @@ extension TenantMetadata {
                 inviteExpiryHours: 48,
                 allowSelfRegistration: true,
                 defaultRole: "Supervisor"
+            ),
+            lexicon: TenantLexicon(
+                squadSingular: "Watch",
+                squadPlural: "Watches",
+                bureauSingular: "Precinct",
+                bureauPlural: "Precincts",
+                taskSingular: "Assignment",
+                taskPlural: "Assignments"
             )
         )
     ]

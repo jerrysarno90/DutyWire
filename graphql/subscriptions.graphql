@@ -229,16 +229,12 @@ subscription OnCreateOvertimePosting(
     startsAt
     endsAt
     slots
-    policySnapshot
-    selectionPolicy
-    needsEscalation
+    policy
+    notes
+    deadline
     state
     createdBy
-    invites {
-      nextToken
-      __typename
-    }
-    auditTrail {
+    signups {
       nextToken
       __typename
     }
@@ -261,16 +257,12 @@ subscription OnUpdateOvertimePosting(
     startsAt
     endsAt
     slots
-    policySnapshot
-    selectionPolicy
-    needsEscalation
+    policy
+    notes
+    deadline
     state
     createdBy
-    invites {
-      nextToken
-      __typename
-    }
-    auditTrail {
+    signups {
       nextToken
       __typename
     }
@@ -293,16 +285,12 @@ subscription OnDeleteOvertimePosting(
     startsAt
     endsAt
     slots
-    policySnapshot
-    selectionPolicy
-    needsEscalation
+    policy
+    notes
+    deadline
     state
     createdBy
-    invites {
-      nextToken
-      __typename
-    }
-    auditTrail {
+    signups {
       nextToken
       __typename
     }
@@ -312,102 +300,72 @@ subscription OnDeleteOvertimePosting(
   }
 }
 
-subscription OnCreateOvertimeInvite(
-  $filter: ModelSubscriptionOvertimeInviteFilterInput
+subscription OnCreateOvertimeSignup(
+  $filter: ModelSubscriptionOvertimeSignupFilterInput
   $officerId: String
 ) {
-  onCreateOvertimeInvite(filter: $filter, officerId: $officerId) {
+  onCreateOvertimeSignup(filter: $filter, officerId: $officerId) {
     id
     postingId
+    orgId
     officerId
-    bucket
-    sequence
-    reason
     status
-    respondedAt
+    rank
+    rankPriority
+    badgeNumber
+    tieBreakerKey
+    submittedAt
+    forcedBy
+    forcedReason
+    notes
     createdAt
     updatedAt
     __typename
   }
 }
 
-subscription OnUpdateOvertimeInvite(
-  $filter: ModelSubscriptionOvertimeInviteFilterInput
+subscription OnUpdateOvertimeSignup(
+  $filter: ModelSubscriptionOvertimeSignupFilterInput
   $officerId: String
 ) {
-  onUpdateOvertimeInvite(filter: $filter, officerId: $officerId) {
+  onUpdateOvertimeSignup(filter: $filter, officerId: $officerId) {
     id
     postingId
+    orgId
     officerId
-    bucket
-    sequence
-    reason
     status
-    respondedAt
+    rank
+    rankPriority
+    badgeNumber
+    tieBreakerKey
+    submittedAt
+    forcedBy
+    forcedReason
+    notes
     createdAt
     updatedAt
     __typename
   }
 }
 
-subscription OnDeleteOvertimeInvite(
-  $filter: ModelSubscriptionOvertimeInviteFilterInput
+subscription OnDeleteOvertimeSignup(
+  $filter: ModelSubscriptionOvertimeSignupFilterInput
   $officerId: String
 ) {
-  onDeleteOvertimeInvite(filter: $filter, officerId: $officerId) {
+  onDeleteOvertimeSignup(filter: $filter, officerId: $officerId) {
     id
     postingId
+    orgId
     officerId
-    bucket
-    sequence
-    reason
     status
-    respondedAt
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-subscription OnCreateOvertimeAuditEvent(
-  $filter: ModelSubscriptionOvertimeAuditEventFilterInput
-) {
-  onCreateOvertimeAuditEvent(filter: $filter) {
-    id
-    postingId
-    type
-    details
-    createdBy
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-subscription OnUpdateOvertimeAuditEvent(
-  $filter: ModelSubscriptionOvertimeAuditEventFilterInput
-) {
-  onUpdateOvertimeAuditEvent(filter: $filter) {
-    id
-    postingId
-    type
-    details
-    createdBy
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-subscription OnDeleteOvertimeAuditEvent(
-  $filter: ModelSubscriptionOvertimeAuditEventFilterInput
-) {
-  onDeleteOvertimeAuditEvent(filter: $filter) {
-    id
-    postingId
-    type
-    details
-    createdBy
+    rank
+    rankPriority
+    badgeNumber
+    tieBreakerKey
+    submittedAt
+    forcedBy
+    forcedReason
+    notes
     createdAt
     updatedAt
     __typename
@@ -585,6 +543,165 @@ subscription OnDeleteNotificationPreference(
     contactPhone
     contactEmail
     backupEmail
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnCreateSquad($filter: ModelSubscriptionSquadFilterInput) {
+  onCreateSquad(filter: $filter) {
+    id
+    orgId
+    name
+    bureau
+    shift
+    notes
+    isActive
+    memberships {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateSquad($filter: ModelSubscriptionSquadFilterInput) {
+  onUpdateSquad(filter: $filter) {
+    id
+    orgId
+    name
+    bureau
+    shift
+    notes
+    isActive
+    memberships {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteSquad($filter: ModelSubscriptionSquadFilterInput) {
+  onDeleteSquad(filter: $filter) {
+    id
+    orgId
+    name
+    bureau
+    shift
+    notes
+    isActive
+    memberships {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnCreateSquadMembership(
+  $filter: ModelSubscriptionSquadMembershipFilterInput
+  $userId: String
+) {
+  onCreateSquadMembership(filter: $filter, userId: $userId) {
+    id
+    squadId
+    userId
+    roleInSquad
+    isPrimary
+    isActive
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateSquadMembership(
+  $filter: ModelSubscriptionSquadMembershipFilterInput
+  $userId: String
+) {
+  onUpdateSquadMembership(filter: $filter, userId: $userId) {
+    id
+    squadId
+    userId
+    roleInSquad
+    isPrimary
+    isActive
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteSquadMembership(
+  $filter: ModelSubscriptionSquadMembershipFilterInput
+  $userId: String
+) {
+  onDeleteSquadMembership(filter: $filter, userId: $userId) {
+    id
+    squadId
+    userId
+    roleInSquad
+    isPrimary
+    isActive
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnCreateNotificationReceipt(
+  $filter: ModelSubscriptionNotificationReceiptFilterInput
+  $userId: String
+) {
+  onCreateNotificationReceipt(filter: $filter, userId: $userId) {
+    id
+    notificationId
+    userId
+    orgId
+    isRead
+    readAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateNotificationReceipt(
+  $filter: ModelSubscriptionNotificationReceiptFilterInput
+  $userId: String
+) {
+  onUpdateNotificationReceipt(filter: $filter, userId: $userId) {
+    id
+    notificationId
+    userId
+    orgId
+    isRead
+    readAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteNotificationReceipt(
+  $filter: ModelSubscriptionNotificationReceiptFilterInput
+  $userId: String
+) {
+  onDeleteNotificationReceipt(filter: $filter, userId: $userId) {
+    id
+    notificationId
+    userId
+    orgId
+    isRead
+    readAt
     createdAt
     updatedAt
     __typename

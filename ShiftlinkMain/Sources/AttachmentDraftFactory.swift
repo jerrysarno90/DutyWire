@@ -22,7 +22,7 @@ enum AttachmentDraftFactory {
             try FileManager.default.copyItem(at: url, to: destination)
 
             let attributes = try FileManager.default.attributesOfItem(atPath: destination.path)
-            let fileSize = (attributes[.size] as? NSNumber)?.intValue ?? 0
+            let fileSize = (attributes[FileAttributeKey.size] as? NSNumber)?.intValue ?? 0
             guard fileSize <= AttachmentConstraints.maxFileSizeBytes else {
                 try? FileManager.default.removeItem(at: destination)
                 print("AttachmentDraftFactory: file exceeds maximum size.")
@@ -69,5 +69,12 @@ enum AttachmentDraftFactory {
             return type.preferredMIMEType
         }
         return nil
+    }
+}
+
+extension String {
+    /// Helps collapse empty strings into nil when chaining optional fallbacks.
+    var nilIfEmpty: String? {
+        isEmpty ? nil : self
     }
 }

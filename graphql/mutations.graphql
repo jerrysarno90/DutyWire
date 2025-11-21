@@ -258,16 +258,12 @@ mutation CreateOvertimePosting(
     startsAt
     endsAt
     slots
-    policySnapshot
-    selectionPolicy
-    needsEscalation
+    policy
+    notes
+    deadline
     state
     createdBy
-    invites {
-      nextToken
-      __typename
-    }
-    auditTrail {
+    signups {
       nextToken
       __typename
     }
@@ -290,16 +286,12 @@ mutation UpdateOvertimePosting(
     startsAt
     endsAt
     slots
-    policySnapshot
-    selectionPolicy
-    needsEscalation
+    policy
+    notes
+    deadline
     state
     createdBy
-    invites {
-      nextToken
-      __typename
-    }
-    auditTrail {
+    signups {
       nextToken
       __typename
     }
@@ -322,16 +314,12 @@ mutation DeleteOvertimePosting(
     startsAt
     endsAt
     slots
-    policySnapshot
-    selectionPolicy
-    needsEscalation
+    policy
+    notes
+    deadline
     state
     createdBy
-    invites {
-      nextToken
-      __typename
-    }
-    auditTrail {
+    signups {
       nextToken
       __typename
     }
@@ -341,105 +329,72 @@ mutation DeleteOvertimePosting(
   }
 }
 
-mutation CreateOvertimeInvite(
-  $input: CreateOvertimeInviteInput!
-  $condition: ModelOvertimeInviteConditionInput
+mutation CreateOvertimeSignup(
+  $input: CreateOvertimeSignupInput!
+  $condition: ModelOvertimeSignupConditionInput
 ) {
-  createOvertimeInvite(input: $input, condition: $condition) {
+  createOvertimeSignup(input: $input, condition: $condition) {
     id
     postingId
+    orgId
     officerId
-    bucket
-    sequence
-    reason
     status
-    respondedAt
+    rank
+    rankPriority
+    badgeNumber
+    tieBreakerKey
+    submittedAt
+    forcedBy
+    forcedReason
+    notes
     createdAt
     updatedAt
     __typename
   }
 }
 
-mutation UpdateOvertimeInvite(
-  $input: UpdateOvertimeInviteInput!
-  $condition: ModelOvertimeInviteConditionInput
+mutation UpdateOvertimeSignup(
+  $input: UpdateOvertimeSignupInput!
+  $condition: ModelOvertimeSignupConditionInput
 ) {
-  updateOvertimeInvite(input: $input, condition: $condition) {
+  updateOvertimeSignup(input: $input, condition: $condition) {
     id
     postingId
+    orgId
     officerId
-    bucket
-    sequence
-    reason
     status
-    respondedAt
+    rank
+    rankPriority
+    badgeNumber
+    tieBreakerKey
+    submittedAt
+    forcedBy
+    forcedReason
+    notes
     createdAt
     updatedAt
     __typename
   }
 }
 
-mutation DeleteOvertimeInvite(
-  $input: DeleteOvertimeInviteInput!
-  $condition: ModelOvertimeInviteConditionInput
+mutation DeleteOvertimeSignup(
+  $input: DeleteOvertimeSignupInput!
+  $condition: ModelOvertimeSignupConditionInput
 ) {
-  deleteOvertimeInvite(input: $input, condition: $condition) {
+  deleteOvertimeSignup(input: $input, condition: $condition) {
     id
     postingId
+    orgId
     officerId
-    bucket
-    sequence
-    reason
     status
-    respondedAt
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-mutation CreateOvertimeAuditEvent(
-  $input: CreateOvertimeAuditEventInput!
-  $condition: ModelOvertimeAuditEventConditionInput
-) {
-  createOvertimeAuditEvent(input: $input, condition: $condition) {
-    id
-    postingId
-    type
-    details
-    createdBy
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-mutation UpdateOvertimeAuditEvent(
-  $input: UpdateOvertimeAuditEventInput!
-  $condition: ModelOvertimeAuditEventConditionInput
-) {
-  updateOvertimeAuditEvent(input: $input, condition: $condition) {
-    id
-    postingId
-    type
-    details
-    createdBy
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-mutation DeleteOvertimeAuditEvent(
-  $input: DeleteOvertimeAuditEventInput!
-  $condition: ModelOvertimeAuditEventConditionInput
-) {
-  deleteOvertimeAuditEvent(input: $input, condition: $condition) {
-    id
-    postingId
-    type
-    details
-    createdBy
+    rank
+    rankPriority
+    badgeNumber
+    tieBreakerKey
+    submittedAt
+    forcedBy
+    forcedReason
+    notes
     createdAt
     updatedAt
     __typename
@@ -620,6 +575,174 @@ mutation DeleteNotificationPreference(
     contactPhone
     contactEmail
     backupEmail
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateSquad(
+  $input: CreateSquadInput!
+  $condition: ModelSquadConditionInput
+) {
+  createSquad(input: $input, condition: $condition) {
+    id
+    orgId
+    name
+    bureau
+    shift
+    notes
+    isActive
+    memberships {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateSquad(
+  $input: UpdateSquadInput!
+  $condition: ModelSquadConditionInput
+) {
+  updateSquad(input: $input, condition: $condition) {
+    id
+    orgId
+    name
+    bureau
+    shift
+    notes
+    isActive
+    memberships {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteSquad(
+  $input: DeleteSquadInput!
+  $condition: ModelSquadConditionInput
+) {
+  deleteSquad(input: $input, condition: $condition) {
+    id
+    orgId
+    name
+    bureau
+    shift
+    notes
+    isActive
+    memberships {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateSquadMembership(
+  $input: CreateSquadMembershipInput!
+  $condition: ModelSquadMembershipConditionInput
+) {
+  createSquadMembership(input: $input, condition: $condition) {
+    id
+    squadId
+    userId
+    roleInSquad
+    isPrimary
+    isActive
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateSquadMembership(
+  $input: UpdateSquadMembershipInput!
+  $condition: ModelSquadMembershipConditionInput
+) {
+  updateSquadMembership(input: $input, condition: $condition) {
+    id
+    squadId
+    userId
+    roleInSquad
+    isPrimary
+    isActive
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteSquadMembership(
+  $input: DeleteSquadMembershipInput!
+  $condition: ModelSquadMembershipConditionInput
+) {
+  deleteSquadMembership(input: $input, condition: $condition) {
+    id
+    squadId
+    userId
+    roleInSquad
+    isPrimary
+    isActive
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateNotificationReceipt(
+  $input: CreateNotificationReceiptInput!
+  $condition: ModelNotificationReceiptConditionInput
+) {
+  createNotificationReceipt(input: $input, condition: $condition) {
+    id
+    notificationId
+    userId
+    orgId
+    isRead
+    readAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateNotificationReceipt(
+  $input: UpdateNotificationReceiptInput!
+  $condition: ModelNotificationReceiptConditionInput
+) {
+  updateNotificationReceipt(input: $input, condition: $condition) {
+    id
+    notificationId
+    userId
+    orgId
+    isRead
+    readAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteNotificationReceipt(
+  $input: DeleteNotificationReceiptInput!
+  $condition: ModelNotificationReceiptConditionInput
+) {
+  deleteNotificationReceipt(input: $input, condition: $condition) {
+    id
+    notificationId
+    userId
+    orgId
+    isRead
+    readAt
     createdAt
     updatedAt
     __typename

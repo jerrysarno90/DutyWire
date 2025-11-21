@@ -4,7 +4,7 @@ import Foundation
 
 public struct NotificationEndpoint: Model {
   public let id: String
-  public var orgId: String
+  public var orgId: String?
   public var userId: String
   public var deviceToken: String
   public var platform: NotificationPlatform
@@ -16,7 +16,7 @@ public struct NotificationEndpoint: Model {
   public var updatedAt: Temporal.DateTime?
   
   public init(id: String = UUID().uuidString,
-      orgId: String,
+      orgId: String? = nil,
       userId: String,
       deviceToken: String,
       platform: NotificationPlatform,

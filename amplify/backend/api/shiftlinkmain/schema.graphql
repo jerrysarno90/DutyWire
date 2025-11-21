@@ -16,8 +16,8 @@
   startsAt: AWSDateTime!
   endsAt: AWSDateTime!
   notes: String
-  createdAt: AWSDateTime @aws_cognito_user_pools
-  updatedAt: AWSDateTime @aws_cognito_user_pools
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
  }
 
  type Vehicle @model
@@ -33,8 +33,8 @@
   model: String
   plate: String
   inService: Boolean
-  createdAt: AWSDateTime @aws_cognito_user_pools
-  updatedAt: AWSDateTime @aws_cognito_user_pools
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
  }
 
  type CalendarEvent @model
@@ -94,18 +94,16 @@ enum OvertimePostingState {
  CLOSED
 }
 
-enum OvertimeSelectionPolicy {
-  ROTATION
+enum OvertimePolicy {
+  FIRST_COME_FIRST_SERVED
   SENIORITY
-  FIRST_COME
 }
 
- enum OvertimeInviteStatus {
+enum OvertimeSignupStatus {
   PENDING
-  ACCEPTED
-  DECLINED
-  ORDERED
-  EXPIRED
+  CONFIRMED
+  WITHDRAWN
+  FORCED
  }
 
  type OvertimePosting @model
@@ -121,42 +119,36 @@ enum OvertimeSelectionPolicy {
   startsAt: AWSDateTime!
   endsAt: AWSDateTime!
   slots: Int!
-  policySnapshot: AWSJSON!
-  selectionPolicy: OvertimeSelectionPolicy
-  needsEscalation: Boolean
+  policy: OvertimePolicy!
+  notes: String
+  deadline: AWSDateTime
   state: OvertimePostingState!
   createdBy: String!
-  invites: [OvertimeInvite] @hasMany(indexName: "invitesByPosting", fields: ["id"])
-  auditTrail: [OvertimeAuditEvent] @hasMany(indexName: "auditsByPosting", fields: ["id"])
+  signups: [OvertimeSignup] @hasMany(indexName: "signupsByPosting", fields: ["id"])
   createdAt: AWSDateTime @aws_cognito_user_pools
   updatedAt: AWSDateTime @aws_cognito_user_pools
  }
 
- type OvertimeInvite @model
+ type OvertimeSignup @model
   @auth(rules: [
     { allow: owner, ownerField: "officerId" },
     { allow: groups, groups: ["Admin", "Supervisor"] }
   ]) {
   id: ID!
-  postingId: ID! @index(name: "invitesByPosting", queryField: "invitesByPosting", sortKeyFields: ["sequence"])
-  officerId: String!
-  bucket: String!
-  sequence: Int!
-  reason: String!
-  status: OvertimeInviteStatus!
-  respondedAt: AWSDateTime
+  postingId: ID! @index(name: "signupsByPosting", queryField: "signupsByPosting", sortKeyFields: ["submittedAt"])
+  orgId: String! @index(name: "signupsByOrg", queryField: "overtimeSignupsByOrg", sortKeyFields: ["submittedAt"])
+  officerId: String! @index(name: "signupsByOfficer", queryField: "overtimeSignupsByOfficer", sortKeyFields: ["status"])
+  status: OvertimeSignupStatus!
+  rank: String
+  rankPriority: Int
+  badgeNumber: String
+  tieBreakerKey: String
+  submittedAt: AWSDateTime!
+  forcedBy: String
+  forcedReason: String
+  notes: String
   createdAt: AWSDateTime @aws_cognito_user_pools
   updatedAt: AWSDateTime @aws_cognito_user_pools
- }
-
- type OvertimeAuditEvent @model
-  @auth(rules: [{ allow: groups, groups: ["Admin", "Supervisor"] }]) {
-  id: ID!
-  postingId: ID! @index(name: "auditsByPosting", queryField: "auditsByPosting", sortKeyFields: ["createdAt"])
-  type: String!
-  details: AWSJSON
-  createdBy: String
-  createdAt: AWSDateTime @aws_cognito_user_pools
  }
 
  enum NotificationPlatform {
@@ -166,7 +158,7 @@ enum OvertimeSelectionPolicy {
 
  enum NotificationCategory {
   OVERTIME_POSTED
-  OVERTIME_ESCALATION
+  OVERTIME_REMINDER
   OVERTIME_FORCE_ASSIGN
   SQUAD_ALERT
   TASK_ALERT
@@ -180,7 +172,7 @@ type NotificationEndpoint @model
     { allow: groups, groups: ["Admin", "Supervisor"], operations: [read] }
   ]) {
   id: ID!
-  orgId: String! @index(name: "notificationEndpointsByOrg", queryField: "notificationEndpointsByOrg", sortKeyFields: ["updatedAt"])
+  orgId: String @index(name: "notificationEndpointsByOrg", queryField: "notificationEndpointsByOrg", sortKeyFields: ["updatedAt"])
   userId: String! @index(name: "endpointsByUser", queryField: "notificationEndpointsByUser", sortKeyFields: ["updatedAt"])
   deviceToken: String!
   platform: NotificationPlatform!
@@ -208,7 +200,7 @@ type NotificationEndpoint @model
   updatedAt: AWSDateTime @aws_cognito_user_pools
  }
 
- type NotificationPreference @model
+type NotificationPreference @model
   @auth(rules: [
     { allow: owner, ownerField: "userId" },
     { allow: groups, groups: ["Admin", "Supervisor"], operations: [read] }
@@ -225,9 +217,68 @@ type NotificationEndpoint @model
   backupEmail: String
   createdAt: AWSDateTime @aws_cognito_user_pools
   updatedAt: AWSDateTime @aws_cognito_user_pools
- }
+}
 
- input OvertimeNotificationInput {
+type Squad @model
+  @auth(rules: [
+    { allow: private, provider: userPools, operations: [read] },
+    { allow: groups, provider: userPools, groups: ["AgencyManager", "Admin"] },
+    { allow: groups, provider: userPools, groups: ["Supervisor"], operations: [read] },
+    { allow: private, provider: iam, operations: [create, read, update, delete] }
+  ]) {
+  id: ID!
+  orgId: String! @index(name:"squadsByOrg", sortKeyFields:["name"], queryField:"squadsByOrg")
+  name: String!
+  bureau: String!
+  shift: String
+  notes: String
+  isActive: Boolean! @default(value: "true")
+  memberships: [SquadMembership] @hasMany(indexName: "membershipBySquad", fields: ["id"])
+  createdAt: AWSDateTime @aws_cognito_user_pools @auth(rules:[{ allow: private, provider: iam, operations:[read] }])
+  updatedAt: AWSDateTime @aws_cognito_user_pools @auth(rules:[{ allow: private, provider: iam, operations:[read] }])
+}
+
+type SquadMembership @model
+  @auth(rules: [
+    { allow: private, provider: userPools, operations: [read] },
+    { allow: groups, provider: userPools, groups: ["AgencyManager", "Admin"] },
+    { allow: groups, provider: userPools, groups: ["Supervisor"], operations: [read] },
+    { allow: owner, ownerField: "userId", operations: [read] },
+    { allow: private, provider: iam, operations: [create, read, update, delete] }
+  ]) {
+  id: ID!
+  squadId: ID! @index(name: "membershipBySquad", queryField: "squadMembershipsBySquad")
+  userId: String! @index(name: "membershipByUser", queryField: "squadMembershipsByUser")
+  roleInSquad: SquadRole!
+  isPrimary: Boolean! @default(value: "true")
+  isActive: Boolean! @default(value: "true")
+  createdAt: AWSDateTime @aws_cognito_user_pools @auth(rules:[{ allow: private, provider: iam, operations:[read] }])
+  updatedAt: AWSDateTime @aws_cognito_user_pools @auth(rules:[{ allow: private, provider: iam, operations:[read] }])
+}
+
+enum SquadRole {
+  SUPERVISOR
+  OFFICER
+}
+
+type NotificationReceipt @model
+  @auth(rules: [
+    { allow: owner, ownerField: "userId" },
+    { allow: groups, groups: ["Admin", "Supervisor"], operations: [read] }
+  ]) {
+  id: ID!
+  notificationId: ID!
+    @index(name: "notificationReceiptsByNotification", queryField: "notificationReceiptsByNotification", sortKeyFields: ["userId"])
+  userId: String!
+    @index(name: "notificationReceiptsByUser", queryField: "notificationReceiptsByUser", sortKeyFields: ["notificationId"])
+  orgId: String!
+  isRead: Boolean! @default(value: "false")
+  readAt: AWSDateTime
+  createdAt: AWSDateTime @aws_cognito_user_pools
+  updatedAt: AWSDateTime @aws_cognito_user_pools
+}
+
+input OvertimeNotificationInput {
   orgId: String!
   recipients: [String!]!
   title: String!
